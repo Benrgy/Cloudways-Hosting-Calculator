@@ -1,8 +1,11 @@
-
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Footer = () => {
+  const handleCloudwaysClick = () => {
+    window.open('https://www.cloudways.com/en/?id=1384181', '_blank');
+  };
+
   return (
     <footer className="bg-gray-900 text-white py-12">
       <div className="container mx-auto px-4">
@@ -19,6 +22,12 @@ export const Footer = () => {
               Compare shared hosting costs with Cloudways managed cloud hosting. 
               Make informed decisions with accurate calculations and personalized recommendations.
             </p>
+            <button 
+              onClick={handleCloudwaysClick}
+              className="mt-4 text-emerald-400 hover:text-emerald-300 transition-colors underline"
+            >
+              Get Started with Cloudways
+            </button>
           </div>
 
           {/* Quick Links */}
@@ -53,23 +62,29 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Support */}
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+            <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="/privacy" className="hover:text-emerald-400 transition-colors">
-                  Privacy Policy
-                </a>
+                <button 
+                  onClick={handleCloudwaysClick}
+                  className="hover:text-emerald-400 transition-colors text-left"
+                >
+                  Contact Support Team
+                </button>
               </li>
               <li>
-                <a href="/terms" className="hover:text-emerald-400 transition-colors">
-                  Terms of Service
-                </a>
+                <button 
+                  onClick={handleCloudwaysClick}
+                  className="hover:text-emerald-400 transition-colors text-left"
+                >
+                  Cloudways Hosting
+                </button>
               </li>
               <li>
                 <a href="/contact" className="hover:text-emerald-400 transition-colors">
-                  Contact
+                  Contact Us
                 </a>
               </li>
             </ul>

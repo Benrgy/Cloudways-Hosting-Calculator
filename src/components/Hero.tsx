@@ -7,6 +7,10 @@ interface HeroProps {
 }
 
 export const Hero = ({ onCalculateClick }: HeroProps) => {
+  const handleLearnMoreClick = () => {
+    window.open('https://www.cloudways.com/en/?id=1384181', '_blank');
+  };
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
       <div className="container mx-auto px-4 py-20 lg:py-32">
@@ -44,6 +48,7 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
                 size="lg" 
                 variant="outline" 
                 className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 px-8 py-4 text-lg"
+                onClick={handleLearnMoreClick}
               >
                 Learn More
               </Button>
