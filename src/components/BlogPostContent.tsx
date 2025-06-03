@@ -4,6 +4,10 @@ interface BlogPostContentProps {
 }
 
 export const BlogPostContent = ({ content }: BlogPostContentProps) => {
+  const handleCalculateClick = () => {
+    window.open('https://www.cloudways.com/en/?id=1384181', '_blank');
+  };
+
   return (
     <article className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -22,12 +26,12 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
               Use our free calculator to see how much you could save by migrating 
               from shared hosting to Cloudways managed cloud hosting.
             </p>
-            <a 
-              href="/#calculator" 
-              className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+            <button 
+              onClick={handleCalculateClick}
+              className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors cursor-pointer"
             >
-              Calculate Your Savings
-            </a>
+              Get Started with Cloudways
+            </button>
           </div>
         </div>
       </div>

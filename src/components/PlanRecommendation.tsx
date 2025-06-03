@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,8 +11,7 @@ interface PlanRecommendationProps {
 
 export const PlanRecommendation = ({ plan, cost, savings }: PlanRecommendationProps) => {
   const handleSignUpClick = () => {
-    // In a real app, this would use the affiliate link
-    window.open('https://cloudways.com', '_blank');
+    window.open('https://www.cloudways.com/en/?id=1384181', '_blank');
   };
 
   const planFeatures = {

@@ -37,16 +37,6 @@ export const Header = () => {
             </a>
           </nav>
 
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-gray-600 hover:text-emerald-600">
-              Log In
-            </Button>
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
-              Sign Up Free
-            </Button>
-          </div>
-
           {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2"
@@ -76,14 +66,6 @@ export const Header = () => {
               <a href="#faq" className="text-gray-600 hover:text-emerald-600 transition-colors">
                 FAQ
               </a>
-              <div className="pt-4 border-t border-gray-200 space-y-2">
-                <Button variant="ghost" className="w-full justify-start text-gray-600 hover:text-emerald-600">
-                  Log In
-                </Button>
-                <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
-                  Sign Up Free
-                </Button>
-              </div>
             </nav>
           </div>
         )}
