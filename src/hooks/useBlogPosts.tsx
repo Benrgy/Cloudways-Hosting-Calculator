@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -59,3 +58,6 @@ export const useBlogPost = (slug: string) => {
     enabled: !!slug,
   });
 };
+
+// Using mock data for now - replace with Supabase when ready
+export * from './useMockBlogPosts';
