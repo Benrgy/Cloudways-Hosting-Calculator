@@ -1,5 +1,6 @@
 
 import { Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -33,6 +34,11 @@ export const Footer = () => {
                 <a href="#how-it-works" className="hover:text-emerald-400 transition-colors">
                   How It Works
                 </a>
+              </li>
+              <li>
+                <Link to="/blog" className="hover:text-emerald-400 transition-colors">
+                  Blog
+                </Link>
               </li>
               <li>
                 <a href="#faq" className="hover:text-emerald-400 transition-colors">

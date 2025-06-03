@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,14 +12,14 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <Link to="/" className="flex items-center">
             <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">H</span>
             </div>
             <span className="ml-2 text-xl font-bold text-gray-900">
               HostingCalc
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
@@ -28,6 +29,9 @@ export const Header = () => {
             <a href="#how-it-works" className="text-gray-600 hover:text-emerald-600 transition-colors">
               How It Works
             </a>
+            <Link to="/blog" className="text-gray-600 hover:text-emerald-600 transition-colors">
+              Blog
+            </Link>
             <a href="#faq" className="text-gray-600 hover:text-emerald-600 transition-colors">
               FAQ
             </a>
@@ -66,6 +70,9 @@ export const Header = () => {
               <a href="#how-it-works" className="text-gray-600 hover:text-emerald-600 transition-colors">
                 How It Works
               </a>
+              <Link to="/blog" className="text-gray-600 hover:text-emerald-600 transition-colors">
+                Blog
+              </Link>
               <a href="#faq" className="text-gray-600 hover:text-emerald-600 transition-colors">
                 FAQ
               </a>
