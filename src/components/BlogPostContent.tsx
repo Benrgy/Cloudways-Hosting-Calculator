@@ -1,5 +1,4 @@
 
-
 interface BlogPostContentProps {
   content: string;
 }
@@ -45,11 +44,54 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
           .prose p {
             margin-bottom: 1.5rem !important;
           }
-          .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+          .prose h1 {
+            font-size: 2.25rem !important;
+            font-weight: 800 !important;
             margin-top: 2rem !important;
             margin-bottom: 1rem !important;
+            line-height: 1.2 !important;
           }
-          .prose h1:first-child, .prose h2:first-child, .prose h3:first-child {
+          .prose h2 {
+            font-size: 1.875rem !important;
+            font-weight: 700 !important;
+            margin-top: 2rem !important;
+            margin-bottom: 1rem !important;
+            line-height: 1.3 !important;
+          }
+          .prose h3 {
+            font-size: 1.5rem !important;
+            font-weight: 600 !important;
+            margin-top: 1.75rem !important;
+            margin-bottom: 0.875rem !important;
+            line-height: 1.4 !important;
+          }
+          .prose h4 {
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            margin-top: 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.4 !important;
+          }
+          .prose h5 {
+            font-size: 1.125rem !important;
+            font-weight: 600 !important;
+            margin-top: 1.25rem !important;
+            margin-bottom: 0.625rem !important;
+            line-height: 1.5 !important;
+          }
+          .prose h6 {
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            margin-top: 1rem !important;
+            margin-bottom: 0.5rem !important;
+            line-height: 1.5 !important;
+          }
+          .prose h1:first-child, 
+          .prose h2:first-child, 
+          .prose h3:first-child,
+          .prose h4:first-child,
+          .prose h5:first-child,
+          .prose h6:first-child {
             margin-top: 0 !important;
           }
           .prose blockquote {
@@ -69,4 +111,3 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
     </article>
   );
 };
-
