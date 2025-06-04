@@ -40,30 +40,32 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
         </div>
       </div>
 
-      <style jsx>{`
-        .prose p {
-          margin-bottom: 1.5rem !important;
-        }
-        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-          margin-top: 2rem !important;
-          margin-bottom: 1rem !important;
-        }
-        .prose h1:first-child, .prose h2:first-child, .prose h3:first-child {
-          margin-top: 0 !important;
-        }
-        .prose blockquote {
-          margin-top: 1.5rem !important;
-          margin-bottom: 1.5rem !important;
-        }
-        .prose ul, .prose ol {
-          margin-top: 1rem !important;
-          margin-bottom: 1.5rem !important;
-        }
-        .prose img {
-          margin-top: 1.5rem !important;
-          margin-bottom: 1.5rem !important;
-        }
-      `}</style>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .prose p {
+            margin-bottom: 1.5rem !important;
+          }
+          .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+            margin-top: 2rem !important;
+            margin-bottom: 1rem !important;
+          }
+          .prose h1:first-child, .prose h2:first-child, .prose h3:first-child {
+            margin-top: 0 !important;
+          }
+          .prose blockquote {
+            margin-top: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+          .prose ul, .prose ol {
+            margin-top: 1rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+          .prose img {
+            margin-top: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+        `
+      }} />
     </article>
   );
 };
