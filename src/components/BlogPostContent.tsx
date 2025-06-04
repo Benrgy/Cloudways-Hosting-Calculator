@@ -1,4 +1,5 @@
 
+
 interface BlogPostContentProps {
   content: string;
 }
@@ -13,7 +14,10 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div 
-            className="prose prose-lg prose-emerald max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6 prose-li:text-gray-700 prose-strong:text-gray-900 prose-a:text-emerald-600 hover:prose-a:text-emerald-700 prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-blockquote:border-l-emerald-500 prose-blockquote:bg-emerald-50 prose-blockquote:p-4 prose-blockquote:mb-6 prose-img:rounded-lg prose-img:shadow-md prose-img:mb-6 prose-h2:mt-8 prose-h2:mb-4 prose-h3:mt-6 prose-h3:mb-3"
+            className="prose prose-lg prose-emerald max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-li:text-gray-700 prose-strong:text-gray-900 prose-a:text-emerald-600 hover:prose-a:text-emerald-700 prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-blockquote:border-l-emerald-500 prose-blockquote:bg-emerald-50 prose-blockquote:p-4 prose-img:rounded-lg prose-img:shadow-md"
+            style={{
+              lineHeight: '1.7'
+            }}
             dangerouslySetInnerHTML={{ __html: content }}
           />
           
@@ -35,6 +39,32 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .prose p {
+          margin-bottom: 1.5rem !important;
+        }
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+          margin-top: 2rem !important;
+          margin-bottom: 1rem !important;
+        }
+        .prose h1:first-child, .prose h2:first-child, .prose h3:first-child {
+          margin-top: 0 !important;
+        }
+        .prose blockquote {
+          margin-top: 1.5rem !important;
+          margin-bottom: 1.5rem !important;
+        }
+        .prose ul, .prose ol {
+          margin-top: 1rem !important;
+          margin-bottom: 1.5rem !important;
+        }
+        .prose img {
+          margin-top: 1.5rem !important;
+          margin-bottom: 1.5rem !important;
+        }
+      `}</style>
     </article>
   );
 };
+
