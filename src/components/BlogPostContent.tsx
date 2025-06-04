@@ -13,7 +13,7 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div 
-            className="prose prose-lg prose-emerald max-w-none"
+            className="prose prose-lg prose-emerald max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-li:text-gray-700 prose-strong:text-gray-900 prose-a:text-emerald-600 hover:prose-a:text-emerald-700 prose-code:bg-gray-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-blockquote:border-l-emerald-500 prose-blockquote:bg-emerald-50 prose-blockquote:p-4 prose-img:rounded-lg prose-img:shadow-md"
             dangerouslySetInnerHTML={{ __html: content }}
           />
           
