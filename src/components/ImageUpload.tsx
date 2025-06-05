@@ -84,6 +84,13 @@ export const ImageUpload = ({ onImageUploaded, currentImage }: ImageUploadProps)
     onImageUploaded("");
   };
 
+  const triggerFileInput = () => {
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4">
@@ -98,7 +105,7 @@ export const ImageUpload = ({ onImageUploaded, currentImage }: ImageUploadProps)
           type="button"
           variant="outline"
           disabled={uploading}
-          onClick={() => document.querySelector('input[type="file"]')?.click()}
+          onClick={triggerFileInput}
         >
           <Upload className="w-4 h-4 mr-2" />
           {uploading ? "Uploading..." : "Upload"}
