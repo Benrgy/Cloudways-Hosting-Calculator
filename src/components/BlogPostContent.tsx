@@ -1,3 +1,4 @@
+import { MarkdownRenderer } from "./MarkdownRenderer";
 
 interface BlogPostContentProps {
   content: string;
@@ -12,14 +13,9 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
     <article className="py-16 bg-gradient-to-br from-white via-emerald-50/30 to-blue-50/30">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <div 
-            className="prose prose-lg prose-emerald max-w-none animate-fade-in"
-            style={{
-              lineHeight: '1.8',
-              fontSize: '18px'
-            }}
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <div className="animate-fade-in">
+            <MarkdownRenderer content={content} />
+          </div>
           
           {/* Call to Action with enhanced styling */}
           <div className="mt-12 p-8 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-xl border-0 shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in">
@@ -238,7 +234,7 @@ export const BlogPostContent = ({ content }: BlogPostContentProps) => {
             margin: 2rem 0 !important;
             overflow-x: auto !important;
             border: 1px solid #4b5563 !important;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
             animation: fade-in 1s ease-out 0.9s both;
           }
           

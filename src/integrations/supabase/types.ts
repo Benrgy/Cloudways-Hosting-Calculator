@@ -12,6 +12,7 @@ export type Database = {
       blog_posts: {
         Row: {
           author: string | null
+          canonical_url: string | null
           category: string | null
           content: string | null
           created_at: string | null
@@ -19,15 +20,19 @@ export type Database = {
           featured: boolean | null
           id: string
           image_url: string | null
+          meta_description: string | null
+          meta_title: string | null
           published: boolean | null
           published_at: string | null
           read_time: string | null
           slug: string
+          tags: string[] | null
           title: string
           updated_at: string | null
         }
         Insert: {
           author?: string | null
+          canonical_url?: string | null
           category?: string | null
           content?: string | null
           created_at?: string | null
@@ -35,15 +40,19 @@ export type Database = {
           featured?: boolean | null
           id?: string
           image_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
           published?: boolean | null
           published_at?: string | null
           read_time?: string | null
           slug: string
+          tags?: string[] | null
           title: string
           updated_at?: string | null
         }
         Update: {
           author?: string | null
+          canonical_url?: string | null
           category?: string | null
           content?: string | null
           created_at?: string | null
@@ -51,12 +60,30 @@ export type Database = {
           featured?: boolean | null
           id?: string
           image_url?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
           published?: boolean | null
           published_at?: string | null
           read_time?: string | null
           slug?: string
+          tags?: string[] | null
           title?: string
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      meta_title: {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
         }
         Relationships: []
       }

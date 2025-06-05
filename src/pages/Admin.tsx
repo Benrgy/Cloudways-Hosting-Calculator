@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
@@ -8,7 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ImageUpload } from "@/components/ImageUpload";
+import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { supabase } from "@/integrations/supabase/client";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
@@ -171,15 +172,18 @@ const Admin = () => {
                 New Post
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>
                   {editingPost ? "Edit Post" : "Create New Post"}
                 </DialogTitle>
+                <DialogDescription>
+                  {editingPost ? "Update your blog post" : "Create a new blog post with rich content and images"}
+                </DialogDescription>
               </DialogHeader>
               
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="title"
@@ -210,6 +214,23 @@ const Admin = () => {
                   
                   <FormField
                     control={form.control}
+                    name="image_url"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Featured Image</FormLabel>
+                        <FormControl>
+                          <ImageUpload
+                            currentImage={field.value}
+                            onImageUploaded={(url) => field.onChange(url)}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
                     name="excerpt"
                     render={({ field }) => (
                       <FormItem>
@@ -227,12 +248,12 @@ const Admin = () => {
                     name="content"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Content (HTML)</FormLabel>
+                        <FormLabel>Content</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="<h2>Your content here...</h2>"
-                            className="min-h-[200px]" 
-                            {...field} 
+                          <MarkdownEditor
+                            value={field.value}
+                            onChange={field.onChange}
+                            placeholder="Write your blog post content using Markdown..."
                           />
                         </FormControl>
                         <FormMessage />
@@ -278,20 +299,6 @@ const Admin = () => {
                         <FormLabel>Author</FormLabel>
                         <FormControl>
                           <Input placeholder="Author name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="image_url"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Image URL</FormLabel>
-                        <FormControl>
-                          <Input placeholder="https://..." {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
