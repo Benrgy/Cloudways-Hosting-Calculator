@@ -14,6 +14,8 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit, Trash2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import type { BlogPost } from "@/hooks/useBlogPosts";
 
 interface BlogPostForm {
   title: string;
@@ -29,7 +31,7 @@ interface BlogPostForm {
 
 const Admin = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingPost, setEditingPost] = useState<any>(null);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -47,20 +49,73 @@ const Admin = () => {
     },
   });
 
-  // Temporary mock data until database is set up
+  // Fetch blog posts from Supabase
   const { data: posts, isLoading } = useQuery({
     queryKey: ['admin-blog-posts'],
     queryFn: async () => {
-      console.log('Admin posts will be loaded from database once tables are created');
-      return [];
+      console.log('Loading admin blog posts from Supabase...');
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching admin blog posts:', error);
+        throw error;
+      }
+
+      console.log('Admin blog posts loaded:', data);
+      return data as BlogPost[];
     },
   });
 
-  // Temporary save mutation until database is set up
+  // Save/update blog post
   const saveMutation = useMutation({
     mutationFn: async (values: BlogPostForm) => {
-      console.log('Post would be saved to database:', values);
-      throw new Error('Database not set up yet - please create the blog_posts table first');
+      console.log('Saving blog post:', values);
+      
+      if (editingPost) {
+        // Update existing post
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .update({
+            title: values.title,
+            slug: values.slug,
+            excerpt: values.excerpt,
+            content: values.content,
+            category: values.category,
+            read_time: values.read_time,
+            image_url: values.image_url,
+            author: values.author,
+            featured: values.featured,
+          })
+          .eq('id', editingPost.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data;
+      } else {
+        // Create new post
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .insert({
+            title: values.title,
+            slug: values.slug,
+            excerpt: values.excerpt,
+            content: values.content,
+            category: values.category,
+            read_time: values.read_time,
+            image_url: values.image_url,
+            author: values.author,
+            featured: values.featured,
+          })
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
@@ -73,21 +128,27 @@ const Admin = () => {
       setEditingPost(null);
       form.reset();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to save post. Please set up the database first.",
+        description: error.message || "Failed to save post. Please try again.",
         variant: "destructive",
       });
       console.error('Save error:', error);
     },
   });
 
-  // Temporary delete mutation until database is set up
+  // Delete blog post
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      console.log('Post would be deleted from database:', id);
-      throw new Error('Database not set up yet - please create the blog_posts table first');
+      console.log('Deleting blog post:', id);
+      const { error } = await supabase
+        .from('blog_posts')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      return id;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
@@ -97,10 +158,10 @@ const Admin = () => {
         description: "The blog post has been removed.",
       });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast({
         title: "Error",
-        description: error.message || "Failed to delete post. Please set up the database first.",
+        description: error.message || "Failed to delete post. Please try again.",
         variant: "destructive",
       });
       console.error('Delete error:', error);
@@ -118,7 +179,7 @@ const Admin = () => {
     saveMutation.mutate(values);
   };
 
-  const handleEdit = (post: any) => {
+  const handleEdit = (post: BlogPost) => {
     setEditingPost(post);
     form.reset({
       title: post.title || "",
@@ -346,27 +407,22 @@ const Admin = () => {
                 <TableRow>
                   <TableCell colSpan={6} className="text-center">
                     <div className="py-8">
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">No Database Tables Found</h3>
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">No blog posts yet</h3>
                       <p className="text-gray-600 mb-4">
-                        The blog_posts table needs to be created first. 
-                        <br />Please set up the database schema to start managing blog posts.
+                        Create your first blog post to get started!
                       </p>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : (
-                posts.map((post: any) => (
+                posts.map((post: BlogPost) => (
                   <TableRow key={post.id}>
                     <TableCell className="font-medium">{post.title}</TableCell>
                     <TableCell>{post.category}</TableCell>
                     <TableCell>{post.author}</TableCell>
                     <TableCell>
-                      <span className={`px-2 py-1 rounded text-xs ${
-                        post.published 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {post.published ? 'Published' : 'Draft'}
+                      <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">
+                        Published
                       </span>
                     </TableCell>
                     <TableCell>
