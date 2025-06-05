@@ -1,6 +1,5 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 
 export interface BlogPost {
   id: string;
@@ -18,22 +17,15 @@ export interface BlogPost {
   updated_at: string;
 }
 
+// Temporary mock data until database is set up
+const mockPosts: BlogPost[] = [];
+
 export const useBlogPosts = () => {
   return useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('published', true)
-        .order('published_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching blog posts:', error);
-        throw error;
-      }
-
-      return data as BlogPost[];
+      console.log('Blog posts will be loaded from database once tables are created');
+      return mockPosts;
     },
   });
 };
@@ -42,19 +34,8 @@ export const useBlogPost = (slug: string) => {
   return useQuery({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('slug', slug)
-        .eq('published', true)
-        .single();
-
-      if (error) {
-        console.error('Error fetching blog post:', error);
-        throw error;
-      }
-
-      return data as BlogPost;
+      console.log('Blog post will be loaded from database once tables are created');
+      return null;
     },
     enabled: !!slug,
   });

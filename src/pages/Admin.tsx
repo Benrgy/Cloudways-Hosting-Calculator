@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
@@ -10,7 +11,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ImageUpload } from "@/components/ImageUpload";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
-import { supabase } from "@/integrations/supabase/client";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit, Trash2 } from "lucide-react";
@@ -47,35 +47,20 @@ const Admin = () => {
     },
   });
 
-  // Fetch all blog posts (including unpublished)
+  // Temporary mock data until database is set up
   const { data: posts, isLoading } = useQuery({
     queryKey: ['admin-blog-posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return data;
+      console.log('Admin posts will be loaded from database once tables are created');
+      return [];
     },
   });
 
-  // Create or update blog post
+  // Temporary save mutation until database is set up
   const saveMutation = useMutation({
     mutationFn: async (values: BlogPostForm) => {
-      if (editingPost) {
-        const { error } = await supabase
-          .from('blog_posts')
-          .update({ ...values, updated_at: new Date().toISOString() })
-          .eq('id', editingPost.id);
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from('blog_posts')
-          .insert([values]);
-        if (error) throw error;
-      }
+      console.log('Post would be saved to database:', values);
+      throw new Error('Database not set up yet - please create the blog_posts table first');
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
@@ -91,21 +76,18 @@ const Admin = () => {
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Failed to save post. Please try again.",
+        description: error.message || "Failed to save post. Please set up the database first.",
         variant: "destructive",
       });
       console.error('Save error:', error);
     },
   });
 
-  // Delete blog post
+  // Temporary delete mutation until database is set up
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('blog_posts')
-        .delete()
-        .eq('id', id);
-      if (error) throw error;
+      console.log('Post would be deleted from database:', id);
+      throw new Error('Database not set up yet - please create the blog_posts table first');
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
@@ -118,7 +100,7 @@ const Admin = () => {
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Failed to delete post. Please try again.",
+        description: error.message || "Failed to delete post. Please set up the database first.",
         variant: "destructive",
       });
       console.error('Delete error:', error);
@@ -360,14 +342,20 @@ const Admin = () => {
                     Loading posts...
                   </TableCell>
                 </TableRow>
-              ) : posts?.length === 0 ? (
+              ) : (!posts || posts.length === 0) ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center">
-                    No posts yet. Create your first post!
+                    <div className="py-8">
+                      <h3 className="text-lg font-medium text-gray-900 mb-2">No Database Tables Found</h3>
+                      <p className="text-gray-600 mb-4">
+                        The blog_posts table needs to be created first. 
+                        <br />Please set up the database schema to start managing blog posts.
+                      </p>
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : (
-                posts?.map((post) => (
+                posts.map((post: any) => (
                   <TableRow key={post.id}>
                     <TableCell className="font-medium">{post.title}</TableCell>
                     <TableCell>{post.category}</TableCell>
