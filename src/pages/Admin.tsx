@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
@@ -6,19 +5,24 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ImageUpload } from "@/components/ImageUpload";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
+import { HtmlEditor } from "@/components/HtmlEditor";
 import { SEOAnalyzer } from "@/components/SEOAnalyzer";
 import { SEOMetaFields } from "@/components/SEOMetaFields";
 import { SEOPreview } from "@/components/SEOPreview";
 import { SlugGenerator } from "@/components/SlugGenerator";
+import { TagManager } from "@/components/TagManager";
+import { CategoryManager } from "@/components/CategoryManager";
+import { MediaManager } from "@/components/MediaManager";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink } from "lucide-react";
+import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink, Code, Hash, Folder, Image } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/hooks/useBlogPosts";
 
@@ -27,6 +31,7 @@ interface BlogPostForm {
   slug: string;
   excerpt: string;
   content: string;
+  content_type: 'markdown' | 'html';
   category: string;
   read_time: string;
   image_url: string;
@@ -53,6 +58,8 @@ const Admin = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<any>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -62,6 +69,7 @@ const Admin = () => {
       slug: "",
       excerpt: "",
       content: "",
+      content_type: "markdown",
       category: "",
       read_time: "",
       image_url: "",
@@ -114,7 +122,8 @@ const Admin = () => {
         slug: values.slug,
         excerpt: values.excerpt,
         content: values.content,
-        category: values.category,
+        content_type: values.content_type,
+        category: selectedCategory || null,
         read_time: values.read_time,
         image_url: values.image_url,
         author: values.author,
@@ -145,32 +154,54 @@ const Admin = () => {
         h3_count: currentAnalysis?.metrics?.h3Count || null,
       };
       
+      let savedPost;
       if (editingPost) {
-        // Update existing post
         const { data, error } = await supabase
           .from('blog_posts')
           .update(postData)
           .eq('id', editingPost.id)
           .select()
           .single();
-
         if (error) throw error;
-        return data;
+        savedPost = data;
       } else {
-        // Create new post
         const { data, error } = await supabase
           .from('blog_posts')
           .insert(postData)
           .select()
           .single();
-
         if (error) throw error;
-        return data;
+        savedPost = data;
       }
+
+      // Handle tags
+      if (selectedTags.length > 0) {
+        // First remove existing tags if editing
+        if (editingPost) {
+          await supabase
+            .from('post_tags')
+            .delete()
+            .eq('post_id', editingPost.id);
+        }
+
+        // Add new tags
+        const tagInserts = selectedTags.map(tagId => ({
+          post_id: savedPost.id,
+          tag_id: tagId
+        }));
+
+        await supabase
+          .from('post_tags')
+          .insert(tagInserts);
+      }
+
+      return savedPost;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
       queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
+      queryClient.invalidateQueries({ queryKey: ['tags'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
       toast({
         title: editingPost ? "Post updated!" : "Post created!",
         description: "Your SEO-optimized blog post has been saved successfully.",
@@ -178,6 +209,8 @@ const Admin = () => {
       setIsDialogOpen(false);
       setEditingPost(null);
       setCurrentAnalysis(null);
+      setSelectedTags([]);
+      setSelectedCategory("");
       form.reset();
     },
     onError: (error: any) => {
@@ -238,6 +271,7 @@ const Admin = () => {
       slug: post.slug || "",
       excerpt: post.excerpt || "",
       content: post.content || "",
+      content_type: (post as any).content_type || "markdown",
       category: post.category || "",
       read_time: post.read_time || "",
       image_url: post.image_url || "",
@@ -258,12 +292,15 @@ const Admin = () => {
       robots_meta: post.robots_meta || "index,follow",
       breadcrumbs: post.breadcrumbs || true,
     });
+    setSelectedCategory(post.category || "");
     setIsDialogOpen(true);
   };
 
   const handleNew = () => {
     setEditingPost(null);
     setCurrentAnalysis(null);
+    setSelectedTags([]);
+    setSelectedCategory("");
     form.reset();
     setIsDialogOpen(true);
   };
@@ -331,10 +368,18 @@ const Admin = () => {
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <Tabs defaultValue="content" className="space-y-6">
-                    <TabsList className="grid w-full grid-cols-4">
+                    <TabsList className="grid w-full grid-cols-6">
                       <TabsTrigger value="content" className="gap-2">
                         <FileText className="w-4 h-4" />
                         Content
+                      </TabsTrigger>
+                      <TabsTrigger value="taxonomy" className="gap-2">
+                        <Hash className="w-4 h-4" />
+                        Tags & Categories
+                      </TabsTrigger>
+                      <TabsTrigger value="media" className="gap-2">
+                        <Image className="w-4 h-4" />
+                        Media
                       </TabsTrigger>
                       <TabsTrigger value="seo" className="gap-2">
                         <Search className="w-4 h-4" />
@@ -486,15 +531,61 @@ const Admin = () => {
 
                       <FormField
                         control={form.control}
+                        name="content_type"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-base font-semibold">Content Type</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select content type" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="markdown">Markdown (Standard)</SelectItem>
+                                <SelectItem value="html">HTML (Advanced)</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
                         name="content"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-base font-semibold">Content</FormLabel>
                             <FormControl>
-                              <MarkdownEditor
-                                value={field.value}
-                                onChange={field.onChange}
-                                placeholder="# Your SEO-Optimized Blog Post
+                              {form.watch("content_type") === "html" ? (
+                                <HtmlEditor
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  placeholder="# Your SEO-Optimized Blog Post (HTML)
+
+<h1>Your Main Heading</h1>
+<p>Start with an engaging introduction that includes your focus keyword...</p>
+
+<h2>Use H2 headings to structure your content</h2>
+<p>Write comprehensive, valuable content that answers your readers' questions.</p>
+
+<h3>H3 headings for sub-topics</h3>
+<ul>
+  <li>Use bullet points for better readability</li>
+  <li>Include internal and external links</li>
+  <li>Add images with descriptive alt text</li>
+</ul>
+
+<img src='image-url' alt='Descriptive alt text for SEO' />
+
+<strong>Remember:</strong> Aim for 300+ words, use your focus keyword naturally, and write for humans first, search engines second."
+                                />
+                              ) : (
+                                <MarkdownEditor
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  placeholder="# Your SEO-Optimized Blog Post
 
 Start with an engaging introduction that includes your focus keyword...
 
@@ -511,12 +602,30 @@ Write comprehensive, valuable content that answers your readers' questions.
 ![Alt text describing your image](image-url)
 
 **Remember:** Aim for 300+ words, use your focus keyword naturally, and write for humans first, search engines second."
-                              />
+                                />
+                              )}
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
+                    </TabsContent>
+
+                    <TabsContent value="taxonomy" className="space-y-6">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <CategoryManager
+                          selectedCategory={selectedCategory}
+                          onCategoryChange={setSelectedCategory}
+                        />
+                        <TagManager
+                          selectedTags={selectedTags}
+                          onTagsChange={setSelectedTags}
+                        />
+                      </div>
+                    </TabsContent>
+
+                    <TabsContent value="media">
+                      <MediaManager showSelector />
                     </TabsContent>
 
                     <TabsContent value="seo">
