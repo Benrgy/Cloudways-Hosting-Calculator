@@ -56,7 +56,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
     queryKey: ['categories'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('categories')
+        .from('categories' as any)
         .select('*')
         .order('name');
 
@@ -75,7 +75,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
 
       if (editingCategory) {
         const { data, error } = await supabase
-          .from('categories')
+          .from('categories' as any)
           .update(payload)
           .eq('id', editingCategory.id)
           .select()
@@ -84,7 +84,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
         return data;
       } else {
         const { data, error } = await supabase
-          .from('categories')
+          .from('categories' as any)
           .insert(payload)
           .select()
           .single();
@@ -115,7 +115,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
-        .from('categories')
+        .from('categories' as any)
         .delete()
         .eq('id', id);
       if (error) throw error;

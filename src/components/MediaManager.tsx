@@ -58,7 +58,7 @@ export const MediaManager = ({ onImageSelect, showSelector }: MediaManagerProps)
     queryKey: ['media'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('media')
+        .from('media' as any)
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -93,7 +93,7 @@ export const MediaManager = ({ onImageSelect, showSelector }: MediaManagerProps)
       };
 
       const { data, error } = await supabase
-        .from('media')
+        .from('media' as any)
         .insert(mediaData)
         .select()
         .single();
@@ -124,7 +124,7 @@ export const MediaManager = ({ onImageSelect, showSelector }: MediaManagerProps)
       if (!editingMedia) return;
 
       const { data, error } = await supabase
-        .from('media')
+        .from('media' as any)
         .update(values)
         .eq('id', editingMedia.id)
         .select()
@@ -156,7 +156,7 @@ export const MediaManager = ({ onImageSelect, showSelector }: MediaManagerProps)
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
-        .from('media')
+        .from('media' as any)
         .delete()
         .eq('id', id);
       if (error) throw error;

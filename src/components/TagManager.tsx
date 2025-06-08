@@ -54,7 +54,7 @@ export const TagManager = ({ selectedTags, onTagsChange }: TagManagerProps) => {
     queryKey: ['tags'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('tags')
+        .from('tags' as any)
         .select('*')
         .order('name');
 
@@ -68,7 +68,7 @@ export const TagManager = ({ selectedTags, onTagsChange }: TagManagerProps) => {
     mutationFn: async (values: any) => {
       if (editingTag) {
         const { data, error } = await supabase
-          .from('tags')
+          .from('tags' as any)
           .update(values)
           .eq('id', editingTag.id)
           .select()
@@ -77,7 +77,7 @@ export const TagManager = ({ selectedTags, onTagsChange }: TagManagerProps) => {
         return data;
       } else {
         const { data, error } = await supabase
-          .from('tags')
+          .from('tags' as any)
           .insert(values)
           .select()
           .single();
@@ -108,7 +108,7 @@ export const TagManager = ({ selectedTags, onTagsChange }: TagManagerProps) => {
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
-        .from('tags')
+        .from('tags' as any)
         .delete()
         .eq('id', id);
       if (error) throw error;
