@@ -1,72 +1,66 @@
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { AdminNavigation } from "./AdminNavigation";
+import { Menu, X } from "lucide-react";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">H</span>
+        <div className="flex justify-between items-center h-16">
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">HM</span>
             </div>
-            <span className="ml-2 text-xl font-bold text-gray-900">
-              HostingCalc
-            </span>
+            <span className="font-bold text-xl text-gray-900">HostMigrator</span>
           </Link>
-
+          
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-600 hover:text-emerald-600 transition-colors">
-              Features
-            </a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-emerald-600 transition-colors">
-              How It Works
-            </a>
-            <Link to="/blog" className="text-gray-600 hover:text-emerald-600 transition-colors">
+            <Link to="/" className="text-gray-600 hover:text-primary transition-colors">
+              Home
+            </Link>
+            <Link to="/blog" className="text-gray-600 hover:text-primary transition-colors">
               Blog
             </Link>
-            <a href="#faq" className="text-gray-600 hover:text-emerald-600 transition-colors">
-              FAQ
-            </a>
+            <AdminNavigation />
           </nav>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-gray-600" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-600" />
-            )}
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 bg-white">
-            <nav className="flex flex-col space-y-4">
-              <a href="#features" className="text-gray-600 hover:text-emerald-600 transition-colors">
-                Features
-              </a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-emerald-600 transition-colors">
-                How It Works
-              </a>
-              <Link to="/blog" className="text-gray-600 hover:text-emerald-600 transition-colors">
+          <div className="md:hidden py-4 border-t">
+            <div className="flex flex-col space-y-4">
+              <Link 
+                to="/" 
+                className="text-gray-600 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/blog" 
+                className="text-gray-600 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Blog
               </Link>
-              <a href="#faq" className="text-gray-600 hover:text-emerald-600 transition-colors">
-                FAQ
-              </a>
-            </nav>
+              <div onClick={() => setIsMenuOpen(false)}>
+                <AdminNavigation />
+              </div>
+            </div>
           </div>
         )}
       </div>
