@@ -10,13 +10,23 @@ import { Footer } from "@/components/Footer";
 import { AdminQuickAccess } from "@/components/AdminQuickAccess";
 
 const Index = () => {
+  const handleCalculateClick = () => {
+    // Scroll to calculator section
+    const calculatorElement = document.getElementById('calculator');
+    if (calculatorElement) {
+      calculatorElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
-      <Hero />
+      <Hero onCalculateClick={handleCalculateClick} />
       <Features />
       <HowItWorks />
-      <Calculator />
+      <div id="calculator">
+        <Calculator />
+      </div>
       <FeatureComparison />
       <FAQ />
       <Footer />

@@ -1,10 +1,13 @@
 
+import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BlogCard } from "@/components/BlogCard";
 import { BlogHero } from "@/components/BlogHero";
 import { BlogCategories } from "@/components/BlogCategories";
 import { AdminQuickAccess } from "@/components/AdminQuickAccess";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const Blog = () => {
