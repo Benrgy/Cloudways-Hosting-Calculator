@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
@@ -14,9 +15,10 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { SEOAnalyzer } from "@/components/SEOAnalyzer";
 import { SEOMetaFields } from "@/components/SEOMetaFields";
 import { SEOPreview } from "@/components/SEOPreview";
+import { SlugGenerator } from "@/components/SlugGenerator";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, BarChart3, TrendingUp } from "lucide-react";
+import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/hooks/useBlogPosts";
 
@@ -261,6 +263,7 @@ const Admin = () => {
 
   const handleNew = () => {
     setEditingPost(null);
+    setCurrentAnalysis(null);
     form.reset();
     setIsDialogOpen(true);
   };
@@ -274,6 +277,15 @@ const Admin = () => {
     });
   };
 
+  const getScoreColor = (score: number | null) => {
+    if (!score) return "text-gray-400";
+    if (score >= 80) return "text-green-600";
+    if (score >= 60) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const existingSlugs = posts?.map(p => p.slug) || [];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -281,24 +293,38 @@ const Admin = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">SEO Blog Admin</h1>
-            <p className="text-gray-600 mt-2">Create SEO-optimized content with real-time analysis</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">SEO Blog Dashboard</h1>
+            <p className="text-lg text-gray-600">Professional content management with enterprise-grade SEO tools</p>
+            <div className="flex items-center gap-4 mt-4">
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <FileText className="w-4 h-4" />
+                {posts?.length || 0} posts
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <Star className="w-4 h-4" />
+                {posts?.filter(p => p.featured).length || 0} featured
+              </div>
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <BarChart3 className="w-4 h-4" />
+                Avg SEO: {posts?.length ? Math.round(posts.reduce((acc, p) => acc + (p.seo_score || 0), 0) / posts.length) : 0}
+              </div>
+            </div>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={handleNew} size="lg">
-                <Plus className="w-4 h-4 mr-2" />
-                New SEO Post
+              <Button onClick={handleNew} size="lg" className="gap-2">
+                <Plus className="w-5 h-5" />
+                Create New Post
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
-                  {editingPost ? "Edit SEO Post" : "Create New SEO Post"}
-                  <BarChart3 className="w-5 h-5" />
+                <DialogTitle className="flex items-center gap-2 text-xl">
+                  {editingPost ? "Edit SEO-Optimized Post" : "Create New SEO-Optimized Post"}
+                  <TrendingUp className="w-6 h-6 text-primary" />
                 </DialogTitle>
-                <DialogDescription>
-                  Create SEO-optimized content with real-time analysis and social media previews
+                <DialogDescription className="text-base">
+                  Professional content creation with real-time SEO analysis, social media optimization, and advanced analytics
                 </DialogDescription>
               </DialogHeader>
               
@@ -306,23 +332,39 @@ const Admin = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <Tabs defaultValue="content" className="space-y-6">
                     <TabsList className="grid w-full grid-cols-4">
-                      <TabsTrigger value="content">Content</TabsTrigger>
-                      <TabsTrigger value="seo">SEO Settings</TabsTrigger>
-                      <TabsTrigger value="analysis">SEO Analysis</TabsTrigger>
-                      <TabsTrigger value="preview">Preview</TabsTrigger>
+                      <TabsTrigger value="content" className="gap-2">
+                        <FileText className="w-4 h-4" />
+                        Content
+                      </TabsTrigger>
+                      <TabsTrigger value="seo" className="gap-2">
+                        <Search className="w-4 h-4" />
+                        SEO Settings
+                      </TabsTrigger>
+                      <TabsTrigger value="analysis" className="gap-2">
+                        <BarChart3 className="w-4 h-4" />
+                        SEO Analysis
+                      </TabsTrigger>
+                      <TabsTrigger value="preview" className="gap-2">
+                        <Eye className="w-4 h-4" />
+                        Preview
+                      </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="content" className="space-y-6">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                           <FormField
                             control={form.control}
                             name="title"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Title</FormLabel>
+                                <FormLabel className="text-base font-semibold">Title</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Post title" {...field} />
+                                  <Input 
+                                    placeholder="Write an engaging, keyword-rich title" 
+                                    className="text-lg"
+                                    {...field} 
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -334,9 +376,14 @@ const Admin = () => {
                             name="slug"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Slug (URL path)</FormLabel>
+                                <FormLabel className="text-base font-semibold">URL Slug</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="post-url-slug" {...field} />
+                                  <SlugGenerator
+                                    title={form.watch("title")}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    existingSlugs={existingSlugs}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -348,9 +395,13 @@ const Admin = () => {
                             name="excerpt"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Excerpt</FormLabel>
+                                <FormLabel className="text-base font-semibold">Excerpt</FormLabel>
                                 <FormControl>
-                                  <Textarea placeholder="Brief description..." {...field} />
+                                  <Textarea 
+                                    placeholder="Write a compelling excerpt that includes your focus keyword..." 
+                                    className="min-h-[100px]"
+                                    {...field} 
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -365,7 +416,7 @@ const Admin = () => {
                                 <FormItem>
                                   <FormLabel>Category</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="Migration" {...field} />
+                                    <Input placeholder="e.g., Technology, Marketing" {...field} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -379,7 +430,7 @@ const Admin = () => {
                                 <FormItem>
                                   <FormLabel>Read Time</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="5 min read" {...field} />
+                                    <Input placeholder="e.g., 5 min read" {...field} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -408,7 +459,8 @@ const Admin = () => {
                               {...form.register("featured")}
                               className="h-4 w-4"
                             />
-                            <label htmlFor="featured" className="text-sm font-medium">
+                            <label htmlFor="featured" className="text-sm font-medium flex items-center gap-2">
+                              <Star className="w-4 h-4" />
                               Featured Post
                             </label>
                           </div>
@@ -419,7 +471,7 @@ const Admin = () => {
                           name="image_url"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Featured Image</FormLabel>
+                              <FormLabel className="text-base font-semibold">Featured Image</FormLabel>
                               <FormControl>
                                 <ImageUpload
                                   currentImage={field.value}
@@ -437,12 +489,28 @@ const Admin = () => {
                         name="content"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Content</FormLabel>
+                            <FormLabel className="text-base font-semibold">Content</FormLabel>
                             <FormControl>
                               <MarkdownEditor
                                 value={field.value}
                                 onChange={field.onChange}
-                                placeholder="Write your SEO-optimized blog post content using Markdown..."
+                                placeholder="# Your SEO-Optimized Blog Post
+
+Start with an engaging introduction that includes your focus keyword...
+
+## Use H2 headings to structure your content
+
+Write comprehensive, valuable content that answers your readers' questions.
+
+### H3 headings for sub-topics
+
+- Use bullet points for better readability
+- Include internal and external links
+- Add images with descriptive alt text
+
+![Alt text describing your image](image-url)
+
+**Remember:** Aim for 300+ words, use your focus keyword naturally, and write for humans first, search engines second."
                               />
                             </FormControl>
                             <FormMessage />
@@ -485,25 +553,26 @@ const Admin = () => {
                     </TabsContent>
                   </Tabs>
                   
-                  <div className="flex justify-end space-x-2 pt-4 border-t">
+                  <div className="flex justify-end space-x-3 pt-6 border-t bg-gray-50 -m-6 p-6">
                     <Button 
                       type="button" 
                       variant="outline"
                       onClick={() => setIsDialogOpen(false)}
+                      className="px-8"
                     >
                       Cancel
                     </Button>
                     <Button 
                       type="submit"
                       disabled={saveMutation.isPending}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 px-8"
                     >
                       {saveMutation.isPending ? (
-                        "Saving..."
+                        "Publishing..."
                       ) : (
                         <>
                           <TrendingUp className="w-4 h-4" />
-                          {editingPost ? "Update SEO Post" : "Create SEO Post"}
+                          {editingPost ? "Update Post" : "Publish Post"}
                         </>
                       )}
                     </Button>
@@ -514,88 +583,125 @@ const Admin = () => {
           </Dialog>
         </div>
 
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-white rounded-lg shadow-sm border">
+          <div className="p-6 border-b">
+            <h2 className="text-xl font-semibold">Posts Overview</h2>
+            <p className="text-gray-600 mt-1">Manage your SEO-optimized content</p>
+          </div>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Title</TableHead>
+                <TableHead className="w-[300px]">Title</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Author</TableHead>
-                <TableHead>SEO Score</TableHead>
-                <TableHead>Readability</TableHead>
-                <TableHead>Words</TableHead>
-                <TableHead>Published</TableHead>
-                <TableHead>Featured</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead className="text-center">SEO Score</TableHead>
+                <TableHead className="text-center">Readability</TableHead>
+                <TableHead className="text-center">Words</TableHead>
+                <TableHead className="text-center">Status</TableHead>
+                <TableHead className="text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">
-                    Loading posts...
+                  <TableCell colSpan={8} className="text-center py-12">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                      Loading posts...
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : (!posts || posts.length === 0) ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">
-                    <div className="py-8">
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">No blog posts yet</h3>
-                      <p className="text-gray-600 mb-4">
-                        Create your first blog post to get started!
+                  <TableCell colSpan={8} className="text-center py-12">
+                    <div className="space-y-4">
+                      <div className="text-6xl">📝</div>
+                      <h3 className="text-lg font-medium text-gray-900">No blog posts yet</h3>
+                      <p className="text-gray-600 max-w-md mx-auto">
+                        Create your first SEO-optimized blog post to get started with professional content management!
                       </p>
+                      <Button onClick={handleNew} className="mt-4">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Create Your First Post
+                      </Button>
                     </div>
                   </TableCell>
                 </TableRow>
               ) : (
                 posts.map((post: BlogPost) => (
-                  <TableRow key={post.id}>
-                    <TableCell className="font-medium">{post.title}</TableCell>
-                    <TableCell>{post.category}</TableCell>
-                    <TableCell>{post.author}</TableCell>
+                  <TableRow key={post.id} className="hover:bg-gray-50">
                     <TableCell>
-                      <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">
-                        SEO Score: {post.seo_score}
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{post.title}</span>
+                          {post.featured && <Star className="w-4 h-4 text-yellow-500 fill-current" />}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(post.created_at).toLocaleDateString()}
+                          <ExternalLink className="w-3 h-3" />
+                          <a 
+                            href={`/blog/${post.slug}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="hover:text-primary underline"
+                          >
+                            View Live
+                          </a>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+                        {post.category || 'Uncategorized'}
                       </span>
                     </TableCell>
                     <TableCell>
-                      <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">
-                        Readability: {post.readability_score}
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-gray-400" />
+                        {post.author || 'Anonymous'}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <span className={`font-semibold ${getScoreColor(post.seo_score)}`}>
+                        {post.seo_score || '—'}
                       </span>
                     </TableCell>
-                    <TableCell>
-                      <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">
-                        Words: {post.word_count}
+                    <TableCell className="text-center">
+                      <span className={`font-semibold ${getScoreColor(post.readability_score)}`}>
+                        {post.readability_score || '—'}
                       </span>
                     </TableCell>
-                    <TableCell>
-                      <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-800">
+                    <TableCell className="text-center">
+                      <span className="text-gray-600">
+                        {post.word_count || '—'}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">
                         Published
                       </span>
                     </TableCell>
                     <TableCell>
-                      {post.featured && (
-                        <span className="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">
-                          Featured
-                        </span>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex space-x-2">
+                      <div className="flex justify-center space-x-2">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleEdit(post)}
+                          className="gap-1"
                         >
-                          <Edit className="w-4 h-4" />
+                          <Edit className="w-3 h-3" />
+                          Edit
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => deleteMutation.mutate(post.id)}
                           disabled={deleteMutation.isPending}
+                          className="gap-1 text-red-600 hover:text-red-700"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-3 h-3" />
+                          Delete
                         </Button>
                       </div>
                     </TableCell>
