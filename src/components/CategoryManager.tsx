@@ -61,7 +61,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
         .order('name');
 
       if (error) throw error;
-      return (data || []) as Category[];
+      return ((data || []) as unknown) as Category[];
     },
   });
 
