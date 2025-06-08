@@ -63,7 +63,7 @@ export const MediaManager = ({ onImageSelect, showSelector }: MediaManagerProps)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as Media[];
+      return (data || []) as Media[];
     },
   });
 

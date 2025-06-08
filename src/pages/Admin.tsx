@@ -179,7 +179,7 @@ const Admin = () => {
         // First remove existing tags if editing
         if (editingPost) {
           await supabase
-            .from('post_tags')
+            .from('post_tags' as any)
             .delete()
             .eq('post_id', editingPost.id);
         }
@@ -191,7 +191,7 @@ const Admin = () => {
         }));
 
         await supabase
-          .from('post_tags')
+          .from('post_tags' as any)
           .insert(tagInserts);
       }
 

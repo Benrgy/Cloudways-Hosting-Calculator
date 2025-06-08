@@ -59,7 +59,7 @@ export const TagManager = ({ selectedTags, onTagsChange }: TagManagerProps) => {
         .order('name');
 
       if (error) throw error;
-      return data as Tag[];
+      return (data || []) as Tag[];
     },
   });
 
