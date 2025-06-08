@@ -16,6 +16,31 @@ export interface BlogPost {
   featured: boolean;
   created_at: string;
   updated_at: string;
+  // SEO fields
+  meta_title?: string;
+  meta_description?: string;
+  focus_keyword?: string;
+  seo_keywords?: string[];
+  canonical_url?: string;
+  og_title?: string;
+  og_description?: string;
+  og_image?: string;
+  twitter_title?: string;
+  twitter_description?: string;
+  twitter_image?: string;
+  schema_type?: string;
+  robots_meta?: string;
+  breadcrumbs?: boolean;
+  seo_score?: number;
+  readability_score?: number;
+  word_count?: number;
+  internal_links?: number;
+  external_links?: number;
+  images_count?: number;
+  alt_texts_missing?: number;
+  h1_count?: number;
+  h2_count?: number;
+  h3_count?: number;
 }
 
 export const useBlogPosts = () => {
@@ -52,7 +77,6 @@ export const useBlogPost = (slug: string) => {
 
       if (error) {
         if (error.code === 'PGRST116') {
-          // No rows returned
           console.log('Blog post not found:', slug);
           return null;
         }

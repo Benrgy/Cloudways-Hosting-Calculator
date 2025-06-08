@@ -1,9 +1,11 @@
 
 import { useParams } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BlogPostContent } from "@/components/BlogPostContent";
 import { BlogPostHeader } from "@/components/BlogPostHeader";
+import { BlogPostHead } from "@/components/BlogPostHead";
 import { RelatedPosts } from "@/components/RelatedPosts";
 import { useBlogPost } from "@/hooks/useBlogPosts";
 
@@ -57,13 +59,31 @@ const BlogPost = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <BlogPostHeader post={postData} />
-      <BlogPostContent content={post.content} />
-      <RelatedPosts currentSlug={slug} />
-      <Footer />
-    </div>
+    <HelmetProvider>
+      <div className="min-h-screen bg-gray-50">
+        <BlogPostHead post={post} />
+        <Header />
+        {post.breadcrumbs && (
+          <nav className="bg-white border-b">
+            <div className="container mx-auto px-4 py-3">
+              <ol className="flex items-center space-x-2 text-sm text-gray-600">
+                <li><a href="/" className="hover:text-emerald-600">Home</a></li>
+                <li className="before:content-['/'] before:mx-2">
+                  <a href="/blog" className="hover:text-emerald-600">Blog</a>
+                </li>
+                <li className="before:content-['/'] before:mx-2 text-gray-900">
+                  {post.title}
+                </li>
+              </ol>
+            </div>
+          </nav>
+        )}
+        <BlogPostHeader post={postData} />
+        <BlogPostContent content={post.content} />
+        <RelatedPosts currentSlug={slug} />
+        <Footer />
+      </div>
+    </HelmetProvider>
   );
 };
 
