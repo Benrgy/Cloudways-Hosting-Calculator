@@ -47,7 +47,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
       meta_description: "",
       focus_keyword: "",
       color: "#059669",
-      parent_id: "",
+      parent_id: "none",
     },
   });
 
@@ -70,7 +70,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
     mutationFn: async (values: any) => {
       const payload = {
         ...values,
-        parent_id: values.parent_id || null,
+        parent_id: values.parent_id === "none" ? null : values.parent_id,
       };
 
       if (editingCategory) {
@@ -149,7 +149,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
       meta_description: category.meta_description || "",
       focus_keyword: category.focus_keyword || "",
       color: category.color,
-      parent_id: category.parent_id || "",
+      parent_id: category.parent_id || "none",
     });
     setIsDialogOpen(true);
   };
@@ -239,7 +239,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="">No Parent (Top Level)</SelectItem>
+                            <SelectItem value="none">No Parent (Top Level)</SelectItem>
                             {getParentCategories().map((category) => (
                               <SelectItem key={category.id} value={category.id}>
                                 {category.name}
@@ -358,7 +358,7 @@ export const CategoryManager = ({ selectedCategory, onCategoryChange }: Category
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">No Category</SelectItem>
+              <SelectItem value="none">No Category</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category.id} value={category.id}>
                   <div className="flex items-center gap-2">
