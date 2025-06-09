@@ -20,7 +20,7 @@ export const seedBlogData = async () => {
           published_at: article.published_at,
           author: article.author,
           image_url: article.image_url,
-          featured: article.featured
+          featured: article.featured || false
         }, { onConflict: 'slug' });
 
       if (error) {
