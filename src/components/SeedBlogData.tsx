@@ -21,7 +21,7 @@ export const SeedBlogData = () => {
         setSeedingComplete(true);
         toast({
           title: "Blog Data Added Successfully!",
-          description: "All SEO-optimized articles and categories have been added to your blog.",
+          description: "All SEO-optimized articles have been added to your blog.",
         });
       } else {
         throw new Error("Seeding failed");
@@ -47,7 +47,7 @@ export const SeedBlogData = () => {
             <div>
               <h3 className="font-semibold text-green-800">Blog Content Added Successfully!</h3>
               <p className="text-green-700">
-                6 SEO-optimized articles and 3 categories have been added to your blog.
+                6 SEO-optimized articles have been added to your blog.
               </p>
             </div>
           </div>
@@ -68,8 +68,8 @@ export const SeedBlogData = () => {
         <div className="space-y-2">
           <h3 className="font-semibold">Ready to add professional blog content?</h3>
           <p className="text-sm text-muted-foreground">
-            This will add 6 professionally written, SEO-optimized articles (2 per category) 
-            and properly configured categories with meta descriptions.
+            This will add 6 professionally written, SEO-optimized articles covering migration guides, 
+            performance optimization, and cost comparison topics.
           </p>
           
           <div className="bg-blue-50 p-4 rounded-lg">
@@ -79,7 +79,6 @@ export const SeedBlogData = () => {
               <li>• <strong>Performance Optimization:</strong> 2 speed & optimization guides</li>
               <li>• <strong>Cost Comparison:</strong> 2 detailed pricing analysis articles</li>
               <li>• <strong>All articles:</strong> 1000+ words, SEO-optimized, human-readable</li>
-              <li>• <strong>Categories:</strong> Properly configured with meta descriptions</li>
             </ul>
           </div>
           
