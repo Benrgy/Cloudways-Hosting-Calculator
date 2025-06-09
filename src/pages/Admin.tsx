@@ -25,6 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink, Code, Hash, Folder, Image } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/hooks/useBlogPosts";
+import { SeedBlogData } from "@/components/SeedBlogData";
 
 interface BlogPostForm {
   title: string;
@@ -56,6 +57,7 @@ interface BlogPostForm {
 
 const Admin = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isPostDialogOpen, setIsPostDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<any>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
