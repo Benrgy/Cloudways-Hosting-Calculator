@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
@@ -24,9 +23,8 @@ import { CategoryManager } from "@/components/CategoryManager";
 import { MediaManager } from "@/components/MediaManager";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/AuthContext";
 import { useAutoSave } from "@/hooks/useAutoSave";
-import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink, Code, Hash, Folder, Image, LogOut, Save, Clock } from "lucide-react";
+import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Star, Calendar, User, FileText, ExternalLink, Hash, Image, Save, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/hooks/useBlogPosts";
 import { SeedBlogData } from "@/components/SeedBlogData";
@@ -69,7 +67,6 @@ const Admin = () => {
   const [isAutoSaveEnabled, setIsAutoSaveEnabled] = useState(true);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const { toast } = useToast();
-  const { user, signOut } = useAuth();
   const queryClient = useQueryClient();
 
   const form = useForm<BlogPostForm>({
@@ -82,7 +79,7 @@ const Admin = () => {
       category: "",
       read_time: "",
       image_url: "",
-      author: user?.email || "",
+      author: "Admin",
       featured: false,
       meta_title: "",
       meta_description: "",
@@ -355,7 +352,7 @@ const Admin = () => {
       category: post.category || "",
       read_time: post.read_time || "",
       image_url: post.image_url || "",
-      author: post.author || user?.email || "",
+      author: post.author || "Admin",
       featured: post.featured || false,
       meta_title: post.meta_title || "",
       meta_description: post.meta_description || "",
@@ -386,7 +383,7 @@ const Admin = () => {
     setHasUnsavedChanges(false);
     setLastSaved(null);
     form.reset({
-      author: user?.email || "",
+      author: "Admin",
     });
     setIsDialogOpen(true);
   };
@@ -407,14 +404,6 @@ const Admin = () => {
     return "text-red-600";
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-    toast({
-      title: "Signed out",
-      description: "You have been successfully signed out.",
-    });
-  };
-
   const existingSlugs = posts?.map(p => p.slug) || [];
 
   return (
@@ -429,7 +418,7 @@ const Admin = () => {
             <div className="flex items-center gap-4 mt-4">
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <User className="w-4 h-4" />
-                {user?.email}
+                Admin
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <FileText className="w-4 h-4" />
@@ -839,11 +828,6 @@ Write comprehensive, valuable content that answers your readers' questions.
                 </Form>
               </DialogContent>
             </Dialog>
-            
-            <Button variant="outline" onClick={handleSignOut} className="gap-2">
-              <LogOut className="w-4 h-4" />
-              Sign Out
-            </Button>
           </div>
         </div>
 
