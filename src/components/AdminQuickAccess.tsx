@@ -2,14 +2,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Settings, Plus } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 
 export const AdminQuickAccess = () => {
   const location = useLocation();
-  const { user } = useAuth();
   
-  // Only show when already authenticated and not on admin pages
-  if (location.pathname.startsWith('/admin') || !user) {
+  // Only show when not on admin pages
+  if (location.pathname.startsWith('/admin')) {
     return null;
   }
 

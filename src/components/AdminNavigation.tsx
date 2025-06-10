@@ -1,16 +1,14 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Settings, Edit, Eye, BarChart3, LogOut } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { Eye, BarChart3 } from "lucide-react";
 
 export const AdminNavigation = () => {
   const location = useLocation();
-  const { user } = useAuth();
   const isAdminRoute = location.pathname.startsWith('/admin');
 
-  // Only show admin navigation when on admin routes and user is authenticated
-  if (!isAdminRoute || !user) {
+  // Only show admin navigation when on admin routes
+  if (!isAdminRoute) {
     return null;
   }
 
