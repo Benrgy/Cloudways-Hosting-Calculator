@@ -26,18 +26,6 @@ const Auth = () => {
     }
   }, [user, navigate]);
 
-  // Redirect visitors away from auth page since this is owner-only access
-  useEffect(() => {
-    // Only allow access to auth page if coming from /admin route or if user is already authenticated
-    const referrer = document.referrer;
-    const fromAdmin = referrer.includes('/admin') || window.location.pathname.startsWith('/admin');
-    
-    if (!fromAdmin && !user) {
-      // Redirect visitors to homepage instead of showing auth
-      navigate('/');
-    }
-  }, [navigate, user]);
-
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
