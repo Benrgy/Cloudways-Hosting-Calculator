@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ImageUpload } from "@/components/ImageUpload";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { HtmlEditor } from "@/components/HtmlEditor";
@@ -22,7 +24,9 @@ import { CategoryManager } from "@/components/CategoryManager";
 import { MediaManager } from "@/components/MediaManager";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink, Code, Hash, Folder, Image } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useAutoSave } from "@/hooks/useAutoSave";
+import { Plus, Edit, Trash2, BarChart3, TrendingUp, Eye, Search, Target, Star, Calendar, User, FileText, ExternalLink, Code, Hash, Folder, Image, LogOut, Save, Clock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import type { BlogPost } from "@/hooks/useBlogPosts";
 import { SeedBlogData } from "@/components/SeedBlogData";
@@ -57,12 +61,15 @@ interface BlogPostForm {
 
 const Admin = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isPostDialogOpen, setIsPostDialogOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [currentAnalysis, setCurrentAnalysis] = useState<any>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isAutoSaveEnabled, setIsAutoSaveEnabled] = useState(true);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const { toast } = useToast();
+  const { user, signOut } = useAuth();
   const queryClient = useQueryClient();
 
   const form = useForm<BlogPostForm>({
@@ -75,7 +82,7 @@ const Admin = () => {
       category: "",
       read_time: "",
       image_url: "",
-      author: "",
+      author: user?.email || "",
       featured: false,
       meta_title: "",
       meta_description: "",
@@ -93,6 +100,8 @@ const Admin = () => {
       breadcrumbs: true,
     },
   });
+
+  const watchedValues = form.watch();
 
   // Fetch blog posts from Supabase
   const { data: posts, isLoading } = useQuery({
@@ -113,6 +122,73 @@ const Admin = () => {
       return data as BlogPost[];
     },
   });
+
+  // Auto-save functionality
+  const handleAutoSave = async (data: BlogPostForm) => {
+    if (!editingPost) return; // Only auto-save when editing existing posts
+    
+    const postData = {
+      title: data.title,
+      slug: data.slug,
+      excerpt: data.excerpt,
+      content: data.content,
+      content_type: data.content_type,
+      category: selectedCategory || null,
+      read_time: data.read_time,
+      image_url: data.image_url,
+      author: data.author,
+      featured: data.featured,
+      meta_title: data.meta_title || null,
+      meta_description: data.meta_description || null,
+      focus_keyword: data.focus_keyword || null,
+      seo_keywords: data.seo_keywords?.length ? data.seo_keywords : null,
+      canonical_url: data.canonical_url || null,
+      og_title: data.og_title || null,
+      og_description: data.og_description || null,
+      og_image: data.og_image || null,
+      twitter_title: data.twitter_title || null,
+      twitter_description: data.twitter_description || null,
+      twitter_image: data.twitter_image || null,
+      schema_type: data.schema_type || 'Article',
+      robots_meta: data.robots_meta || 'index,follow',
+      breadcrumbs: data.breadcrumbs !== false,
+      seo_score: currentAnalysis?.overallScore || null,
+      readability_score: currentAnalysis?.readabilityScore || null,
+      word_count: currentAnalysis?.wordCount || null,
+      internal_links: currentAnalysis?.metrics?.internalLinks || null,
+      external_links: currentAnalysis?.metrics?.externalLinks || null,
+      images_count: currentAnalysis?.metrics?.images || null,
+      alt_texts_missing: currentAnalysis?.metrics?.altTextsMissing || null,
+      h1_count: currentAnalysis?.metrics?.h1Count || null,
+      h2_count: currentAnalysis?.metrics?.h2Count || null,
+      h3_count: currentAnalysis?.metrics?.h3Count || null,
+    };
+
+    const { error } = await supabase
+      .from('blog_posts')
+      .update(postData)
+      .eq('id', editingPost.id);
+
+    if (error) throw error;
+    
+    setLastSaved(new Date());
+    setHasUnsavedChanges(false);
+    queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
+  };
+
+  useAutoSave({
+    data: { ...watchedValues, selectedCategory, selectedTags },
+    onSave: handleAutoSave,
+    delay: 3000,
+    enabled: isAutoSaveEnabled && !!editingPost
+  });
+
+  // Track unsaved changes
+  useEffect(() => {
+    if (editingPost) {
+      setHasUnsavedChanges(true);
+    }
+  }, [watchedValues, selectedCategory, selectedTags]);
 
   // Save/update blog post
   const saveMutation = useMutation({
@@ -213,6 +289,8 @@ const Admin = () => {
       setCurrentAnalysis(null);
       setSelectedTags([]);
       setSelectedCategory("");
+      setHasUnsavedChanges(false);
+      setLastSaved(new Date());
       form.reset();
     },
     onError: (error: any) => {
@@ -277,7 +355,7 @@ const Admin = () => {
       category: post.category || "",
       read_time: post.read_time || "",
       image_url: post.image_url || "",
-      author: post.author || "",
+      author: post.author || user?.email || "",
       featured: post.featured || false,
       meta_title: post.meta_title || "",
       meta_description: post.meta_description || "",
@@ -295,6 +373,8 @@ const Admin = () => {
       breadcrumbs: post.breadcrumbs || true,
     });
     setSelectedCategory(post.category || "");
+    setHasUnsavedChanges(false);
+    setLastSaved(null);
     setIsDialogOpen(true);
   };
 
@@ -303,7 +383,11 @@ const Admin = () => {
     setCurrentAnalysis(null);
     setSelectedTags([]);
     setSelectedCategory("");
-    form.reset();
+    setHasUnsavedChanges(false);
+    setLastSaved(null);
+    form.reset({
+      author: user?.email || "",
+    });
     setIsDialogOpen(true);
   };
 
@@ -323,6 +407,14 @@ const Admin = () => {
     return "text-red-600";
   };
 
+  const handleSignOut = async () => {
+    await signOut();
+    toast({
+      title: "Signed out",
+      description: "You have been successfully signed out.",
+    });
+  };
+
   const existingSlugs = posts?.map(p => p.slug) || [];
 
   return (
@@ -335,6 +427,10 @@ const Admin = () => {
             <h1 className="text-4xl font-bold text-gray-900 mb-2">SEO Blog Dashboard</h1>
             <p className="text-lg text-gray-600">Professional content management with enterprise-grade SEO tools</p>
             <div className="flex items-center gap-4 mt-4">
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <User className="w-4 h-4" />
+                {user?.email}
+              </div>
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <FileText className="w-4 h-4" />
                 {posts?.length || 0} posts
@@ -349,121 +445,104 @@ const Admin = () => {
               </div>
             </div>
           </div>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button onClick={handleNew} size="lg" className="gap-2">
-                <Plus className="w-5 h-5" />
-                Create New Post
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-2 text-xl">
-                  {editingPost ? "Edit SEO-Optimized Post" : "Create New SEO-Optimized Post"}
-                  <TrendingUp className="w-6 h-6 text-primary" />
-                </DialogTitle>
-                <DialogDescription className="text-base">
-                  Professional content creation with real-time SEO analysis, social media optimization, and advanced analytics
-                </DialogDescription>
-              </DialogHeader>
-              
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <Tabs defaultValue="content" className="space-y-6">
-                    <TabsList className="grid w-full grid-cols-6">
-                      <TabsTrigger value="content" className="gap-2">
-                        <FileText className="w-4 h-4" />
-                        Content
-                      </TabsTrigger>
-                      <TabsTrigger value="taxonomy" className="gap-2">
-                        <Hash className="w-4 h-4" />
-                        Tags & Categories
-                      </TabsTrigger>
-                      <TabsTrigger value="media" className="gap-2">
-                        <Image className="w-4 h-4" />
-                        Media
-                      </TabsTrigger>
-                      <TabsTrigger value="seo" className="gap-2">
-                        <Search className="w-4 h-4" />
-                        SEO Settings
-                      </TabsTrigger>
-                      <TabsTrigger value="analysis" className="gap-2">
-                        <BarChart3 className="w-4 h-4" />
-                        SEO Analysis
-                      </TabsTrigger>
-                      <TabsTrigger value="preview" className="gap-2">
-                        <Eye className="w-4 h-4" />
-                        Preview
-                      </TabsTrigger>
-                    </TabsList>
+          
+          <div className="flex items-center gap-3">
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button onClick={handleNew} size="lg" className="gap-2">
+                  <Plus className="w-5 h-5" />
+                  Create New Post
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-7xl max-h-[95vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="flex items-center gap-2 text-xl">
+                    {editingPost ? "Edit SEO-Optimized Post" : "Create New SEO-Optimized Post"}
+                    <TrendingUp className="w-6 h-6 text-primary" />
+                  </DialogTitle>
+                  <DialogDescription className="text-base">
+                    Professional content creation with real-time SEO analysis, social media optimization, and advanced analytics
+                  </DialogDescription>
+                </DialogHeader>
+                
+                {/* Auto-save status indicator */}
+                <div className="flex items-center justify-between mb-4 p-3 bg-blue-50 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-blue-600" />
+                    <span className="text-sm text-blue-800">
+                      {isAutoSaveEnabled ? (
+                        editingPost ? "Auto-save enabled" : "Auto-save will start after first manual save"
+                      ) : "Auto-save disabled"}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {lastSaved && (
+                      <span className="text-xs text-gray-600">
+                        Last saved: {lastSaved.toLocaleTimeString()}
+                      </span>
+                    )}
+                    {hasUnsavedChanges && editingPost && (
+                      <span className="text-xs text-orange-600 font-medium">
+                        Unsaved changes
+                      </span>
+                    )}
+                    <label className="flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={isAutoSaveEnabled}
+                        onChange={(e) => setIsAutoSaveEnabled(e.target.checked)}
+                        className="h-4 w-4"
+                      />
+                      Auto-save
+                    </label>
+                  </div>
+                </div>
+                
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <Tabs defaultValue="content" className="space-y-6">
+                      <TabsList className="grid w-full grid-cols-6">
+                        <TabsTrigger value="content" className="gap-2">
+                          <FileText className="w-4 h-4" />
+                          Content
+                        </TabsTrigger>
+                        <TabsTrigger value="taxonomy" className="gap-2">
+                          <Hash className="w-4 h-4" />
+                          Tags & Categories
+                        </TabsTrigger>
+                        <TabsTrigger value="media" className="gap-2">
+                          <Image className="w-4 h-4" />
+                          Media
+                        </TabsTrigger>
+                        <TabsTrigger value="seo" className="gap-2">
+                          <Search className="w-4 h-4" />
+                          SEO Settings
+                        </TabsTrigger>
+                        <TabsTrigger value="analysis" className="gap-2">
+                          <BarChart3 className="w-4 h-4" />
+                          SEO Analysis
+                        </TabsTrigger>
+                        <TabsTrigger value="preview" className="gap-2">
+                          <Eye className="w-4 h-4" />
+                          Preview
+                        </TabsTrigger>
+                      </TabsList>
 
-                    <TabsContent value="content" className="space-y-6">
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="space-y-6">
-                          <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-base font-semibold">Title</FormLabel>
-                                <FormControl>
-                                  <Input 
-                                    placeholder="Write an engaging, keyword-rich title" 
-                                    className="text-lg"
-                                    {...field} 
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          
-                          <FormField
-                            control={form.control}
-                            name="slug"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-base font-semibold">URL Slug</FormLabel>
-                                <FormControl>
-                                  <SlugGenerator
-                                    title={form.watch("title")}
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                    existingSlugs={existingSlugs}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          <FormField
-                            control={form.control}
-                            name="excerpt"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-base font-semibold">Excerpt</FormLabel>
-                                <FormControl>
-                                  <Textarea 
-                                    placeholder="Write a compelling excerpt that includes your focus keyword..." 
-                                    className="min-h-[100px]"
-                                    {...field} 
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-
-                          <div className="grid grid-cols-2 gap-4">
+                      <TabsContent value="content" className="space-y-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          <div className="space-y-6">
                             <FormField
                               control={form.control}
-                              name="category"
+                              name="title"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Category</FormLabel>
+                                  <FormLabel className="text-base font-semibold">Title</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="e.g., Technology, Marketing" {...field} />
+                                    <Input 
+                                      placeholder="Write an engaging, keyword-rich title" 
+                                      className="text-lg"
+                                      {...field} 
+                                    />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
@@ -472,99 +551,151 @@ const Admin = () => {
                             
                             <FormField
                               control={form.control}
-                              name="read_time"
+                              name="slug"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Read Time</FormLabel>
+                                  <FormLabel className="text-base font-semibold">URL Slug</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="e.g., 5 min read" {...field} />
+                                    <SlugGenerator
+                                      title={form.watch("title")}
+                                      value={field.value}
+                                      onChange={field.onChange}
+                                      existingSlugs={existingSlugs}
+                                    />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
                               )}
                             />
+
+                            <FormField
+                              control={form.control}
+                              name="excerpt"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel className="text-base font-semibold">Excerpt</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      placeholder="Write a compelling excerpt that includes your focus keyword..." 
+                                      className="min-h-[100px]"
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <div className="grid grid-cols-2 gap-4">
+                              <FormField
+                                control={form.control}
+                                name="category"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Category</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder="e.g., Technology, Marketing" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              
+                              <FormField
+                                control={form.control}
+                                name="read_time"
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Read Time</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder="e.g., 5 min read" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+
+                            <FormField
+                              control={form.control}
+                              name="author"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Author</FormLabel>
+                                  <FormControl>
+                                    <Input placeholder="Author name" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+
+                            <div className="flex items-center space-x-2">
+                              <input
+                                type="checkbox"
+                                id="featured"
+                                {...form.register("featured")}
+                                className="h-4 w-4"
+                              />
+                              <label htmlFor="featured" className="text-sm font-medium flex items-center gap-2">
+                                <Star className="w-4 h-4" />
+                                Featured Post
+                              </label>
+                            </div>
                           </div>
 
                           <FormField
                             control={form.control}
-                            name="author"
+                            name="image_url"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Author</FormLabel>
+                                <FormLabel className="text-base font-semibold">Featured Image</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Author name" {...field} />
+                                  <ImageUpload
+                                    currentImage={field.value}
+                                    onImageUploaded={(url) => field.onChange(url)}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-
-                          <div className="flex items-center space-x-2">
-                            <input
-                              type="checkbox"
-                              id="featured"
-                              {...form.register("featured")}
-                              className="h-4 w-4"
-                            />
-                            <label htmlFor="featured" className="text-sm font-medium flex items-center gap-2">
-                              <Star className="w-4 h-4" />
-                              Featured Post
-                            </label>
-                          </div>
                         </div>
 
                         <FormField
                           control={form.control}
-                          name="image_url"
+                          name="content_type"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-base font-semibold">Featured Image</FormLabel>
-                              <FormControl>
-                                <ImageUpload
-                                  currentImage={field.value}
-                                  onImageUploaded={(url) => field.onChange(url)}
-                                />
-                              </FormControl>
+                              <FormLabel className="text-base font-semibold">Content Type</FormLabel>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select content type" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="markdown">Markdown (Standard)</SelectItem>
+                                  <SelectItem value="html">HTML (Advanced)</SelectItem>
+                                </SelectContent>
+                              </Select>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
-                      </div>
 
-                      <FormField
-                        control={form.control}
-                        name="content_type"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-base font-semibold">Content Type</FormLabel>
-                            <Select onValueChange={field.onChange} value={field.value}>
+                        <FormField
+                          control={form.control}
+                          name="content"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-base font-semibold">Content</FormLabel>
                               <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Select content type" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="markdown">Markdown (Standard)</SelectItem>
-                                <SelectItem value="html">HTML (Advanced)</SelectItem>
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="content"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel className="text-base font-semibold">Content</FormLabel>
-                            <FormControl>
-                              {form.watch("content_type") === "html" ? (
-                                <HtmlEditor
-                                  value={field.value}
-                                  onChange={field.onChange}
-                                  placeholder="# Your SEO-Optimized Blog Post (HTML)
+                                {form.watch("content_type") === "html" ? (
+                                  <HtmlEditor
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    placeholder="# Your SEO-Optimized Blog Post (HTML)
 
 <h1>Your Main Heading</h1>
 <p>Start with an engaging introduction that includes your focus keyword...</p>
@@ -582,12 +713,12 @@ const Admin = () => {
 <img src='image-url' alt='Descriptive alt text for SEO' />
 
 <strong>Remember:</strong> Aim for 300+ words, use your focus keyword naturally, and write for humans first, search engines second."
-                                />
-                              ) : (
-                                <MarkdownEditor
-                                  value={field.value}
-                                  onChange={field.onChange}
-                                  placeholder="# Your SEO-Optimized Blog Post
+                                  />
+                                ) : (
+                                  <MarkdownEditor
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    placeholder="# Your SEO-Optimized Blog Post
 
 Start with an engaging introduction that includes your focus keyword...
 
@@ -604,95 +735,124 @@ Write comprehensive, valuable content that answers your readers' questions.
 ![Alt text describing your image](image-url)
 
 **Remember:** Aim for 300+ words, use your focus keyword naturally, and write for humans first, search engines second."
-                                />
-                              )}
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
+                                  />
+                                )}
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </TabsContent>
+
+                      <TabsContent value="taxonomy" className="space-y-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          <CategoryManager
+                            selectedCategory={selectedCategory}
+                            onCategoryChange={setSelectedCategory}
+                          />
+                          <TagManager
+                            selectedTags={selectedTags}
+                            onTagsChange={setSelectedTags}
+                          />
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="media">
+                        <MediaManager showSelector />
+                      </TabsContent>
+
+                      <TabsContent value="seo">
+                        <SEOMetaFields form={form} />
+                      </TabsContent>
+
+                      <TabsContent value="analysis">
+                        <SEOAnalyzer
+                          title={form.watch("title")}
+                          content={form.watch("content")}
+                          excerpt={form.watch("excerpt")}
+                          focusKeyword={form.watch("focus_keyword")}
+                          metaTitle={form.watch("meta_title")}
+                          metaDescription={form.watch("meta_description")}
+                          onScoreUpdate={handleScoreUpdate}
+                        />
+                      </TabsContent>
+
+                      <TabsContent value="preview">
+                        <SEOPreview
+                          title={form.watch("title")}
+                          excerpt={form.watch("excerpt")}
+                          slug={form.watch("slug")}
+                          metaTitle={form.watch("meta_title")}
+                          metaDescription={form.watch("meta_description")}
+                          ogTitle={form.watch("og_title")}
+                          ogDescription={form.watch("og_description")}
+                          ogImage={form.watch("og_image")}
+                          twitterTitle={form.watch("twitter_title")}
+                          twitterDescription={form.watch("twitter_description")}
+                          twitterImage={form.watch("twitter_image")}
+                          imageUrl={form.watch("image_url")}
+                        />
+                      </TabsContent>
+                    </Tabs>
+                    
+                    <div className="flex justify-between items-center pt-6 border-t bg-gray-50 -m-6 p-6">
+                      <div className="flex items-center gap-4">
+                        <Button 
+                          type="button" 
+                          variant="outline"
+                          onClick={() => setIsDialogOpen(false)}
+                          className="px-8"
+                        >
+                          Cancel
+                        </Button>
+                        
+                        {editingPost && (
+                          <Button 
+                            type="button"
+                            variant="outline"
+                            onClick={() => handleAutoSave(form.getValues())}
+                            disabled={!hasUnsavedChanges}
+                            className="flex items-center gap-2 px-6"
+                          >
+                            <Save className="w-4 h-4" />
+                            Save Draft
+                          </Button>
                         )}
-                      />
-                    </TabsContent>
-
-                    <TabsContent value="taxonomy" className="space-y-6">
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <CategoryManager
-                          selectedCategory={selectedCategory}
-                          onCategoryChange={setSelectedCategory}
-                        />
-                        <TagManager
-                          selectedTags={selectedTags}
-                          onTagsChange={setSelectedTags}
-                        />
                       </div>
-                    </TabsContent>
-
-                    <TabsContent value="media">
-                      <MediaManager showSelector />
-                    </TabsContent>
-
-                    <TabsContent value="seo">
-                      <SEOMetaFields form={form} />
-                    </TabsContent>
-
-                    <TabsContent value="analysis">
-                      <SEOAnalyzer
-                        title={form.watch("title")}
-                        content={form.watch("content")}
-                        excerpt={form.watch("excerpt")}
-                        focusKeyword={form.watch("focus_keyword")}
-                        metaTitle={form.watch("meta_title")}
-                        metaDescription={form.watch("meta_description")}
-                        onScoreUpdate={handleScoreUpdate}
-                      />
-                    </TabsContent>
-
-                    <TabsContent value="preview">
-                      <SEOPreview
-                        title={form.watch("title")}
-                        excerpt={form.watch("excerpt")}
-                        slug={form.watch("slug")}
-                        metaTitle={form.watch("meta_title")}
-                        metaDescription={form.watch("meta_description")}
-                        ogTitle={form.watch("og_title")}
-                        ogDescription={form.watch("og_description")}
-                        ogImage={form.watch("og_image")}
-                        twitterTitle={form.watch("twitter_title")}
-                        twitterDescription={form.watch("twitter_description")}
-                        twitterImage={form.watch("twitter_image")}
-                        imageUrl={form.watch("image_url")}
-                      />
-                    </TabsContent>
-                  </Tabs>
-                  
-                  <div className="flex justify-end space-x-3 pt-6 border-t bg-gray-50 -m-6 p-6">
-                    <Button 
-                      type="button" 
-                      variant="outline"
-                      onClick={() => setIsDialogOpen(false)}
-                      className="px-8"
-                    >
-                      Cancel
-                    </Button>
-                    <Button 
-                      type="submit"
-                      disabled={saveMutation.isPending}
-                      className="flex items-center gap-2 px-8"
-                    >
-                      {saveMutation.isPending ? (
-                        "Publishing..."
-                      ) : (
-                        <>
-                          <TrendingUp className="w-4 h-4" />
-                          {editingPost ? "Update Post" : "Publish Post"}
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
+                      
+                      <Button 
+                        type="submit"
+                        disabled={saveMutation.isPending}
+                        className="flex items-center gap-2 px-8"
+                      >
+                        {saveMutation.isPending ? (
+                          "Publishing..."
+                        ) : (
+                          <>
+                            <TrendingUp className="w-4 h-4" />
+                            {editingPost ? "Update Post" : "Publish Post"}
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+            
+            <Button variant="outline" onClick={handleSignOut} className="gap-2">
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
+
+        {/* Show seeding option only if no posts exist */}
+        {(!posts || posts.length === 0) && !isLoading && (
+          <div className="mb-8">
+            <SeedBlogData />
+          </div>
+        )}
 
         <div className="bg-white rounded-lg shadow-sm border">
           <div className="p-6 border-b">
