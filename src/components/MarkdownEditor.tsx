@@ -15,6 +15,9 @@ export const MarkdownEditor = ({ value, onChange, placeholder }: MarkdownEditorP
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
 
   const formatMarkdown = (text: string) => {
+    // Handle undefined or null text
+    if (!text) return '';
+    
     // Simple markdown to HTML conversion for preview
     return text
       .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -121,7 +124,7 @@ export const MarkdownEditor = ({ value, onChange, placeholder }: MarkdownEditorP
 
         <TabsContent value="edit">
           <Textarea
-            value={value}
+            value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder || "Write your content in Markdown..."}
             className="min-h-[400px] font-mono"
