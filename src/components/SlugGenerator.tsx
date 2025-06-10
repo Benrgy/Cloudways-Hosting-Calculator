@@ -26,8 +26,9 @@ export const SlugGenerator = ({ title, value, onChange, existingSlugs = [] }: Sl
   };
 
   const validateSlug = (slug: string) => {
+    const safeExistingSlugs = existingSlugs || [];
     const isValidFormat = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
-    const isUnique = !existingSlugs.includes(slug);
+    const isUnique = !safeExistingSlugs.includes(slug);
     const isNotEmpty = slug.length > 0;
     const isReasonableLength = slug.length >= 3 && slug.length <= 100;
     
@@ -35,6 +36,7 @@ export const SlugGenerator = ({ title, value, onChange, existingSlugs = [] }: Sl
   };
 
   const generateSuggestions = (baseSlug: string) => {
+    const safeExistingSlugs = existingSlugs || [];
     const suggestions = [];
     if (baseSlug) {
       // Add date suffix
@@ -57,7 +59,7 @@ export const SlugGenerator = ({ title, value, onChange, existingSlugs = [] }: Sl
       }
     }
     
-    return suggestions.filter(s => !existingSlugs.includes(s)).slice(0, 3);
+    return suggestions.filter(s => !safeExistingSlugs.includes(s)).slice(0, 3);
   };
 
   useEffect(() => {
@@ -76,9 +78,10 @@ export const SlugGenerator = ({ title, value, onChange, existingSlugs = [] }: Sl
   };
 
   const getSlugStatus = () => {
+    const safeExistingSlugs = existingSlugs || [];
     if (!value) return { color: "text-gray-500", message: "Enter a URL slug" };
     if (!isValid) {
-      if (existingSlugs.includes(value)) {
+      if (safeExistingSlugs.includes(value)) {
         return { color: "text-red-500", message: "Slug already exists" };
       }
       return { color: "text-red-500", message: "Invalid slug format" };
@@ -93,7 +96,7 @@ export const SlugGenerator = ({ title, value, onChange, existingSlugs = [] }: Sl
       <div className="flex gap-2">
         <div className="flex-1 relative">
           <Input
-            value={value}
+            value={value || ""}
             onChange={(e) => onChange(e.target.value)}
             placeholder="your-blog-post-url"
             className={`pr-8 ${!isValid && value ? 'border-red-500' : ''}`}
@@ -119,11 +122,11 @@ export const SlugGenerator = ({ title, value, onChange, existingSlugs = [] }: Sl
       <div className="flex items-center justify-between text-xs">
         <span className={status.color}>{status.message}</span>
         <span className="text-muted-foreground">
-          {value.length}/100 characters
+          {(value || "").length}/100 characters
         </span>
       </div>
 
-      {suggestions.length > 0 && (
+      {suggestions && suggestions.length > 0 && (
         <div className="space-y-2">
           <span className="text-xs font-medium text-muted-foreground">Suggestions:</span>
           <div className="flex flex-wrap gap-1">
