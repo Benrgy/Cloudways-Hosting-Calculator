@@ -63,6 +63,8 @@ export const HtmlEditor = ({ value, onChange, placeholder }: HtmlEditorProps) =>
   ];
 
   const cleanHtml = (html: string) => {
+    // Handle undefined or null html
+    if (!html) return '';
     // Basic HTML sanitization for preview
     return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
   };
