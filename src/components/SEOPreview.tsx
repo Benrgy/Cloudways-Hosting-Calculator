@@ -32,17 +32,17 @@ export const SEOPreview = ({
   twitterImage,
   imageUrl
 }: SEOPreviewProps) => {
-  const finalMetaTitle = metaTitle || title;
-  const finalMetaDescription = metaDescription || excerpt;
-  const finalOgTitle = ogTitle || finalMetaTitle;
-  const finalOgDescription = ogDescription || finalMetaDescription;
-  const finalTwitterTitle = twitterTitle || finalMetaTitle;
-  const finalTwitterDescription = twitterDescription || finalMetaDescription;
-  const finalOgImage = ogImage || imageUrl;
-  const finalTwitterImage = twitterImage || imageUrl;
+  const finalMetaTitle = metaTitle || title || '';
+  const finalMetaDescription = metaDescription || excerpt || '';
+  const finalOgTitle = ogTitle || finalMetaTitle || '';
+  const finalOgDescription = ogDescription || finalMetaDescription || '';
+  const finalTwitterTitle = twitterTitle || finalMetaTitle || '';
+  const finalTwitterDescription = twitterDescription || finalMetaDescription || '';
+  const finalOgImage = ogImage || imageUrl || '';
+  const finalTwitterImage = twitterImage || imageUrl || '';
 
-  const siteUrl = window.location.origin;
-  const fullUrl = `${siteUrl}/blog/${slug}`;
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://yoursite.com';
+  const fullUrl = `${siteUrl}/blog/${slug || ''}`;
 
   return (
     <Card>
@@ -71,10 +71,10 @@ export const SEOPreview = ({
             </div>
           </div>
           <div className="flex gap-2 text-xs">
-            <Badge variant={finalMetaTitle.length >= 30 && finalMetaTitle.length <= 60 ? "default" : "destructive"}>
+            <Badge variant={(finalMetaTitle.length >= 30 && finalMetaTitle.length <= 60) ? "default" : "destructive"}>
               Title: {finalMetaTitle.length}/60
             </Badge>
-            <Badge variant={finalMetaDescription.length >= 120 && finalMetaDescription.length <= 160 ? "default" : "destructive"}>
+            <Badge variant={(finalMetaDescription.length >= 120 && finalMetaDescription.length <= 160) ? "default" : "destructive"}>
               Description: {finalMetaDescription.length}/160
             </Badge>
           </div>
