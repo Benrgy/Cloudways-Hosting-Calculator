@@ -16,7 +16,7 @@ export const seedBlogData = async () => {
           content: article.content,
           excerpt: article.excerpt,
           category: article.category,
-          read_time: article.read_time,
+          read_time: String(article.read_time), // Ensure it's a string
           published_at: article.published_at,
           author: article.author,
           image_url: article.image_url,
