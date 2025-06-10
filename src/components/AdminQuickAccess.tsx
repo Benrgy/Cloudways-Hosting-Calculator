@@ -8,7 +8,7 @@ export const AdminQuickAccess = () => {
   const location = useLocation();
   const { user } = useAuth();
   
-  // Only show on blog pages, not on admin pages, and only for authenticated users
+  // Only show when already authenticated and not on admin pages
   if (location.pathname.startsWith('/admin') || !user) {
     return null;
   }
