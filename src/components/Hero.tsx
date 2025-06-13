@@ -1,12 +1,14 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calculator, TrendingUp, Shield } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeroProps {
   onCalculateClick: () => void;
 }
 
 export const Hero = ({ onCalculateClick }: HeroProps) => {
+  const { t } = useLanguage();
+
   const handleLearnMoreClick = () => {
     window.open('https://www.cloudways.com/en/?id=1384181', '_blank');
   };
@@ -19,19 +21,15 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
           <div className="text-center lg:text-left">
             <div className="inline-flex items-center px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-6">
               <Calculator className="w-4 h-4 mr-2" />
-              Free Migration Calculator
+              {t('hero.badge')}
             </div>
             
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Easily Compare{" "}
-              <span className="text-emerald-500">Shared Hosting</span>{" "}
-              vs Cloudways
+              {t('hero.title')}
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 max-w-2xl">
-              Discover how much you could save and improve performance by migrating 
-              from shared hosting to Cloudways managed cloud hosting. Get personalized 
-              recommendations in seconds.
+              {t('hero.subtitle')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -40,7 +38,7 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
                 className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 text-lg"
                 onClick={onCalculateClick}
               >
-                Start Your Free Calculation
+                {t('hero.startCalculation')}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               
@@ -50,7 +48,7 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
                 className="border-emerald-200 text-emerald-700 hover:bg-emerald-50 px-8 py-4 text-lg"
                 onClick={handleLearnMoreClick}
               >
-                Learn More
+                {t('hero.learnMore')}
               </Button>
             </div>
 
@@ -58,15 +56,15 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
             <div className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-emerald-600">3x</div>
-                <div className="text-sm text-gray-600">Faster Loading</div>
+                <div className="text-sm text-gray-600">{t('hero.fasterLoading')}</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-emerald-600">99.9%</div>
-                <div className="text-sm text-gray-600">Uptime</div>
+                <div className="text-sm text-gray-600">{t('hero.uptime')}</div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-2xl font-bold text-emerald-600">50%</div>
-                <div className="text-sm text-gray-600">Average Savings</div>
+                <div className="text-sm text-gray-600">{t('hero.averageSavings')}</div>
               </div>
             </div>
           </div>

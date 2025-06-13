@@ -5,8 +5,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const FAQ = () => {
+  const { t } = useLanguage();
+
   const faqs = [
     {
       question: "How accurate are the cost savings calculations?",
@@ -47,10 +50,10 @@ export const FAQ = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
+            {t('faq.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Everything you need to know about our hosting calculator and migration process
+            {t('faq.subtitle')}
           </p>
         </div>
 

@@ -1,7 +1,10 @@
 
 import { Calculator, TrendingUp, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const HowItWorks = () => {
+  const { t } = useLanguage();
+
   const steps = [
     {
       step: 1,
@@ -28,10 +31,10 @@ export const HowItWorks = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            How It Works
+            {t('howItWorks.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Get personalized hosting recommendations in three simple steps
+            {t('howItWorks.subtitle')}
           </p>
         </div>
 

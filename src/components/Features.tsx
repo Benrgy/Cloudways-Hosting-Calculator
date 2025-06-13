@@ -1,7 +1,10 @@
 
 import { Calculator, TrendingUp, Award, Users, Shield, Zap } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Features = () => {
+  const { t } = useLanguage();
+
   const features = [
     {
       icon: Calculator,
@@ -40,11 +43,10 @@ export const Features = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Why Choose Our Calculator?
+            {t('features.title')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Make informed hosting decisions with comprehensive comparisons, 
-            accurate calculations, and personalized recommendations.
+            {t('features.subtitle')}
           </p>
         </div>
 

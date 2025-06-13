@@ -1,11 +1,13 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -32,25 +34,25 @@ export const Header = () => {
               onClick={() => scrollToSection('features')}
               className="text-gray-600 hover:text-primary transition-colors"
             >
-              Features
+              {t('header.features')}
             </button>
             <button 
               onClick={() => scrollToSection('how-it-works')}
               className="text-gray-600 hover:text-primary transition-colors"
             >
-              How It Works
+              {t('header.howItWorks')}
             </button>
             <button 
               onClick={() => scrollToSection('faq')}
               className="text-gray-600 hover:text-primary transition-colors"
             >
-              FAQ
+              {t('header.faq')}
             </button>
             <button 
               onClick={() => scrollToSection('calculator')}
               className="text-gray-600 hover:text-primary transition-colors"
             >
-              Calculator
+              {t('header.calculator')}
             </button>
             <a 
               href="https://www.cloudways.com" 
@@ -58,8 +60,9 @@ export const Header = () => {
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-primary transition-colors"
             >
-              Cloudways Hosting
+              {t('header.cloudwaysHosting')}
             </a>
+            <LanguageSelector />
           </nav>
 
           {/* Mobile Menu Button */}
@@ -79,25 +82,25 @@ export const Header = () => {
                 onClick={() => scrollToSection('features')}
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
-                Features
+                {t('header.features')}
               </button>
               <button 
                 onClick={() => scrollToSection('how-it-works')}
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
-                How It Works
+                {t('header.howItWorks')}
               </button>
               <button 
                 onClick={() => scrollToSection('faq')}
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
-                FAQ
+                {t('header.faq')}
               </button>
               <button 
                 onClick={() => scrollToSection('calculator')}
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
-                Calculator
+                {t('header.calculator')}
               </button>
               <a 
                 href="https://www.cloudways.com" 
@@ -106,8 +109,11 @@ export const Header = () => {
                 className="text-gray-600 hover:text-primary transition-colors text-left"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Cloudways Hosting
+                {t('header.cloudwaysHosting')}
               </a>
+              <div className="pt-2 border-t">
+                <LanguageSelector />
+              </div>
             </div>
           </div>
         )}
