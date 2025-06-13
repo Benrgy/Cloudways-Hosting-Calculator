@@ -3,13 +3,20 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { HowItWorks } from "@/components/HowItWorks";
-import { Calculator } from "@/components/Calculator";
+import { AdvancedCalculator } from "@/components/AdvancedCalculator";
+import { EmbeddedArticles } from "@/components/EmbeddedArticles";
 import { SEOContent } from "@/components/SEOContent";
+import { Testimonials } from "@/components/Testimonials";
+import { OptimizationGuides } from "@/components/OptimizationGuides";
 import { FeatureComparison } from "@/components/FeatureComparison";
 import { FAQ } from "@/components/FAQ";
 import { Footer } from "@/components/Footer";
+import { ConversionBoosters } from "@/components/ConversionBoosters";
+import { useState } from "react";
 
 const Index = () => {
+  const [calculatorResult, setCalculatorResult] = useState(null);
+  
   const handleCalculateClick = () => {
     // Scroll to calculator section
     const calculatorElement = document.getElementById('calculator');
@@ -29,14 +36,30 @@ const Index = () => {
         <HowItWorks />
       </div>
       <div id="calculator">
-        <Calculator />
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                Calculate Your Hosting Savings & Performance Improvements
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Get personalized recommendations and see exactly how much you can save by migrating to Cloudways
+              </p>
+            </div>
+            <AdvancedCalculator />
+          </div>
+        </section>
       </div>
+      <EmbeddedArticles />
       <SEOContent />
+      <Testimonials />
+      <OptimizationGuides />
       <FeatureComparison />
       <div id="faq">
         <FAQ />
       </div>
       <Footer />
+      <ConversionBoosters calculatorResult={calculatorResult} />
     </div>
   );
 };
