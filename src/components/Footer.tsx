@@ -1,9 +1,10 @@
+
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Footer = () => {
   const handleCloudwaysClick = () => {
-    window.open('https://www.cloudways.com/en/?id=1384181', '_blank');
+    window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=footer&utm_campaign=savings_calculator', '_blank');
   };
 
   return (
@@ -14,19 +15,19 @@ export const Footer = () => {
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">H</span>
+                <span className="text-white font-bold text-sm">CW</span>
               </div>
-              <span className="ml-2 text-xl font-bold">HostingCalc</span>
+              <span className="ml-2 text-xl font-bold">Cloudways Savings Calculator</span>
             </div>
-            <p className="text-gray-400 max-w-md">
+            <p className="text-gray-400 max-w-md mb-4">
               Compare shared hosting costs with Cloudways managed cloud hosting. 
               Make informed decisions with accurate calculations and personalized recommendations.
             </p>
             <button 
               onClick={handleCloudwaysClick}
-              className="mt-4 text-emerald-400 hover:text-emerald-300 transition-colors underline"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
-              Get Started with Cloudways
+              Get Started with Cloudways →
             </button>
           </div>
 
@@ -45,11 +46,6 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <Link to="/blog" className="hover:text-emerald-400 transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
                 <a href="#faq" className="hover:text-emerald-400 transition-colors">
                   FAQ
                 </a>
@@ -64,16 +60,8 @@ export const Footer = () => {
 
           {/* Support */}
           <div>
-            <h4 className="font-semibold mb-4">Support</h4>
+            <h4 className="font-semibold mb-4">Cloudways Resources</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>
-                <button 
-                  onClick={handleCloudwaysClick}
-                  className="hover:text-emerald-400 transition-colors text-left"
-                >
-                  Contact Support Team
-                </button>
-              </li>
               <li>
                 <button 
                   onClick={handleCloudwaysClick}
@@ -83,9 +71,20 @@ export const Footer = () => {
                 </button>
               </li>
               <li>
-                <a href="/contact" className="hover:text-emerald-400 transition-colors">
-                  Contact Us
-                </a>
+                <button 
+                  onClick={() => window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=footer_support&utm_campaign=savings_calculator', '_blank')}
+                  className="hover:text-emerald-400 transition-colors text-left"
+                >
+                  24/7 Expert Support
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=footer_migration&utm_campaign=savings_calculator', '_blank')}
+                  className="hover:text-emerald-400 transition-colors text-left"
+                >
+                  Free Migration Service
+                </button>
               </li>
             </ul>
           </div>
@@ -93,12 +92,19 @@ export const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-400 text-sm">
-              © 2024 HostingCalc. All rights reserved.
+            <div className="text-gray-400 text-sm mb-4 md:mb-0">
+              © 2024 Cloudways Savings Calculator. All rights reserved.
             </div>
             
-            <div className="flex items-center text-gray-400 text-sm mt-4 md:mt-0">
-              Made with <Heart className="w-4 h-4 mx-1 text-emerald-500" /> for better hosting decisions
+            {/* Affiliate Disclosure */}
+            <div className="text-gray-400 text-xs text-center md:text-right">
+              <p className="mb-2">
+                *Disclosure: I earn commissions if you sign up for Cloudways using my links. 
+                This helps support the development of this free calculator tool.
+              </p>
+              <div className="flex items-center justify-center md:justify-end">
+                Made with <Heart className="w-4 h-4 mx-1 text-emerald-500" /> for better hosting decisions
+              </div>
             </div>
           </div>
         </div>

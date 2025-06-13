@@ -21,6 +21,8 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [showLeadMagnet, setShowLeadMagnet] = useState(false);
 
+  const cloudwaysLink = 'https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=conversion_booster&utm_campaign=savings_calculator';
+
   // Exit intent detection
   useEffect(() => {
     let isExitIntentShown = false;
@@ -51,23 +53,30 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowLeadMagnet(true);
-    }, 60000); // Show after 60 seconds
+    }, 90000); // Show after 90 seconds
 
     return () => clearTimeout(timer);
   }, []);
 
   const shareResults = () => {
-    if (calculatorResult && navigator.share) {
+    const tweetText = calculatorResult 
+      ? `I could save $${calculatorResult.monthlySavings}/month by switching to @Cloudways! Calculate your savings: ${window.location.href}` 
+      : `Check out this Cloudways savings calculator! ${window.location.href}`;
+    
+    if (navigator.share) {
       navigator.share({
         title: 'Check out my hosting savings!',
-        text: `I could save $${calculatorResult.monthlySavings}/month by switching to Cloudways!`,
+        text: tweetText,
         url: window.location.href
       });
     } else {
-      // Fallback to copying to clipboard
-      const text = `I could save $${calculatorResult?.monthlySavings || 'X'}/month by switching to Cloudways! Calculate your savings: ${window.location.href}`;
-      navigator.clipboard.writeText(text);
+      // Fallback to Twitter
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`, '_blank');
     }
+  };
+
+  const handleCloudwaysClick = (source: string) => {
+    window.open(`${cloudwaysLink}&utm_content=${source}`, '_blank');
   };
 
   return (
@@ -77,15 +86,15 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
         <div className="fixed bottom-0 left-0 right-0 bg-emerald-600 text-white p-4 shadow-lg z-50 md:hidden">
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-semibold text-sm">Ready to migrate?</div>
-              <div className="text-xs opacity-90">Start saving today!</div>
+              <div className="font-semibold text-sm">Ready to save money?</div>
+              <div className="text-xs opacity-90">Start your free trial today!</div>
             </div>
             <Button 
               size="sm" 
               className="bg-white text-emerald-600 hover:bg-gray-100"
-              onClick={() => window.open('https://cloudways.com', '_blank')}
+              onClick={() => handleCloudwaysClick('sticky_mobile')}
             >
-              Get Started
+              Start Free Trial
             </Button>
           </div>
         </div>
@@ -120,10 +129,10 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-orange-500" />
-              Wait! Don't Leave Empty-Handed
+              Wait! Get 25% OFF Your First 3 Months
             </DialogTitle>
             <DialogDescription>
-              Before you go, grab our exclusive migration checklist and save up to 40% on your hosting costs!
+              Don't leave without claiming your exclusive Cloudways discount and migration checklist!
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
@@ -133,17 +142,17 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
                   <Gift className="w-8 h-8 text-emerald-600 flex-shrink-0 mt-1" />
                   <div>
                     <h4 className="font-semibold text-emerald-900 mb-1">
-                      FREE Migration Checklist + Exclusive Discount
+                      Exclusive Cloudways Offer + FREE Migration
                     </h4>
                     <p className="text-sm text-emerald-700 mb-2">
-                      Get our step-by-step migration guide plus a special discount code for Cloudways hosting.
+                      Get 25% off your first 3 months + free expert migration service when you start your Cloudways trial now.
                     </p>
                     <div className="flex gap-2">
                       <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 text-xs">
-                        ✓ 24-point checklist
+                        ✓ 25% OFF 3 months
                       </Badge>
                       <Badge variant="secondary" className="bg-emerald-100 text-emerald-800 text-xs">
-                        ✓ Exclusive discount
+                        ✓ Free migration
                       </Badge>
                     </div>
                   </div>
@@ -153,10 +162,10 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
 
             <div className="flex gap-3">
               <Button 
-                onClick={() => setShowLeadMagnet(true)}
+                onClick={() => handleCloudwaysClick('exit_intent')}
                 className="flex-1 bg-emerald-600 hover:bg-emerald-700"
               >
-                Get Free Guide
+                Claim 25% Discount
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button 
@@ -169,7 +178,7 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
             </div>
 
             <p className="text-xs text-gray-500 text-center">
-              No spam. Unsubscribe anytime. Used by 10,000+ website owners.
+              Limited time offer. No credit card required for trial.
             </p>
           </div>
         </DialogContent>
@@ -180,7 +189,7 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-center text-2xl">
-              🚀 Free Migration Checklist + Exclusive Bonuses
+              🚀 Free Migration Checklist + Cloudways Trial
             </DialogTitle>
             <DialogDescription className="text-center text-base">
               Join 10,000+ website owners who successfully migrated to better hosting
@@ -188,7 +197,6 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
           </DialogHeader>
           
           <div className="space-y-6">
-            {/* What You'll Get */}
             <Card className="border-blue-200 bg-blue-50">
               <CardContent className="p-4">
                 <h4 className="font-semibold text-blue-900 mb-3">What You'll Get Instantly:</h4>
@@ -199,11 +207,11 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
                   </div>
                   <div className="flex items-center gap-2 text-sm text-blue-800">
                     <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                    <span>Exclusive Cloudways Discount Code</span>
+                    <span>3-Day Free Cloudways Trial</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-blue-800">
                     <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                    <span>Emergency Rollback Plan Template</span>
+                    <span>Free Expert Migration Service</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-blue-800">
                     <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
@@ -213,7 +221,6 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
               </CardContent>
             </Card>
 
-            {/* Email Form */}
             <div className="space-y-4">
               <div>
                 <input
@@ -226,40 +233,23 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
               <Button 
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3"
                 size="lg"
+                onClick={() => handleCloudwaysClick('lead_magnet')}
               >
-                Get My Free Migration Kit
+                Get Free Trial + Migration Kit
                 <Download className="w-5 h-5 ml-2" />
               </Button>
             </div>
 
-            {/* Social Proof */}
-            <div className="text-center">
-              <div className="flex justify-center items-center gap-2 mb-2">
-                <div className="flex -space-x-2">
-                  {[1,2,3,4,5].map((i) => (
-                    <div key={i} className="w-8 h-8 bg-emerald-100 border-2 border-white rounded-full flex items-center justify-center">
-                      <span className="text-xs text-emerald-600">👤</span>
-                    </div>
-                  ))}
-                </div>
-                <span className="text-sm text-gray-600">+10,000 others</span>
-              </div>
-              <p className="text-xs text-gray-500">
-                "This checklist saved me hours of research and potential downtime!" - Sarah M.
-              </p>
-            </div>
-
-            {/* Trust Signals */}
             <div className="text-center space-y-2">
               <div className="flex justify-center gap-4">
                 <Badge variant="outline" className="text-xs">
                   ✓ No spam ever
                 </Badge>
                 <Badge variant="outline" className="text-xs">
-                  ✓ Unsubscribe anytime
+                  ✓ No credit card required
                 </Badge>
                 <Badge variant="outline" className="text-xs">
-                  ✓ GDPR compliant
+                  ✓ Cancel anytime
                 </Badge>
               </div>
             </div>
@@ -277,6 +267,7 @@ export const ConversionBoosters = ({ calculatorResult }: ConversionBoostersProps
               size="sm" 
               variant="secondary"
               className="ml-4 bg-white text-orange-600 hover:bg-gray-100"
+              onClick={() => handleCloudwaysClick('banner_offer')}
             >
               Claim Offer
             </Button>

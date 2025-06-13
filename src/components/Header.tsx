@@ -17,15 +17,19 @@ export const Header = () => {
     setIsMenuOpen(false);
   };
 
+  const handleCloudwaysClick = () => {
+    window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=header&utm_campaign=savings_calculator', '_blank');
+  };
+
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">MHC</span>
+              <span className="text-white font-bold text-sm">CW</span>
             </div>
-            <span className="font-bold text-xl text-gray-900">MigrateHostingCalculator</span>
+            <span className="font-bold text-xl text-gray-900">Cloudways Savings Calculator</span>
           </Link>
           
           {/* Desktop Navigation */}
@@ -54,14 +58,12 @@ export const Header = () => {
             >
               {t('header.calculator')}
             </button>
-            <a 
-              href="https://www.cloudways.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-primary transition-colors"
+            <button 
+              onClick={handleCloudwaysClick}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
             >
-              {t('header.cloudwaysHosting')}
-            </a>
+              Start Free Trial
+            </button>
             <LanguageSelector />
           </nav>
 
@@ -102,15 +104,12 @@ export const Header = () => {
               >
                 {t('header.calculator')}
               </button>
-              <a 
-                href="https://www.cloudways.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors text-left"
-                onClick={() => setIsMenuOpen(false)}
+              <button 
+                onClick={handleCloudwaysClick}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-left"
               >
-                {t('header.cloudwaysHosting')}
-              </a>
+                Start Free Trial
+              </button>
               <div className="pt-2 border-t">
                 <LanguageSelector />
               </div>

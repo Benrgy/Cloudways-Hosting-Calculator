@@ -13,54 +13,42 @@ export const FAQ = () => {
 
   const faqs = [
     {
-      question: "How accurate are the cost savings calculations?",
-      answer: "Our calculator uses real Cloudways pricing and industry-standard shared hosting costs to provide accurate estimates. Results may vary based on your specific hosting provider and usage patterns, but we aim for 95%+ accuracy in our calculations. The calculator factors in renewal rate increases, hidden fees, and additional costs that shared hosting providers often charge."
+      question: "How much can I really save by switching to Cloudways?",
+      answer: "Most users save 30-60% on their hosting costs when migrating from shared hosting to Cloudways. Our calculator shows exact savings based on your current setup. For example, if you're paying $50/month for shared hosting, you could potentially run the same websites on Cloudways for $22-35/month while getting better performance, security, and support."
     },
     {
-      question: "Is my data secure when using the calculator?",
-      answer: "Yes, your privacy is our priority. We only collect the information you voluntarily provide, and you can opt out of data collection at any time. All data is encrypted and stored securely, and we comply with GDPR and other privacy regulations. We never share your information with third parties without explicit consent."
+      question: "How do I migrate my website to Cloudways?",
+      answer: "Cloudways offers free migration services handled by their expert team. The process typically takes 24-48 hours with minimal downtime. They support WordPress, Drupal, Joomla, Magento, and custom PHP applications. You can also use our step-by-step migration guide included with the calculator results. The migration team handles everything including database transfers, file uploads, and DNS configuration."
     },
     {
-      question: "Do I need to sign up to use the calculator?",
-      answer: "No, you can use the basic calculator without signing up. However, creating a free account allows you to save your calculations, compare multiple scenarios, and receive personalized recommendations. We also provide additional features like migration planning and cost tracking for registered users."
+      question: "Is Cloudways better than shared hosting providers like Bluehost or SiteGround?",
+      answer: "Yes, in most cases. While shared hosting is cheaper initially, Cloudways offers superior performance, security, and scalability. You get dedicated resources, SSD storage, advanced caching, staging environments, and expert support. Shared hosting often has hidden costs, renewal rate increases, and performance limitations that Cloudways doesn't have. Our comparison tool shows the real cost difference including these factors."
     },
     {
-      question: "How does Cloudways compare to other managed hosting?",
-      answer: "Cloudways offers excellent value with transparent pricing, multiple cloud providers, and robust features. Unlike other managed hosting providers that lock you into their infrastructure, Cloudways lets you choose from DigitalOcean, Vultr, Linode, AWS, and Google Cloud. This gives you better pricing flexibility and performance options."
+      question: "Does Cloudways offer free migration and what support is included?",
+      answer: "Yes, Cloudways provides free migration services for most websites, handled by their expert team. You also get 24/7 expert support via live chat and ticketing system - unlike shared hosting where you often wait hours for basic support. Their support team consists of server and application experts who can help with complex technical issues, optimization, and troubleshooting."
     },
     {
-      question: "What if my website has special requirements?",
-      answer: "Our calculator covers common hosting scenarios including e-commerce stores, high-traffic blogs, and business websites. For websites with special requirements like high-traffic e-commerce, custom applications, PCI/HIPAA compliance, or specific performance needs, we recommend consulting with Cloudways directly for a custom solution."
-    },
-    {
-      question: "Can I migrate my existing website to Cloudways?",
-      answer: "Yes! Cloudways offers free migration services for most websites. Their expert team can help transfer your site, databases, and configurations with minimal downtime. The process typically takes 24-48 hours. They support WordPress, Drupal, Joomla, Magento, and custom PHP applications. You can also use our step-by-step migration guide."
-    },
-    {
-      question: "What support does Cloudways provide?",
-      answer: "Cloudways provides 24/7 expert support via live chat and ticketing system. Unlike shared hosting support, you'll speak with server and application experts who can help with complex technical issues, server optimization, and troubleshooting. They also provide extensive documentation and video tutorials."
+      question: "What are the main benefits of Cloudways over traditional shared hosting?",
+      answer: "Key advantages include: dedicated server resources (no sharing with other sites), faster loading speeds with SSD storage and advanced caching, staging environments for testing, Git integration, automated backups, better security with dedicated firewalls, scalable resources, transparent pricing with no hidden fees, and expert 24/7 support. You also get choice of cloud providers (DigitalOcean, AWS, Google Cloud, etc.)."
     },
     {
       question: "Are there any hidden costs with Cloudways?",
-      answer: "No, Cloudways uses transparent, pay-as-you-use pricing. The calculator shows the base server costs, and you only pay for additional services you choose to use, like backups, CloudwaysCDN, or premium support. There are no setup fees, no contracts, and no surprise renewal rate increases."
+      answer: "No, Cloudways uses transparent, pay-as-you-use pricing with no setup fees, no contracts, and no surprise renewal rate increases. Unlike shared hosting providers that often double prices after the first year, Cloudways pricing remains consistent. You only pay for additional services you choose like backups, CDN, or premium support. Our calculator factors in these potential hidden costs that shared hosting providers often charge."
     },
     {
-      question: "How long does it take to see performance improvements?",
-      answer: "Most users notice significant performance improvements within 24-48 hours of migration. Speed improvements are typically immediate due to SSD storage, optimized server configurations, and advanced caching. SEO improvements from better loading speeds usually become visible within 4-6 weeks."
-    },
-    {
-      question: "What happens if I'm not satisfied with Cloudways?",
-      answer: "Cloudways offers a 3-day free trial, so you can test their platform before committing. If you're not satisfied, you can easily migrate back to your previous hosting or try a different provider. There are no cancellation fees or long-term contracts. Our migration checklist includes a rollback plan for added peace of mind."
+      question: "How long does it take to see performance improvements after migrating?",
+      answer: "Most users notice significant performance improvements within 24-48 hours of migration. Speed improvements are typically immediate due to SSD storage, optimized server configurations, and advanced caching systems. SEO improvements from better loading speeds usually become visible within 4-6 weeks as search engines re-crawl your faster site."
     },
     {
       question: "Can I use this calculator for multiple websites?",
-      answer: "Absolutely! The calculator supports multiple website scenarios. You can input the total cost and resource requirements for all your websites, or calculate each site individually. Many users find significant savings when consolidating multiple shared hosting accounts onto a single Cloudways server."
-    },
-    {
-      question: "Is Cloudways suitable for e-commerce websites?",
-      answer: "Yes, Cloudways is excellent for e-commerce. They offer optimized hosting for Magento, WooCommerce, and other e-commerce platforms. Features include dedicated firewalls, SSL certificates, automatic backups, staging environments, and PCI compliance options. The improved loading speeds can directly increase conversion rates and sales."
+      answer: "Absolutely! The calculator supports multiple website scenarios. You can input the total cost and resource requirements for all your websites, or calculate each site individually. Many users find significant savings when consolidating multiple shared hosting accounts onto a single Cloudways server, which can handle multiple websites efficiently."
     }
   ];
+
+  const handleCloudwaysClick = () => {
+    window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=faq_cta&utm_campaign=savings_calculator', '_blank');
+  };
 
   // Add FAQ schema to page
   useEffect(() => {
@@ -92,7 +80,7 @@ export const FAQ = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
+            Frequently Asked Questions About Cloudways Savings
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Everything you need to know about migrating from shared hosting to Cloudways managed cloud hosting
@@ -123,27 +111,28 @@ export const FAQ = () => {
         <div className="text-center mt-16">
           <div className="bg-emerald-50 rounded-xl p-8 max-w-2xl mx-auto border border-emerald-200">
             <h3 className="text-xl font-semibold text-emerald-900 mb-4">
-              Still have questions?
+              Calculate Your Savings & Start Your Free Trial
             </h3>
             <p className="text-emerald-700 mb-6">
-              Our hosting migration experts are here to help you make the best decision for your website.
+              Ready to see how much you can save? Use our calculator above, then start your risk-free Cloudways trial with free expert migration.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="mailto:support@migratehosting.calculator" 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              <button 
+                onClick={handleCloudwaysClick}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-lg font-medium transition-colors text-lg"
               >
-                Contact Our Experts
-              </a>
+                Start Free Cloudways Trial →
+              </button>
               <a 
-                href="https://cloudways.com" 
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#calculator" 
                 className="border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white px-6 py-3 rounded-lg font-medium transition-colors"
               >
-                Try Cloudways Free
+                Use Calculator First
               </a>
             </div>
+            <p className="text-xs text-emerald-600 mt-4">
+              No credit card required • Free migration included • 24/7 expert support
+            </p>
           </div>
         </div>
       </div>
