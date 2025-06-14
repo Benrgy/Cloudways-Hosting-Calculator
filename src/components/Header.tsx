@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -74,13 +75,17 @@ export const Header = () => {
             </button>
             <span aria-label="Language Selector" tabIndex={0}><LanguageSelector /></span>
           </nav>
+          {/* Fix: Ensure the mobile menu button has a visible label for accessibility */}
           <button
             className="md:hidden"
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
             id="mobile-menu-toggle"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            title={isMenuOpen ? "Close Main Menu" : "Open Main Menu"}
           >
-            {isMenuOpen ? <X className="w-6 h-6" aria-label="Close icon" /> : <Menu className="w-6 h-6" aria-label="Open icon" />}
+            {/* For accessibility, we add a visually hidden text node */}
+            <span className="sr-only">{isMenuOpen ? "Close main menu" : "Open main menu"}</span>
+            {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
           </button>
         </div>
         {isMenuOpen && (
