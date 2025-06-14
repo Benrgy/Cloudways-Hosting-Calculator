@@ -1,11 +1,11 @@
 
+import React, { useState, lazy, Suspense } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Footer } from "@/components/Footer";
 import { ConversionBoosters } from "@/components/ConversionBoosters";
-import { useState, lazy, Suspense } from "react";
 
 // Minimal error boundary for Suspense wrappers
 function ErrorBoundary({ children }: { children: React.ReactNode }) {
@@ -18,12 +18,28 @@ function ErrorBoundary({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Props type must include children!
+interface ErrorBoundaryImplProps {
+  onError: (err: Error) => void;
+  children?: React.ReactNode;
+}
+
 // Helper component (catches error with componentDidCatch)
-class ErrorBoundaryImpl extends React.Component<{ onError: (err: Error) => void }, { hasError: boolean }> {
-  constructor(props: any) { super(props); this.state = { hasError: false }; }
-  static getDerivedStateFromError() { return { hasError: true }; }
-  componentDidCatch(error: Error) { this.props.onError(error); }
-  render() { if (this.state.hasError) return null; return this.props.children; }
+class ErrorBoundaryImpl extends React.Component<ErrorBoundaryImplProps, { hasError: boolean }> {
+  constructor(props: ErrorBoundaryImplProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error: Error) {
+    this.props.onError(error);
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
 }
 
 // --- LAZY IMPORTS (all are named exports, validated) ---
