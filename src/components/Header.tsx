@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -25,7 +24,7 @@ export const Header = () => {
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <Link id="header-home" aria-label="Homepage – Cloudways Savings Calculator" to="/" className="flex items-center space-x-2">
+          <Link id="header-home" aria-label="Cloudways Savings Calculator Homepage" to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">CW</span>
             </div>
@@ -34,7 +33,6 @@ export const Header = () => {
           <nav className="hidden md:flex items-center space-x-8" aria-label="Main Navigation">
             <button 
               onClick={() => scrollToSection('features')}
-              aria-label={t('header.features')}
               id="desktop-nav-features"
               className="text-gray-600 hover:text-primary transition-colors"
             >
@@ -42,7 +40,6 @@ export const Header = () => {
             </button>
             <button 
               onClick={() => scrollToSection('how-it-works')}
-              aria-label={t('header.howItWorks')}
               id="desktop-nav-howitworks"
               className="text-gray-600 hover:text-primary transition-colors"
             >
@@ -50,7 +47,6 @@ export const Header = () => {
             </button>
             <button 
               onClick={() => scrollToSection('faq')}
-              aria-label={t('header.faq')}
               id="desktop-nav-faq"
               className="text-gray-600 hover:text-primary transition-colors"
             >
@@ -58,7 +54,6 @@ export const Header = () => {
             </button>
             <button 
               onClick={() => scrollToSection('calculator')}
-              aria-label={t('header.calculator')}
               id="desktop-nav-calculator"
               className="text-gray-600 hover:text-primary transition-colors"
             >
@@ -66,10 +61,10 @@ export const Header = () => {
             </button>
             <button 
               onClick={handleCloudwaysClick}
-              aria-label="Start Free Cloudways Trial"
               id="desktop-nav-cloudways"
               rel="sponsored noopener noreferrer"
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              aria-label="Start Free Trial"
             >
               Start Free Trial
             </button>
@@ -78,12 +73,11 @@ export const Header = () => {
           {/* Fix: Ensure the mobile menu button has a visible label for accessibility */}
           <button
             className="md:hidden"
-            aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
             id="mobile-menu-toggle"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             title={isMenuOpen ? "Close Main Menu" : "Open Main Menu"}
+            aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
           >
-            {/* For accessibility, we add a visually hidden text node */}
             <span className="sr-only">{isMenuOpen ? "Close main menu" : "Open main menu"}</span>
             {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
           </button>
@@ -93,7 +87,6 @@ export const Header = () => {
             <div className="flex flex-col space-y-4">
               <button
                 onClick={() => scrollToSection('features')}
-                aria-label={t('header.features')}
                 id="mobile-nav-features"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
@@ -101,7 +94,6 @@ export const Header = () => {
               </button>
               <button
                 onClick={() => scrollToSection('how-it-works')}
-                aria-label={t('header.howItWorks')}
                 id="mobile-nav-howitworks"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
@@ -109,7 +101,6 @@ export const Header = () => {
               </button>
               <button
                 onClick={() => scrollToSection('faq')}
-                aria-label={t('header.faq')}
                 id="mobile-nav-faq"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
@@ -117,7 +108,6 @@ export const Header = () => {
               </button>
               <button
                 onClick={() => scrollToSection('calculator')}
-                aria-label={t('header.calculator')}
                 id="mobile-nav-calculator"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
@@ -125,10 +115,10 @@ export const Header = () => {
               </button>
               <button
                 onClick={handleCloudwaysClick}
-                aria-label="Start Free Cloudways Trial"
                 id="mobile-nav-cloudways"
                 rel="sponsored noopener noreferrer"
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-left"
+                aria-label="Start Free Trial"
               >
                 Start Free Trial
               </button>

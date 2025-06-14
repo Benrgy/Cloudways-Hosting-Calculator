@@ -24,9 +24,9 @@ export const Footer = () => {
             </p>
             <button
               onClick={handleCloudwaysClick}
-              aria-label="Get Started with Cloudways"
               rel="sponsored noopener noreferrer"
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              aria-label="Get Started with Cloudways"
             >
               Get Started with Cloudways →
             </button>
@@ -45,22 +45,22 @@ export const Footer = () => {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="#features" className="hover:text-emerald-400 transition-colors" aria-label="Features section">
+                <a href="#features-section" className="hover:text-emerald-400 transition-colors" aria-label="Features">
                   Features
                 </a>
               </li>
               <li>
-                <a href="#how-it-works" className="hover:text-emerald-400 transition-colors" aria-label="How It Works section">
+                <a href="#how-it-works-section" className="hover:text-emerald-400 transition-colors" aria-label="How It Works">
                   How It Works
                 </a>
               </li>
               <li>
-                <a href="#faq" className="hover:text-emerald-400 transition-colors" aria-label="FAQ section">
+                <a href="#faq-section" className="hover:text-emerald-400 transition-colors" aria-label="FAQ">
                   FAQ
                 </a>
               </li>
               <li>
-                <a href="#calculator" className="hover:text-emerald-400 transition-colors" aria-label="Calculator section">
+                <a href="#calculator-section" className="hover:text-emerald-400 transition-colors" aria-label="Calculator">
                   Calculator
                 </a>
               </li>
@@ -76,7 +76,7 @@ export const Footer = () => {
                   href="https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=footer&utm_campaign=savings_calculator"
                   target="_blank"
                   rel="sponsored noopener noreferrer"
-                  aria-label="Cloudways Hosting homepage"
+                  aria-label="Cloudways Hosting"
                   className="hover:text-emerald-400 transition-colors text-left"
                 >
                   Cloudways Hosting
@@ -87,7 +87,7 @@ export const Footer = () => {
                   href="https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=footer_support&utm_campaign=savings_calculator"
                   target="_blank"
                   rel="sponsored noopener noreferrer"
-                  aria-label="Cloudways 24/7 support"
+                  aria-label="24/7 Expert Support"
                   className="hover:text-emerald-400 transition-colors text-left"
                 >
                   24/7 Expert Support
@@ -98,7 +98,7 @@ export const Footer = () => {
                   href="https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=footer_migration&utm_campaign=savings_calculator"
                   target="_blank"
                   rel="sponsored noopener noreferrer"
-                  aria-label="Cloudways Free Migration Service"
+                  aria-label="Free Migration Service"
                   className="hover:text-emerald-400 transition-colors text-left"
                 >
                   Free Migration Service
