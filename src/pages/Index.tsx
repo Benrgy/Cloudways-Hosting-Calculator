@@ -1,4 +1,3 @@
-
 import React, { useState, lazy, Suspense } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -99,9 +98,6 @@ const Index = () => {
   return (
     <div className="min-h-screen" id="main-content">
       <Header />
-      <h1 className="sr-only">
-        Cloudways Savings Calculator – Hosting Cost & Performance Tool
-      </h1>
       <Hero onCalculateClick={handleCalculateClick} />
       <nav aria-label="Page section links" className="sr-only">
         <a href="#features-section">Skip to Features</a>
