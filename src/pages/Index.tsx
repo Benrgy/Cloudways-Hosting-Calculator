@@ -1,3 +1,4 @@
+
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
@@ -6,27 +7,67 @@ import { Footer } from "@/components/Footer";
 import { ConversionBoosters } from "@/components/ConversionBoosters";
 import { useState, lazy, Suspense } from "react";
 
-// Dynamically import large non-critical components for code splitting
+// Minimal error boundary for Suspense wrappers
+function ErrorBoundary({ children }: { children: React.ReactNode }) {
+  const [error, setError] = useState<Error | null>(null);
+  if (error) return <div className="text-red-700 bg-red-100 p-4 text-center">Error loading section: {error.message}</div>;
+  return (
+    <ErrorBoundaryImpl onError={setError}>
+      {children}
+    </ErrorBoundaryImpl>
+  );
+}
+
+// Helper component (catches error with componentDidCatch)
+class ErrorBoundaryImpl extends React.Component<{ onError: (err: Error) => void }, { hasError: boolean }> {
+  constructor(props: any) { super(props); this.state = { hasError: false }; }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error: Error) { this.props.onError(error); }
+  render() { if (this.state.hasError) return null; return this.props.children; }
+}
+
+// --- LAZY IMPORTS (all are named exports, validated) ---
 const AdvancedCalculator = lazy(() =>
-  import("@/components/AdvancedCalculator").then((m) => ({ default: m.AdvancedCalculator }))
+  import("@/components/AdvancedCalculator").then((m) => {
+    console.log("AdvancedCalculator loaded");
+    return { default: m.AdvancedCalculator };
+  })
 );
 const EmbeddedArticles = lazy(() =>
-  import("@/components/EmbeddedArticles").then((m) => ({ default: m.EmbeddedArticles }))
+  import("@/components/EmbeddedArticles").then((m) => {
+    console.log("EmbeddedArticles loaded");
+    return { default: m.EmbeddedArticles };
+  })
 );
 const SEOContent = lazy(() =>
-  import("@/components/SEOContent").then((m) => ({ default: m.SEOContent }))
+  import("@/components/SEOContent").then((m) => {
+    console.log("SEOContent loaded");
+    return { default: m.SEOContent };
+  })
 );
 const Testimonials = lazy(() =>
-  import("@/components/Testimonials").then((m) => ({ default: m.Testimonials }))
+  import("@/components/Testimonials").then((m) => {
+    console.log("Testimonials loaded");
+    return { default: m.Testimonials };
+  })
 );
 const OptimizationGuides = lazy(() =>
-  import("@/components/OptimizationGuides").then((m) => ({ default: m.OptimizationGuides }))
+  import("@/components/OptimizationGuides").then((m) => {
+    console.log("OptimizationGuides loaded");
+    return { default: m.OptimizationGuides };
+  })
 );
 const FeatureComparison = lazy(() =>
-  import("@/components/FeatureComparison").then((m) => ({ default: m.FeatureComparison }))
+  import("@/components/FeatureComparison").then((m) => {
+    console.log("FeatureComparison loaded");
+    return { default: m.FeatureComparison };
+  })
 );
 const FAQ = lazy(() =>
-  import("@/components/FAQ").then((m) => ({ default: m.FAQ }))
+  import("@/components/FAQ").then((m) => {
+    console.log("FAQ loaded");
+    return { default: m.FAQ };
+  })
 );
 
 const Index = () => {
@@ -76,47 +117,61 @@ const Index = () => {
                 <a href="#embedded-articles-section" className="underline text-emerald-700 hover:text-emerald-900" aria-label="Read Cloudways migration articles">Read migration & savings tips</a>
               </p>
             </div>
-            <Suspense fallback={<div className="w-full text-center py-16">Loading calculator…</div>}>
-              <AdvancedCalculator />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<div className="w-full text-center py-16">Loading calculator…</div>}>
+                <AdvancedCalculator />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </section>
       </div>
       <div id="embedded-articles-section" aria-label="SEO Content & Articles">
         <h2 className="sr-only">Cloudways Articles and SEO Content</h2>
-        <Suspense fallback={<div className="w-full text-center py-8">Loading articles…</div>}>
-          <EmbeddedArticles />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="w-full text-center py-8">Loading articles…</div>}>
+            <EmbeddedArticles />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div>
         <h2 className="sr-only">In-depth SEO Content</h2>
-        <Suspense fallback={<div className="w-full text-center py-8">Loading SEO content…</div>}>
-          <SEOContent />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="w-full text-center py-8">Loading SEO content…</div>}>
+            <SEOContent />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div>
         <h2 className="sr-only">Customer Testimonials</h2>
-        <Suspense fallback={<div className="w-full text-center py-8">Loading testimonials…</div>}>
-          <Testimonials />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="w-full text-center py-8">Loading testimonials…</div>}>
+            <Testimonials />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div>
         <h2 className="sr-only">Optimization Guides</h2>
-        <Suspense fallback={<div className="w-full text-center py-8">Loading guides…</div>}>
-          <OptimizationGuides />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="w-full text-center py-8">Loading guides…</div>}>
+            <OptimizationGuides />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div>
         <h2 className="sr-only">Feature Comparison</h2>
-        <Suspense fallback={<div className="w-full text-center py-8">Loading feature comparison…</div>}>
-          <FeatureComparison />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="w-full text-center py-8">Loading feature comparison…</div>}>
+            <FeatureComparison />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div id="faq-section" aria-label="FAQ section">
         <h2 className="sr-only">Frequently Asked Questions</h2>
-        <Suspense fallback={<div className="w-full text-center py-8">Loading FAQ…</div>}>
-          <FAQ />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="w-full text-center py-8">Loading FAQ…</div>}>
+            <FAQ />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <Footer />
       <ConversionBoosters calculatorResult={calculatorResult} />
