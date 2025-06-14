@@ -1,3 +1,4 @@
+
 import React, { useState, lazy, Suspense } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -91,7 +92,9 @@ const Index = () => {
   const handleCalculateClick = () => {
     const calculatorElement = document.getElementById('calculator-section');
     if (calculatorElement) {
-      calculatorElement.scrollIntoView({ behavior: 'smooth' });
+      window.requestAnimationFrame(() => {
+        calculatorElement.scrollIntoView({ behavior: 'smooth' });
+      });
     }
   };
 
