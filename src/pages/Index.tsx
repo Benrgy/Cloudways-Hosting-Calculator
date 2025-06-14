@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Features } from "@/components/Features";
@@ -8,13 +7,27 @@ import { ConversionBoosters } from "@/components/ConversionBoosters";
 import { useState, lazy, Suspense } from "react";
 
 // Dynamically import large non-critical components for code splitting
-const AdvancedCalculator = lazy(() => import("@/components/AdvancedCalculator"));
-const EmbeddedArticles = lazy(() => import("@/components/EmbeddedArticles"));
-const SEOContent = lazy(() => import("@/components/SEOContent"));
-const Testimonials = lazy(() => import("@/components/Testimonials"));
-const OptimizationGuides = lazy(() => import("@/components/OptimizationGuides"));
-const FeatureComparison = lazy(() => import("@/components/FeatureComparison"));
-const FAQ = lazy(() => import("@/components/FAQ"));
+const AdvancedCalculator = lazy(() =>
+  import("@/components/AdvancedCalculator").then((m) => ({ default: m.AdvancedCalculator }))
+);
+const EmbeddedArticles = lazy(() =>
+  import("@/components/EmbeddedArticles").then((m) => ({ default: m.EmbeddedArticles }))
+);
+const SEOContent = lazy(() =>
+  import("@/components/SEOContent").then((m) => ({ default: m.SEOContent }))
+);
+const Testimonials = lazy(() =>
+  import("@/components/Testimonials").then((m) => ({ default: m.Testimonials }))
+);
+const OptimizationGuides = lazy(() =>
+  import("@/components/OptimizationGuides").then((m) => ({ default: m.OptimizationGuides }))
+);
+const FeatureComparison = lazy(() =>
+  import("@/components/FeatureComparison").then((m) => ({ default: m.FeatureComparison }))
+);
+const FAQ = lazy(() =>
+  import("@/components/FAQ").then((m) => ({ default: m.FAQ }))
+);
 
 const Index = () => {
   const [calculatorResult, setCalculatorResult] = useState(null);
