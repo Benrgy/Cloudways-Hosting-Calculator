@@ -21,7 +21,7 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
             Cloudways Savings Calculator
           </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-700 mb-8">
+          <h2 className="text-2xl md:text-3xl text-gray-800 mb-8">
             Instantly Compare Shared Hosting vs. Cloud Hosting Costs
           </h2>
           <p className="text-xl text-gray-800 mb-12 max-w-3xl mx-auto">
