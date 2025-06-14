@@ -26,6 +26,10 @@ const Index = () => {
   return (
     <div className="min-h-screen" id="main-content">
       <Header />
+      {/* Main page heading should be h1 */}
+      <h1 className="sr-only">
+        Cloudways Savings Calculator – Hosting Cost & Performance Tool
+      </h1>
       <Hero onCalculateClick={handleCalculateClick} />
       <nav aria-label="Page section links" className="sr-only">
         {/* Hidden navigation for accessibility - provides internal links */}
@@ -35,15 +39,19 @@ const Index = () => {
         <a href="#faq-section">Skip to FAQ</a>
       </nav>
       <div id="features-section" aria-label="Feature section">
+        {/* Each major section uses h2 */}
+        <h2 className="sr-only">Features</h2>
         <Features />
       </div>
       <div id="how-it-works-section" aria-label="How It Works section">
+        <h2 className="sr-only">How It Works</h2>
         <HowItWorks />
       </div>
       <div id="calculator-section" aria-label="Calculator section">
         <section className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
+              {/* Promotion heading here is demoted to h2, since h1 is at page top */}
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
                 Calculate Your Hosting Savings & Performance Improvements
               </h2>
@@ -61,13 +69,28 @@ const Index = () => {
         </section>
       </div>
       <div id="embedded-articles-section" aria-label="SEO Content & Articles">
+        <h2 className="sr-only">Cloudways Articles and SEO Content</h2>
         <EmbeddedArticles />
       </div>
-      <SEOContent />
-      <Testimonials />
-      <OptimizationGuides />
-      <FeatureComparison />
+      {/* Additional SEO/Article section headings for order */}
+      <div>
+        <h2 className="sr-only">In-depth SEO Content</h2>
+        <SEOContent />
+      </div>
+      <div>
+        <h2 className="sr-only">Customer Testimonials</h2>
+        <Testimonials />
+      </div>
+      <div>
+        <h2 className="sr-only">Optimization Guides</h2>
+        <OptimizationGuides />
+      </div>
+      <div>
+        <h2 className="sr-only">Feature Comparison</h2>
+        <FeatureComparison />
+      </div>
       <div id="faq-section" aria-label="FAQ section">
+        <h2 className="sr-only">Frequently Asked Questions</h2>
         <FAQ />
       </div>
       <Footer />
