@@ -9,8 +9,10 @@ export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
   const basePath = isDev ? '/' : '/cloudways-savings-calculator/';
   
-  console.log('Vite config - Mode:', mode);
-  console.log('Vite config - Base path:', basePath);
+  console.log('=== VITE CONFIG ===');
+  console.log('Mode:', mode);
+  console.log('Base path:', basePath);
+  console.log('isDev:', isDev);
   
   return {
     base: basePath,
@@ -21,13 +23,13 @@ export default defineConfig(({ mode }) => {
     build: {
       assetsDir: 'assets',
       outDir: 'dist',
-      sourcemap: true, // Enable sourcemaps for debugging
+      sourcemap: true,
       rollupOptions: {
         output: {
           manualChunks: undefined,
-          assetFileNames: 'assets/[name]-[hash][extname]',
-          chunkFileNames: 'assets/[name]-[hash].js',
-          entryFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name].[hash][extname]',
+          chunkFileNames: 'assets/[name].[hash].js',
+          entryFileNames: 'assets/[name].[hash].js',
         },
       },
     },

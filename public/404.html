@@ -3,20 +3,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Cloudways Calculator - Redirecting...</title>
+    <title>Cloudways Calculator</title>
     <script type="text/javascript">
-      console.log("404.html redirect script starting");
+      console.log("=== 404.html REDIRECT STARTING ===");
       console.log("Current location:", window.location.href);
       
-      // Single Page Apps for GitHub Pages
-      // This script takes the current url and converts the path and query
-      // string into just a query string, and then redirects the browser
-      // to the new url with only a query string and hash fragment
-      
-      // Set to 1 for GitHub Pages project sites
+      // Simplified redirect for GitHub Pages SPA
       var pathSegmentsToKeep = 1;
-
       var l = window.location;
+      
+      // Build the redirect URL
       var redirect = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
         l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
         l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
@@ -28,9 +24,9 @@
     </script>
   </head>
   <body>
-    <div style="text-align: center; padding: 50px;">
-      <h2>Redirecting...</h2>
-      <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
+    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+      <h2>Redirecting to Cloudways Calculator...</h2>
+      <p>If you are not redirected automatically, <a href="/cloudways-savings-calculator/">click here</a>.</p>
     </div>
   </body>
 </html>
