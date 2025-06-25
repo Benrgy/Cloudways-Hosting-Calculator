@@ -8,7 +8,7 @@
     <title>Cloudways Savings Calculator & Hosting Savings Tool</title>
     <!-- Meta description shortened to 155 chars -->
     <meta name="description" content="See your real hosting savings and performance boost by switching to Cloudways. Use our free calculator to get your personalized savings now." />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" type="image/png" />
+    <link rel="icon" href="./favicon.ico" sizes="32x32" type="image/png" />
     <link rel="canonical" href="https://yourusername.github.io/cloudways-savings-calculator/" />
     <!-- Social Media tags already present, only title/desc adjusted -->
     <meta property="og:type" content="website" />
@@ -29,6 +29,11 @@
     <meta name="distribution" content="global" />
     <meta name="rating" content="general" />
     <meta name="revisit-after" content="1 days" />
+    <script>
+      console.log("HTML loaded, checking environment");
+      console.log("Location:", window.location.href);
+      console.log("Base URL:", document.baseURI);
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -59,32 +64,36 @@
     </script>
     <!-- Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
+      console.log("SPA redirect script loading");
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
       (function(l) {
+        console.log("Checking for SPA redirect, search:", l.search);
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
           }).join('?');
+          console.log("Redirecting to:", l.pathname.slice(0, -1) + decoded + l.hash);
           window.history.replaceState(null, null,
               l.pathname.slice(0, -1) + decoded + l.hash
           );
         }
       }(window.location))
     </script>
-    <!-- FAQ Structured Data already present and valid -->
-    <!-- HowTo schema present as per previous code -->
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
+    <script>
+      console.log("Body script executed");
+      // Fallback error handler
+      window.addEventListener('error', function(e) {
+        console.error('Global error:', e.error, e.filename, e.lineno);
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('Unhandled promise rejection:', e.reason);
+      });
+    </script>
   </body>
 </html>

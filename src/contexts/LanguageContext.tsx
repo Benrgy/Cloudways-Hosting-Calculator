@@ -1,7 +1,7 @@
 
-import React, { createContext, useContext, ReactNode } from 'react';
-import { useLanguageDetection, SupportedLanguage } from '@/hooks/useLanguageDetection';
-import { translations } from '@/data/translations';
+import React, { createContext, useContext, ReactNode, useState } from 'react';
+
+export type SupportedLanguage = 'en' | 'nl' | 'de' | 'fr' | 'es';
 
 interface LanguageContextType {
   currentLanguage: SupportedLanguage;
@@ -12,35 +12,38 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  console.log("LanguageProvider initializing");
-  const { currentLanguage, changeLanguage } = useLanguageDetection();
-  console.log("Current language:", currentLanguage);
+  console.log("=== LANGUAGE PROVIDER INITIALIZING ===");
+  
+  // Simplified language detection - just use English for now
+  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('en');
+  
+  console.log("✅ Language Provider initialized with:", currentLanguage);
 
-  const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[currentLanguage];
-    
-    for (const k of keys) {
-      value = value?.[k];
-    }
-    
-    // Fallback to English if translation doesn't exist
-    if (!value && currentLanguage !== 'en') {
-      let fallbackValue: any = translations.en;
-      for (const k of keys) {
-        fallbackValue = fallbackValue?.[k];
-      }
-      return fallbackValue || key;
-    }
-    
-    return value || key;
+  const changeLanguage = (language: SupportedLanguage) => {
+    console.log("Changing language to:", language);
+    setCurrentLanguage(language);
   };
 
-  return (
-    <LanguageContext.Provider value={{ currentLanguage, changeLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  // Simplified translation function - just return the key for now
+  const t = (key: string): string => {
+    console.log("Translation requested for:", key);
+    return key;
+  };
+
+  try {
+    return (
+      <LanguageContext.Provider value={{ currentLanguage, changeLanguage, t }}>
+        {children}
+      </LanguageContext.Provider>
+    );
+  } catch (error) {
+    console.error("❌ Error in LanguageProvider:", error);
+    return (
+      <div style={{ padding: '20px', color: 'red' }}>
+        Language Provider Error: {error.message}
+      </div>
+    );
+  }
 };
 
 export const useLanguage = () => {
