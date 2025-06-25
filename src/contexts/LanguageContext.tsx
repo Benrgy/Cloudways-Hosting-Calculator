@@ -12,7 +12,9 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
+  console.log("LanguageProvider initializing");
   const { currentLanguage, changeLanguage } = useLanguageDetection();
+  console.log("Current language:", currentLanguage);
 
   const t = (key: string): string => {
     const keys = key.split('.');
