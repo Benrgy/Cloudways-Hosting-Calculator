@@ -16,7 +16,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter basename={import.meta.env.PROD ? '/cloudways-savings-calculator' : ''}>
+        <BrowserRouter basename="/cloudways-savings-calculator">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="*" element={<NotFound />} />
