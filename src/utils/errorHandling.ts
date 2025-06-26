@@ -1,5 +1,6 @@
 
 import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 
 export class CalculatorError extends Error {
   constructor(message: string, public code: string, public recoverable: boolean = true) {
@@ -16,20 +17,22 @@ export const handleCalculatorError = (error: any, retryFn?: () => void) => {
       title: "Calculation Error",
       description: error.message,
       variant: "destructive",
-      action: error.recoverable && retryFn ? {
-        altText: "Retry",
-        onClick: retryFn,
-      } : undefined,
+      action: error.recoverable && retryFn ? (
+        <Button variant="outline" size="sm" onClick={retryFn}>
+          Retry
+        </Button>
+      ) : undefined,
     });
   } else {
     toast({
       title: "Unexpected Error",
       description: "Something went wrong. Please try again.",
       variant: "destructive",
-      action: retryFn ? {
-        altText: "Retry",
-        onClick: retryFn,
-      } : undefined,
+      action: retryFn ? (
+        <Button variant="outline" size="sm" onClick={retryFn}>
+          Retry
+        </Button>
+      ) : undefined,
     });
   }
 };

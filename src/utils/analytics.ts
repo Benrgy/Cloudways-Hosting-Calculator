@@ -1,4 +1,12 @@
 
+// Extend Window interface to include gtag
+declare global {
+  interface Window {
+    gtag?: (command: string, targetId: string, config?: any) => void;
+    dataLayer?: any[];
+  }
+}
+
 // Google Analytics utility for tracking user interactions
 export const trackEvent = (eventName: string, parameters: Record<string, any> = {}) => {
   if (typeof window !== 'undefined' && window.gtag) {
