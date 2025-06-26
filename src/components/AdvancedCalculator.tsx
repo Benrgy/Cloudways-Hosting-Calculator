@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,11 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { CalculatorResults } from "./CalculatorResults";
 import { ArrowRight, Info, Server, Shield, Database } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { LoadingSpinner } from "./LoadingSpinner";
+import { ValidationMessage, validateCalculatorInputs } from "./FormValidation";
+import { EnhancedCalculatorResults } from "./EnhancedCalculatorResults";
 
 interface AdvancedCalculatorInputs {
   monthlyHostingCost: number;
@@ -48,6 +48,8 @@ export const AdvancedCalculator = () => {
 
   const [showResults, setShowResults] = useState(false);
   const [calculationResults, setCalculationResults] = useState<any>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const calculateAdvancedResults = () => {
     // Advanced plan recommendation logic
@@ -113,28 +115,63 @@ export const AdvancedCalculator = () => {
     };
   };
 
-  const handleCalculate = () => {
-    if (inputs.monthlyHostingCost <= 0) {
+  const handleCalculate = async () => {
+    console.log("Starting calculation with inputs:", inputs);
+    
+    // Validate inputs
+    const errors = validateCalculatorInputs(inputs);
+    setValidationErrors(errors);
+    
+    if (errors.length > 0) {
       toast({
-        title: "Invalid Input",
-        description: "Please enter a valid hosting cost",
+        title: "Validation Error",
+        description: "Please fix the errors below before calculating",
         variant: "destructive",
       });
       return;
     }
 
-    const results = calculateAdvancedResults();
-    setCalculationResults(results);
-    setShowResults(true);
+    setIsCalculating(true);
+    
+    // Simulate calculation time for better UX
+    setTimeout(() => {
+      try {
+        const results = calculateAdvancedResults();
+        console.log("Calculation results:", results);
+        setCalculationResults(results);
+        setShowResults(true);
+        setIsCalculating(false);
 
-    toast({
-      title: "Advanced Calculation Complete!",
-      description: "Scroll down to see your detailed comparison results",
-    });
+        toast({
+          title: "Calculation Complete!",
+          description: "Your personalized hosting comparison is ready",
+        });
+
+        // Smooth scroll to results
+        setTimeout(() => {
+          const resultsElement = document.getElementById('calculator-results');
+          if (resultsElement) {
+            resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      } catch (error) {
+        console.error("Calculation error:", error);
+        setIsCalculating(false);
+        toast({
+          title: "Calculation Error",
+          description: "There was an error calculating your results. Please try again.",
+          variant: "destructive",
+        });
+      }
+    }, 1500);
   };
 
   const handleInputChange = (field: keyof AdvancedCalculatorInputs, value: string | number | boolean) => {
     setInputs(prev => ({ ...prev, [field]: value }));
+    // Clear validation errors when user starts typing
+    if (validationErrors.length > 0) {
+      setValidationErrors([]);
+    }
   };
 
   return (
@@ -150,8 +187,15 @@ export const AdvancedCalculator = () => {
           </p>
         </CardHeader>
         <CardContent className="p-8">
+          {validationErrors.length > 0 && (
+            <div className="mb-6 space-y-2">
+              {validationErrors.map((error, index) => (
+                <ValidationMessage key={index} type="error" message={error} />
+              ))}
+            </div>
+          )}
+
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Basic Information */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">
                 Current Hosting Details
@@ -167,7 +211,11 @@ export const AdvancedCalculator = () => {
                   value={inputs.monthlyHostingCost}
                   onChange={(e) => handleInputChange('monthlyHostingCost', parseFloat(e.target.value) || 0)}
                   className="mt-2"
+                  aria-describedby="cost-help"
                 />
+                <p id="cost-help" className="text-sm text-gray-500 mt-1">
+                  Include all hosting-related costs
+                </p>
               </div>
 
               <div>
@@ -207,10 +255,13 @@ export const AdvancedCalculator = () => {
                   onChange={(e) => handleInputChange('responseTimeMS', parseFloat(e.target.value) || 0)}
                   className="mt-2"
                 />
+                <p className="text-sm text-gray-500 mt-1 flex items-center">
+                  <Info className="w-4 h-4 mr-1" />
+                  Test at gtmetrix.com or similar tools
+                </p>
               </div>
             </div>
 
-            {/* Resource Requirements */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
                 <Database className="w-5 h-5" />
@@ -279,7 +330,6 @@ export const AdvancedCalculator = () => {
               </div>
             </div>
 
-            {/* Security & Compliance */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
                 <Shield className="w-5 h-5" />
@@ -345,10 +395,24 @@ export const AdvancedCalculator = () => {
                   onClick={handleCalculate}
                   className="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-lg py-3"
                   size="lg"
+                  disabled={isCalculating}
+                  aria-describedby="calculate-help"
                 >
-                  Calculate Advanced Savings
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  {isCalculating ? (
+                    <>
+                      <LoadingSpinner size="sm" className="mr-2" />
+                      Calculating...
+                    </>
+                  ) : (
+                    <>
+                      Calculate Advanced Savings
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </>
+                  )}
                 </Button>
+                <p id="calculate-help" className="text-sm text-gray-500 mt-2 text-center">
+                  Get your personalized hosting migration report
+                </p>
               </div>
             </div>
           </div>
@@ -356,7 +420,9 @@ export const AdvancedCalculator = () => {
       </Card>
 
       {showResults && calculationResults && (
-        <CalculatorResults results={calculationResults} inputs={inputs} />
+        <div id="calculator-results">
+          <EnhancedCalculatorResults results={calculationResults} inputs={inputs} />
+        </div>
       )}
     </div>
   );
