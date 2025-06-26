@@ -1,0 +1,32 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2C5AA0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="calculatorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00B894;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00A085;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <title>Cloudways Savings Calculator - Compare Hosting Costs</title>
+  <desc>Cloud hosting calculator icon with cloud and dollar sign for cost savings</desc>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="15" fill="url(#cloudGradient)" stroke="#2C5AA0" stroke-width="2" aria-label="Cloudways hosting calculator icon"/>
+  <!-- Cloud shape -->
+  <path d="M8 18c-1.1 0-2-.9-2-2s.9-2 2-2c.2-1.7 1.6-3 3.3-3 1.3 0 2.4.7 3 1.7.4-.2.8-.2 1.2-.2 1.4 0 2.5 1.1 2.5 2.5 0 .3-.1.6-.2.9.6.3 1 .9 1 1.6 0 1.1-.9 2-2 2H8z" fill="white" opacity="0.9" aria-label="Cloud hosting icon"/>
+  
+  <!-- Calculator display -->
+  <rect x="10" y="20" width="12" height="8" rx="1" fill="url(#calculatorGradient)" stroke="#00A085" stroke-width="1" aria-label="Savings calculator"/>
+  <!-- Calculator screen -->
+  <rect x="11" y="21" width="10" height="2.5" rx="0.3" fill="white" aria-label="Calculator screen"/>
+  <!-- Calculator buttons -->
+  <circle cx="12.5" cy="25.5" r="0.8" fill="white" opacity="0.8" aria-label="Calculator button"/>
+  <circle cx="15.5" cy="25.5" r="0.8" fill="white" opacity="0.8" aria-label="Calculator button"/>
+  <circle cx="18.5" cy="25.5" r="0.8" fill="white" opacity="0.8" aria-label="Calculator button"/>
+  
+  <!-- Dollar sign on calculator screen -->
+  <text x="16" y="22.8" font-family="Arial, sans-serif" font-size="2" font-weight="bold" text-anchor="middle" fill="#00B894" aria-label="Dollar sign for savings">$</text>
+</svg>
