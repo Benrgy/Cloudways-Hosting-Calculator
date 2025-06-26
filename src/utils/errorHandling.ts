@@ -1,5 +1,4 @@
 
-
 import { toast } from "@/hooks/use-toast";
 
 export class CalculatorError extends Error {
@@ -72,4 +71,3 @@ export const validateInputs = (inputs: any): string[] => {
   
   return errors;
 };
-

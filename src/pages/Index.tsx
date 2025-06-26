@@ -74,22 +74,10 @@ const Index = () => {
           <h2 className="sr-only">Cloudways Articles and SEO Content</h2>
           <EmbeddedArticles />
         </div>
-        <div>
-          <h2 className="sr-only">In-depth SEO Content</h2>
-          <SEOContent />
-        </div>
-        <div>
-          <h2 className="sr-only">Customer Testimonials</h2>
-          <Testimonials />
-        </div>
-        <div>
-          <h2 className="sr-only">Optimization Guides</h2>
-          <OptimizationGuides />
-        </div>
-        <div>
-          <h2 className="sr-only">Feature Comparison</h2>
-          <FeatureComparison />
-        </div>
+        <SEOContent />
+        <Testimonials />
+        <OptimizationGuides />
+        <FeatureComparison />
         <div id="faq-section" aria-label="FAQ section">
           <h2 className="sr-only">Frequently Asked Questions</h2>
           <FAQ />
@@ -103,8 +91,23 @@ const Index = () => {
     return (
       <div style={{ padding: '20px', color: 'red', textAlign: 'center' }}>
         <h1>Error Loading Page</h1>
-        <p>Error: {error.message}</p>
+        <p>Error: {error?.message || 'Unknown error'}</p>
         <p>Check console for more details</p>
+        <div style={{ marginTop: '20px' }}>
+          <button 
+            onClick={() => window.location.reload()} 
+            style={{ 
+              padding: '10px 20px', 
+              backgroundColor: '#059669', 
+              color: 'white', 
+              border: 'none', 
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Reload Page
+          </button>
+        </div>
       </div>
     );
   }

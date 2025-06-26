@@ -36,22 +36,33 @@ const NotFound = () => {
 const App = () => {
   console.log("=== APP COMPONENT RENDERING ===");
   
-  return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter basename={basename}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </LanguageProvider>
-    </QueryClientProvider>
-  );
+  try {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter basename={basename}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
+    );
+  } catch (error) {
+    console.error("❌ ERROR IN APP COMPONENT:", error);
+    return (
+      <div style={{ padding: '20px', color: 'red', textAlign: 'center' }}>
+        <h1>App Component Error</h1>
+        <p>Error: {error?.message || 'Unknown error'}</p>
+        <p>Check console for more details</p>
+      </div>
+    );
+  }
 };
 
 export default App;
