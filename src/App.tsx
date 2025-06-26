@@ -10,8 +10,8 @@ import Index from "@/pages/Index";
 
 const queryClient = new QueryClient();
 
-// Consistent basename handling
-const basename = import.meta.env.PROD ? "/cloudways-savings-calculator" : "";
+// Consistent basename handling - updated for correct repository name
+const basename = import.meta.env.PROD ? "/cloudways-savings-finder" : "";
 
 console.log("=== APP.TSX INITIALIZING ===");
 console.log("Environment:", import.meta.env.MODE);

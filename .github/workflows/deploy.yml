@@ -50,6 +50,8 @@ jobs:
         head -30 dist/index.html
         echo "=== Check for main JS file ==="
         find dist -name "*.js" | head -5
+        echo "=== Verify base path in built files ==="
+        grep -r "cloudways-savings-finder" dist/ || echo "Base path not found in built files"
         
     - name: Verify build integrity
       run: |
@@ -61,7 +63,7 @@ jobs:
           echo "❌ assets directory not found"
           exit 1
         fi
-        echo "✅ Build files look good"
+        echo "✅ Build files look good for cloudways-savings-finder deployment"
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
