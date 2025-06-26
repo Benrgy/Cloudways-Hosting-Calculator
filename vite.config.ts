@@ -7,7 +7,7 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
-  const basePath = isDev ? '/' : '/cloudways-savings-finder/';
+  const basePath = isDev ? '/' : '/cloudways-savings-calculator/';
   
   console.log('=== VITE CONFIG ===');
   console.log('Mode:', mode);
