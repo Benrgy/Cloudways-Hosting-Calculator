@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -32,28 +33,28 @@ export const Header = () => {
           </Link>
           <nav className="hidden md:flex items-center space-x-8" aria-label="Main Navigation">
             <button 
-              onClick={() => scrollToSection('features')}
+              onClick={() => scrollToSection('features-section')}
               id="desktop-nav-features"
               className="text-gray-600 hover:text-primary transition-colors"
             >
               {t('header.features')}
             </button>
             <button 
-              onClick={() => scrollToSection('how-it-works')}
+              onClick={() => scrollToSection('how-it-works-section')}
               id="desktop-nav-howitworks"
               className="text-gray-600 hover:text-primary transition-colors"
             >
               {t('header.howItWorks')}
             </button>
             <button 
-              onClick={() => scrollToSection('faq')}
+              onClick={() => scrollToSection('faq-section')}
               id="desktop-nav-faq"
               className="text-gray-600 hover:text-primary transition-colors"
             >
               {t('header.faq')}
             </button>
             <button 
-              onClick={() => scrollToSection('calculator')}
+              onClick={() => scrollToSection('calculator-section')}
               id="desktop-nav-calculator"
               className="text-gray-600 hover:text-primary transition-colors"
             >
@@ -70,7 +71,6 @@ export const Header = () => {
             </button>
             <span aria-label="Language Selector" tabIndex={0}><LanguageSelector /></span>
           </nav>
-          {/* Fix: Ensure the mobile menu button has a visible label for accessibility */}
           <button
             className="md:hidden"
             id="mobile-menu-toggle"
@@ -79,35 +79,35 @@ export const Header = () => {
             aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
           >
             <span className="sr-only">{isMenuOpen ? "Close main menu" : "Open main menu"}</span>
-            {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
+            {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <ChevronDown className="w-6 h-6" aria-hidden="true" />}
           </button>
         </div>
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t" aria-label="Mobile Navigation">
             <div className="flex flex-col space-y-4">
               <button
-                onClick={() => scrollToSection('features')}
+                onClick={() => scrollToSection('features-section')}
                 id="mobile-nav-features"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
                 {t('header.features')}
               </button>
               <button
-                onClick={() => scrollToSection('how-it-works')}
+                onClick={() => scrollToSection('how-it-works-section')}
                 id="mobile-nav-howitworks"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
                 {t('header.howItWorks')}
               </button>
               <button
-                onClick={() => scrollToSection('faq')}
+                onClick={() => scrollToSection('faq-section')}
                 id="mobile-nav-faq"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >
                 {t('header.faq')}
               </button>
               <button
-                onClick={() => scrollToSection('calculator')}
+                onClick={() => scrollToSection('calculator-section')}
                 id="mobile-nav-calculator"
                 className="text-gray-600 hover:text-primary transition-colors text-left"
               >

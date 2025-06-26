@@ -1,5 +1,5 @@
 
-import { Globe } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,7 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SupportedLanguage } from "@/hooks/useLanguageDetection";
+
+export type SupportedLanguage = 'en' | 'nl' | 'de' | 'fr' | 'es';
 
 const languages = {
   en: { name: "English", flag: "🇺🇸" },
@@ -25,7 +26,7 @@ export const LanguageSelector = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="sm" className="gap-2">
-          <Globe className="w-4 h-4" />
+          <ChevronDown className="w-4 h-4" />
           <span className="hidden sm:inline">
             {languages[currentLanguage].flag} {languages[currentLanguage].name}
           </span>

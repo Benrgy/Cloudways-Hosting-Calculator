@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, ReactNode, useState } from 'react';
+import { translations } from '@/data/translations';
 
 export type SupportedLanguage = 'en' | 'nl' | 'de' | 'fr' | 'es';
 
@@ -14,7 +15,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   console.log("=== LANGUAGE PROVIDER INITIALIZING ===");
   
-  // Simplified language detection - just use English for now
   const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('en');
   
   console.log("✅ Language Provider initialized with:", currentLanguage);
@@ -24,10 +24,23 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     setCurrentLanguage(language);
   };
 
-  // Simplified translation function - just return the key for now
   const t = (key: string): string => {
     console.log("Translation requested for:", key);
-    return key;
+    
+    // Navigate through the translation object using the key path
+    const keys = key.split('.');
+    let value: any = translations[currentLanguage];
+    
+    for (const k of keys) {
+      if (value && typeof value === 'object' && k in value) {
+        value = value[k];
+      } else {
+        console.warn(`Translation missing for key: ${key} in language: ${currentLanguage}`);
+        return key; // Fallback to key if translation not found
+      }
+    }
+    
+    return typeof value === 'string' ? value : key;
   };
 
   try {

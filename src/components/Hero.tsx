@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Calculator, TrendingUp, Shield, Zap } from "lucide-react";
+import { Calculator, ArrowUp, Shield, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface HeroProps {
@@ -40,7 +40,7 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
             </div>
             <div className="flex flex-col items-center p-4">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                <TrendingUp className="w-6 h-6 text-blue-600" />
+                <ArrowUp className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Performance Boost</h3>
               <p className="text-sm text-gray-800">Up to 250% faster loading speeds guaranteed</p>
@@ -54,7 +54,7 @@ export const Hero = ({ onCalculateClick }: HeroProps) => {
             </div>
             <div className="flex flex-col items-center p-4">
               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
-                <Zap className="w-6 h-6 text-orange-600" />
+                <ChevronDown className="w-6 h-6 text-orange-600" />
               </div>
               <h3 className="font-semibold text-gray-900 mb-1">Free Migration</h3>
               <p className="text-sm text-gray-800">Expert team handles everything with zero downtime</p>
