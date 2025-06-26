@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, DollarSign, Clock, Shield, Download, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { shareCalculation } from "@/utils/shareableUrl";
+import { trackPDFDownload } from "@/utils/analytics";
 
 interface EnhancedCalculatorResultsProps {
   results: any;
@@ -14,38 +16,23 @@ export const EnhancedCalculatorResults = ({ results, inputs }: EnhancedCalculato
   const { toast } = useToast();
 
   const handleShareResults = async () => {
-    const shareData = {
-      title: "My Cloudways Hosting Savings",
-      text: `I could save $${results.monthlySavings.toFixed(2)} per month by switching to Cloudways!`,
-      url: window.location.href
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (err) {
-        copyToClipboard();
-      }
-    } else {
-      copyToClipboard();
+    try {
+      await shareCalculation(inputs, results);
+      toast({
+        title: "Results Shared!",
+        description: "Your calculation link has been copied or shared.",
+      });
+    } catch (error) {
+      toast({
+        title: "Share Failed",
+        description: "Could not share results. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
-  const copyToClipboard = () => {
-    const resultText = `Cloudways Savings Calculator Results:
-Monthly Savings: $${results.monthlySavings.toFixed(2)}
-Annual Savings: $${results.annualSavings.toFixed(2)}
-Performance Improvement: ${results.performanceImprovement.loadingSpeed.toFixed(0)}%
-Recommended Plan: ${results.recommendedPlan}`;
-    
-    navigator.clipboard.writeText(resultText);
-    toast({
-      title: "Results Copied!",
-      description: "Your calculation results have been copied to clipboard.",
-    });
-  };
-
   const generatePDFReport = () => {
+    trackPDFDownload();
     toast({
       title: "PDF Generation",
       description: "PDF report generation feature coming soon!",

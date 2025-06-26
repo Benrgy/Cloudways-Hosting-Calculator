@@ -1,106 +1,24 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Meta title shortened to 49 chars for SEO best practice -->
-    <title>Cloudways Savings Calculator & Hosting Savings Tool</title>
-    <!-- Meta description shortened to 155 chars -->
-    <meta name="description" content="See your real hosting savings and performance boost by switching to Cloudways. Use our free calculator to get your personalized savings now." />
-    <link rel="icon" href="./favicon.ico" sizes="32x32" type="image/png" />
-    <link rel="canonical" href="https://benrgy.github.io/cloudways-savings-finder/" />
-    <!-- Social Media tags already present, only title/desc adjusted -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://benrgy.github.io/cloudways-savings-finder/" />
-    <meta property="og:title" content="Cloudways Savings Calculator & Hosting Savings Tool" />
-    <meta property="og:description" content="Calculate your hosting savings and see performance improvements by migrating to Cloudways. Free, instant, and accurate." />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://benrgy.github.io/cloudways-savings-finder/" />
-    <meta property="twitter:title" content="Cloudways Savings Calculator & Hosting Savings Tool" />
-    <meta property="twitter:description" content="See instant hosting savings and performance boost by switching to Cloudways. Try our advanced calculator now." />
-    <meta property="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="geo.region" content="US" />
-    <meta name="geo.placename" content="United States" />
-    <meta name="language" content="en" />
-    <meta name="distribution" content="global" />
-    <meta name="rating" content="general" />
-    <meta name="revisit-after" content="1 days" />
+    <title>Cloudways Savings Calculator - Compare Hosting Plans & Save Money</title>
+    <meta name="description" content="Calculate potential savings by switching to Cloudways hosting. Compare costs, performance improvements, and get personalized recommendations." />
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
     <script>
-      console.log("=== HTML LOADING ===");
-      console.log("Location:", window.location.href);
-      console.log("Base URL:", document.baseURI);
-      console.log("Environment check starting...");
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Cloudways Savings Calculator",
-      "description": "Quickly calculate hosting cost savings and performance benefits by switching to Cloudways. No registration needed.",
-      "url": "https://benrgy.github.io/cloudways-savings-finder/",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "featureList": [
-        "Cost and savings calculator",
-        "Performance estimate",
-        "Migration checklist PDF",
-        "HowTo Guide",
-        "Internal article links"
-      ],
-      "provider": {
-        "@type": "Organization",
-        "name": "Cloudways Savings Calculator",
-        "url": "https://benrgy.github.io/cloudways-savings-finder/"
-      }
-    }
-    </script>
-    <!-- Single Page Apps for GitHub Pages -->
-    <script type="text/javascript">
-      console.log("SPA redirect script loading");
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      (function(l) {
-        console.log("Checking for SPA redirect, search:", l.search);
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          console.log("Redirecting to:", l.pathname.slice(0, -1) + decoded + l.hash);
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
     </script>
   </head>
   <body>
-    <div id="root">
-      <div style="text-align: center; padding: 50px;">
-        <h2>Loading...</h2>
-        <p>If this message persists, please check the console for errors.</p>
-      </div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      console.log("Body script executed");
-      // Fallback error handler
-      window.addEventListener('error', function(e) {
-        console.error('❌ Global error:', e.error, e.filename, e.lineno);
-        document.getElementById('root').innerHTML = '<div style="padding: 20px; color: red;"><h1>Error Loading App</h1><p>' + e.error + '</p><p>Check console for details</p></div>';
-      });
-      window.addEventListener('unhandledrejection', function(e) {
-        console.error('❌ Unhandled promise rejection:', e.reason);
-      });
-    </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -7,7 +7,12 @@ import { ValidationMessage, validateCalculatorInputs } from "./FormValidation";
 import { EnhancedCalculatorResults } from "./EnhancedCalculatorResults";
 import { CalculatorHeader } from "./CalculatorHeader";
 import { CalculatorInputs } from "./CalculatorInputs";
+import { SavedCalculations } from "./SavedCalculations";
 import { useCalculatorLogic } from "@/hooks/useCalculatorLogic";
+import { saveCalculation } from "@/utils/storage";
+import { parseShareableUrl } from "@/utils/shareableUrl";
+import { trackCalculation } from "@/utils/analytics";
+import { handleCalculatorError, validateInputs } from "@/utils/errorHandling";
 
 interface AdvancedCalculatorInputs {
   monthlyHostingCost: number;
@@ -49,14 +54,29 @@ export const AdvancedCalculator = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
-  const handleCalculate = async () => {
+  // Load shared calculation on mount
+  useEffect(() => {
+    const sharedInputs = parseShareableUrl();
+    if (sharedInputs) {
+      setInputs(sharedInputs);
+      toast({
+        title: "Calculation Loaded",
+        description: "Loaded calculation from shared link",
+      });
+    }
+  }, [toast]);
+
+  const performCalculation = async () => {
     console.log("Starting calculation with inputs:", inputs);
     
-    // Validate inputs
-    const errors = validateCalculatorInputs(inputs);
-    setValidationErrors(errors);
+    // Enhanced validation
+    const basicErrors = validateCalculatorInputs(inputs);
+    const advancedErrors = validateInputs(inputs);
+    const allErrors = [...basicErrors, ...advancedErrors];
     
-    if (errors.length > 0) {
+    setValidationErrors(allErrors);
+    
+    if (allErrors.length > 0) {
       toast({
         title: "Validation Error",
         description: "Please fix the errors below before calculating",
@@ -67,37 +87,42 @@ export const AdvancedCalculator = () => {
 
     setIsCalculating(true);
     
-    // Simulate calculation time for better UX
-    setTimeout(() => {
-      try {
-        const results = calculateAdvancedResults(inputs);
-        console.log("Calculation results:", results);
-        setCalculationResults(results);
-        setShowResults(true);
-        setIsCalculating(false);
+    try {
+      // Simulate calculation time for better UX
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      const results = calculateAdvancedResults(inputs);
+      console.log("Calculation results:", results);
+      
+      setCalculationResults(results);
+      setShowResults(true);
+      
+      // Save calculation and track analytics
+      const calculationId = saveCalculation(inputs, results);
+      trackCalculation(inputs, results);
+      
+      toast({
+        title: "Calculation Complete!",
+        description: "Your personalized hosting comparison is ready",
+      });
 
-        toast({
-          title: "Calculation Complete!",
-          description: "Your personalized hosting comparison is ready",
-        });
+      // Smooth scroll to results
+      setTimeout(() => {
+        const resultsElement = document.getElementById('calculator-results');
+        if (resultsElement) {
+          resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+      
+    } catch (error) {
+      handleCalculatorError(error, performCalculation);
+    } finally {
+      setIsCalculating(false);
+    }
+  };
 
-        // Smooth scroll to results
-        setTimeout(() => {
-          const resultsElement = document.getElementById('calculator-results');
-          if (resultsElement) {
-            resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
-      } catch (error) {
-        console.error("Calculation error:", error);
-        setIsCalculating(false);
-        toast({
-          title: "Calculation Error",
-          description: "There was an error calculating your results. Please try again.",
-          variant: "destructive",
-        });
-      }
-    }, 1500);
+  const handleCalculate = () => {
+    performCalculation();
   };
 
   const handleInputChange = (field: keyof AdvancedCalculatorInputs, value: string | number | boolean) => {
@@ -108,8 +133,24 @@ export const AdvancedCalculator = () => {
     }
   };
 
+  const handleLoadCalculation = (savedInputs: any, savedResults: any) => {
+    setInputs(savedInputs);
+    setCalculationResults(savedResults);
+    setShowResults(true);
+    
+    // Scroll to results
+    setTimeout(() => {
+      const resultsElement = document.getElementById('calculator-results');
+      if (resultsElement) {
+        resultsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto space-y-6">
+      <SavedCalculations onLoadCalculation={handleLoadCalculation} />
+      
       <Card className="border-emerald-200 shadow-lg">
         <CalculatorHeader />
         <CardContent className="p-8">
