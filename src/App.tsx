@@ -6,11 +6,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ABTestProvider } from "@/components/ABTestProvider";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { initializeAnalytics } from "@/utils/analytics";
 import { logger } from "@/utils/logger";
 import { performanceMonitor } from "@/utils/performance";
 import Index from "@/pages/Index";
+import Auth from "@/pages/Auth";
+import Dashboard from "@/pages/Dashboard";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,18 +73,31 @@ const App = () => {
     return (
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter basename={basename}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </BrowserRouter>
-            </TooltipProvider>
-          </LanguageProvider>
+          <AuthProvider>
+            <LanguageProvider>
+              <ABTestProvider>
+                <TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                  <BrowserRouter basename={basename}>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/auth" element={<Auth />} />
+                      <Route 
+                        path="/dashboard" 
+                        element={
+                          <ProtectedRoute>
+                            <Dashboard />
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </BrowserRouter>
+                </TooltipProvider>
+              </ABTestProvider>
+            </LanguageProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     );
