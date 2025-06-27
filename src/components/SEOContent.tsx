@@ -1,8 +1,11 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, TrendingUp, DollarSign, Shield } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const SEOContent = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -10,12 +13,10 @@ export const SEOContent = () => {
           {/* Main SEO Content */}
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Why Migrate from Shared Hosting to Cloudways Cloud Hosting?
+              {t('seo.title')}
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Shared hosting limitations can severely impact your website's performance, security, and scalability. 
-              Our free migration calculator helps you understand the real costs and benefits of upgrading to 
-              Cloudways managed cloud hosting.
+              {t('seo.subtitle')}
             </p>
           </div>
 
@@ -29,12 +30,10 @@ export const SEOContent = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      Performance Improvements
+                      {t('seo.performanceTitle')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Experience up to 300% faster loading speeds with SSD storage, advanced caching, 
-                      and optimized server configurations. Better performance leads to improved SEO 
-                      rankings and user experience.
+                      {t('seo.performanceDesc')}
                     </p>
                   </div>
                 </div>
@@ -49,11 +48,10 @@ export const SEOContent = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      Cost-Effective Scaling
+                      {t('seo.costTitle')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Pay only for resources you use with transparent pricing. No hidden fees, 
-                      unlimited bandwidth charges, or surprise overages common with shared hosting providers.
+                      {t('seo.costDesc')}
                     </p>
                   </div>
                 </div>
@@ -68,11 +66,10 @@ export const SEOContent = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      Enhanced Security
+                      {t('seo.securityTitle')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Dedicated firewalls, regular security patches, automated backups, and 
-                      isolated server environments protect your website from threats common in shared hosting.
+                      {t('seo.securityDesc')}
                     </p>
                   </div>
                 </div>
@@ -87,11 +84,10 @@ export const SEOContent = () => {
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                      24/7 Expert Support
+                      {t('seo.supportTitle')}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      Get help from real server experts, not entry-level support. Cloudways provides 
-                      knowledgeable assistance for complex technical issues and optimizations.
+                      {t('seo.supportDesc')}
                     </p>
                   </div>
                 </div>
@@ -102,31 +98,31 @@ export const SEOContent = () => {
           {/* Common Migration Scenarios */}
           <div className="bg-white rounded-xl p-8 border border-gray-200">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Common Hosting Migration Scenarios
+              {t('seo.migrationScenariosTitle')}
             </h3>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
                 <p className="text-gray-600">
-                  <strong>WordPress Sites:</strong> Migrate from shared hosting to optimized WordPress hosting with better caching and performance
+                  {t('seo.wordpressSites')}
                 </p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
                 <p className="text-gray-600">
-                  <strong>E-commerce Stores:</strong> Ensure reliable uptime and fast loading for online stores with high traffic demands
+                  {t('seo.ecommerceSites')}
                 </p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
                 <p className="text-gray-600">
-                  <strong>Growing Websites:</strong> Scale resources automatically as your website traffic and storage needs increase
+                  {t('seo.growingSites')}
                 </p>
               </div>
               <div className="flex items-start space-x-3">
                 <CheckCircle className="w-5 h-5 text-emerald-600 mt-1 flex-shrink-0" />
                 <p className="text-gray-600">
-                  <strong>Business Websites:</strong> Professional hosting with better security, backups, and support for business-critical sites
+                  {t('seo.businessSites')}
                 </p>
               </div>
             </div>

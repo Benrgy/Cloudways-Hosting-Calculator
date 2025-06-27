@@ -1,8 +1,7 @@
 
-import React, { createContext, useContext, ReactNode, useState } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
 import { translations } from '@/data/translations';
-
-export type SupportedLanguage = 'en' | 'nl' | 'de' | 'fr' | 'es';
+import { useLanguageDetection, SupportedLanguage } from '@/hooks/useLanguageDetection';
 
 interface LanguageContextType {
   currentLanguage: SupportedLanguage;
@@ -15,14 +14,9 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   console.log("=== LANGUAGE PROVIDER INITIALIZING ===");
   
-  const [currentLanguage, setCurrentLanguage] = useState<SupportedLanguage>('en');
+  const { currentLanguage, changeLanguage } = useLanguageDetection();
   
   console.log("✅ Language Provider initialized with:", currentLanguage);
-
-  const changeLanguage = (language: SupportedLanguage) => {
-    console.log("Changing language to:", language);
-    setCurrentLanguage(language);
-  };
 
   const t = (key: string): string => {
     console.log("Translation requested for:", key);
@@ -36,7 +30,16 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
         value = value[k];
       } else {
         console.warn(`Translation missing for key: ${key} in language: ${currentLanguage}`);
-        return key; // Fallback to key if translation not found
+        // Fallback to English if translation not found
+        let fallbackValue: any = translations.en;
+        for (const fallbackKey of keys) {
+          if (fallbackValue && typeof fallbackValue === 'object' && fallbackKey in fallbackValue) {
+            fallbackValue = fallbackValue[fallbackKey];
+          } else {
+            return key; // Return key if even English translation is missing
+          }
+        }
+        return typeof fallbackValue === 'string' ? fallbackValue : key;
       }
     }
     

@@ -9,20 +9,20 @@ export const HowItWorks = () => {
     {
       step: 1,
       icon: Calculator,
-      title: "Input Your Details",
-      description: "Enter your current shared hosting cost, storage needs, bandwidth, and performance metrics."
+      title: t('howItWorks.step1Title'),
+      description: t('howItWorks.step1Desc')
     },
     {
       step: 2,
       icon: TrendingUp,
-      title: "Get Instant Analysis",
-      description: "Our calculator compares costs, performance, and features to show you potential savings and improvements."
+      title: t('howItWorks.step2Title'),
+      description: t('howItWorks.step2Desc')
     },
     {
       step: 3,
       icon: ArrowRight,
-      title: "Choose Your Plan",
-      description: "Get personalized Cloudways plan recommendations and migrate with confidence using our results."
+      title: t('howItWorks.step3Title'),
+      description: t('howItWorks.step3Desc')
     }
   ];
 
@@ -75,7 +75,7 @@ export const HowItWorks = () => {
         <div className="text-center mt-16">
           <div className="inline-flex items-center px-6 py-3 bg-emerald-100 text-emerald-700 rounded-full">
             <Calculator className="w-5 h-5 mr-2" />
-            Get your free comparison in under 2 minutes
+            {t('howItWorks.freeComparison')}
           </div>
         </div>
       </div>

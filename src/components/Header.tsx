@@ -67,7 +67,7 @@ export const Header = () => {
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
               aria-label="Start Free Trial"
             >
-              Start Free Trial
+              {t('header.startFreeTrial')}
             </button>
             <span aria-label="Language Selector" tabIndex={0}><LanguageSelector /></span>
           </nav>
@@ -120,7 +120,7 @@ export const Header = () => {
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-left"
                 aria-label="Start Free Trial"
               >
-                Start Free Trial
+                {t('header.startFreeTrial')}
               </button>
               <div className="pt-2 border-t">
                 <span aria-label="Language Selector" tabIndex={0}><LanguageSelector /></span>

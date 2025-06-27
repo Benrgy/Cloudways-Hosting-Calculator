@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
 const Index = () => {
   const { user } = useAuth();
   const { getVariant, trackConversion } = useABTest();
+  const { t } = useLanguage();
   
   // A/B test for calculator version
   const calculatorVariant = getVariant('calculator_version');
@@ -48,7 +49,7 @@ const Index = () => {
             <Link to="/dashboard">
               <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
                 <User className="w-4 h-4 mr-2" />
-                Dashboard
+                {t('header.dashboard')}
                 <Badge variant="secondary" className="ml-2 bg-white text-emerald-700">
                   Pro
                 </Badge>
@@ -58,13 +59,13 @@ const Index = () => {
             <div className="flex gap-2">
               <Link to="/auth">
                 <Button variant="outline" className="bg-white/90 backdrop-blur-sm">
-                  Sign In
+                  {t('header.signIn')}
                 </Button>
               </Link>
               <Link to="/auth">
                 <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
                   <Zap className="w-4 h-4 mr-2" />
-                  Get Started Free
+                  {t('header.getStartedFree')}
                 </Button>
               </Link>
             </div>
@@ -77,12 +78,12 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {calculatorVariant === 'B' ? 'Advanced Hosting Calculator' : 'Calculate Your Savings'}
+              {calculatorVariant === 'B' ? t('calculator.advancedTitle') : t('calculator.title')}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               {calculatorVariant === 'B' 
-                ? 'Professional hosting analysis with compliance, security, and performance optimization'
-                : 'See how much you could save by switching to optimized cloud hosting'
+                ? t('calculator.advancedSubtitle')
+                : t('calculator.subtitle')
               }
             </p>
           </div>
@@ -100,11 +101,10 @@ const Index = () => {
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Stay Ahead of Hosting Trends
+                {t('newsletter.title')}
               </h2>
               <p className="text-gray-600">
-                Join thousands of professionals who get our weekly insights on hosting optimization, 
-                cost reduction strategies, and industry trends.
+                {t('newsletter.subtitle')}
               </p>
             </div>
             <NewsletterSignup />
