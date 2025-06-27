@@ -7,9 +7,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Star, Trash2, Calendar, TrendingUp, Eye } from 'lucide-react';
 import { useSavedCalculations } from '@/hooks/useSavedCalculations';
 import { useToast } from '@/hooks/use-toast';
+import { CalculationResults, CalculationInputs } from '@/types/calculator';
 
 interface SavedCalculationsProps {
-  onLoadCalculation: (inputs: any, results: any) => void;
+  onLoadCalculation: (inputs: CalculationInputs, results: CalculationResults) => void;
 }
 
 export const SavedCalculations = ({ onLoadCalculation }: SavedCalculationsProps) => {
@@ -17,7 +18,9 @@ export const SavedCalculations = ({ onLoadCalculation }: SavedCalculationsProps)
   const { toast } = useToast();
 
   const handleLoadCalculation = (calculation: any) => {
-    onLoadCalculation(calculation.inputs, calculation.results);
+    const inputs = calculation.inputs as CalculationInputs;
+    const results = calculation.results as CalculationResults;
+    onLoadCalculation(inputs, results);
     toast({
       title: "Calculation Loaded",
       description: `Loaded "${calculation.name}"`,
@@ -86,109 +89,112 @@ export const SavedCalculations = ({ onLoadCalculation }: SavedCalculationsProps)
       </Card>
 
       <div className="grid gap-4">
-        {calculations.map((calculation) => (
-          <Card key={calculation.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-lg text-gray-900 truncate">
-                      {calculation.name}
-                    </h3>
-                    {calculation.is_favorite && (
-                      <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                    )}
-                  </div>
-                  
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(calculation.created_at).toLocaleDateString()}
-                    </span>
-                    {calculation.tags && calculation.tags.length > 0 && (
-                      <div className="flex gap-1">
-                        {calculation.tags.slice(0, 2).map((tag, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                        {calculation.tags.length > 2 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{calculation.tags.length - 2}
-                          </Badge>
-                        )}
+        {calculations.map((calculation) => {
+          const results = calculation.results as CalculationResults;
+          return (
+            <Card key={calculation.id} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="font-semibold text-lg text-gray-900 truncate">
+                        {calculation.name}
+                      </h3>
+                      {calculation.is_favorite && (
+                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(calculation.created_at).toLocaleDateString()}
+                      </span>
+                      {calculation.tags && calculation.tags.length > 0 && (
+                        <div className="flex gap-1">
+                          {calculation.tags.slice(0, 2).map((tag, index) => (
+                            <Badge key={index} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                          {calculation.tags.length > 2 && (
+                            <Badge variant="outline" className="text-xs">
+                              +{calculation.tags.length - 2}
+                            </Badge>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                      <div className="text-center p-3 bg-green-50 rounded-lg">
+                        <div className="text-lg font-bold text-green-600">
+                          ${results?.monthlySavings?.toFixed(0) || '0'}
+                        </div>
+                        <div className="text-xs text-gray-600">Monthly Savings</div>
                       </div>
-                    )}
+                      
+                      <div className="text-center p-3 bg-blue-50 rounded-lg">
+                        <div className="text-lg font-bold text-blue-600">
+                          ${results?.annualSavings?.toFixed(0) || '0'}
+                        </div>
+                        <div className="text-xs text-gray-600">Annual Savings</div>
+                      </div>
+                      
+                      <div className="text-center p-3 bg-purple-50 rounded-lg">
+                        <div className="text-lg font-bold text-purple-600">
+                          {results?.savingsPercentage?.toFixed(1) || '0'}%
+                        </div>
+                        <div className="text-xs text-gray-600">Cost Reduction</div>
+                      </div>
+                      
+                      <div className="text-center p-3 bg-orange-50 rounded-lg">
+                        <div className="text-lg font-bold text-orange-600">
+                          {results?.recommendedPlan?.split(' ')[0] || 'N/A'}
+                        </div>
+                        <div className="text-xs text-gray-600">Recommended</div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                    <div className="text-center p-3 bg-green-50 rounded-lg">
-                      <div className="text-lg font-bold text-green-600">
-                        ${calculation.results?.monthlySavings?.toFixed(0) || '0'}
-                      </div>
-                      <div className="text-xs text-gray-600">Monthly Savings</div>
-                    </div>
+                  <div className="flex flex-col gap-2 ml-4">
+                    <Button
+                      size="sm"
+                      onClick={() => handleLoadCalculation(calculation)}
+                      className="bg-emerald-500 hover:bg-emerald-600"
+                    >
+                      <Eye className="w-4 h-4 mr-1" />
+                      Load
+                    </Button>
                     
-                    <div className="text-center p-3 bg-blue-50 rounded-lg">
-                      <div className="text-lg font-bold text-blue-600">
-                        ${calculation.results?.annualSavings?.toFixed(0) || '0'}
-                      </div>
-                      <div className="text-xs text-gray-600">Annual Savings</div>
-                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleToggleFavorite(calculation.id, calculation.is_favorite)}
+                    >
+                      <Star 
+                        className={`w-4 h-4 ${
+                          calculation.is_favorite 
+                            ? 'text-yellow-500 fill-current' 
+                            : 'text-gray-400'
+                        }`} 
+                      />
+                    </Button>
                     
-                    <div className="text-center p-3 bg-purple-50 rounded-lg">
-                      <div className="text-lg font-bold text-purple-600">
-                        {calculation.results?.savingsPercentage?.toFixed(1) || '0'}%
-                      </div>
-                      <div className="text-xs text-gray-600">Cost Reduction</div>
-                    </div>
-                    
-                    <div className="text-center p-3 bg-orange-50 rounded-lg">
-                      <div className="text-lg font-bold text-orange-600">
-                        {calculation.results?.recommendedPlan?.split(' ')[0] || 'N/A'}
-                      </div>
-                      <div className="text-xs text-gray-600">Recommended</div>
-                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleDeleteCalculation(calculation.id, calculation.name)}
+                      className="text-red-600 hover:text-red-700 hover:border-red-200"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
-
-                <div className="flex flex-col gap-2 ml-4">
-                  <Button
-                    size="sm"
-                    onClick={() => handleLoadCalculation(calculation)}
-                    className="bg-emerald-500 hover:bg-emerald-600"
-                  >
-                    <Eye className="w-4 h-4 mr-1" />
-                    Load
-                  </Button>
-                  
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleToggleFavorite(calculation.id, calculation.is_favorite)}
-                  >
-                    <Star 
-                      className={`w-4 h-4 ${
-                        calculation.is_favorite 
-                          ? 'text-yellow-500 fill-current' 
-                          : 'text-gray-400'
-                      }`} 
-                    />
-                  </Button>
-                  
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleDeleteCalculation(calculation.id, calculation.name)}
-                    className="text-red-600 hover:text-red-700 hover:border-red-200"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </div>
   );

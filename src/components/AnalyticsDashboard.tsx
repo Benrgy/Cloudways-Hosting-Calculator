@@ -6,6 +6,7 @@ import { TrendingUp, Calculator, DollarSign, Users, Activity } from 'lucide-reac
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { CalculationResults } from '@/types/calculator';
 
 export const AnalyticsDashboard = () => {
   const { user } = useAuth();
@@ -39,12 +40,15 @@ export const AnalyticsDashboard = () => {
     },
   });
 
-  // Process data for charts
-  const savingsData = calculations?.map(calc => ({
-    name: calc.name,
-    monthly: calc.results?.monthlySavings || 0,
-    annual: calc.results?.annualSavings || 0,
-  })) || [];
+  // Process data for charts with proper type casting
+  const savingsData = calculations?.map(calc => {
+    const results = calc.results as CalculationResults;
+    return {
+      name: calc.name,
+      monthly: results?.monthlySavings || 0,
+      annual: results?.annualSavings || 0,
+    };
+  }) || [];
 
   const usageData = [
     { name: 'Calculations', value: calculations?.length || 0 },
@@ -162,24 +166,27 @@ export const AnalyticsDashboard = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {calculations?.slice(0, 5).map((calc, index) => (
-              <div key={calc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <h4 className="font-medium">{calc.name}</h4>
-                  <p className="text-sm text-gray-600">
-                    Created {new Date(calc.created_at).toLocaleDateString()}
-                  </p>
+            {calculations?.slice(0, 5).map((calc) => {
+              const results = calc.results as CalculationResults;
+              return (
+                <div key={calc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <h4 className="font-medium">{calc.name}</h4>
+                    <p className="text-sm text-gray-600">
+                      Created {new Date(calc.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-green-600">
+                      ${results?.monthlySavings?.toFixed(0) || 0}/mo saved
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      ${results?.annualSavings?.toFixed(0) || 0}/yr
+                    </p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-medium text-green-600">
-                    ${calc.results?.monthlySavings?.toFixed(0) || 0}/mo saved
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    ${calc.results?.annualSavings?.toFixed(0) || 0}/yr
-                  </p>
-                </div>
-              </div>
-            )) || (
+              );
+            }) || (
               <div className="text-center py-8 text-gray-500">
                 <Calculator className="mx-auto h-12 w-12 mb-4 opacity-50" />
                 <p>No calculations yet. Start calculating to see your analytics!</p>

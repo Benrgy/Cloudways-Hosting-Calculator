@@ -30,13 +30,17 @@ const Index = () => {
     trackConversion('calculator_version', 'calculator_used');
   };
 
+  const handleCalculateClick = () => {
+    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
       
       {/* Enhanced Hero with Auth CTA */}
       <div className="relative">
-        <Hero />
+        <Hero onCalculateClick={handleCalculateClick} />
         
         {/* Enhanced CTA Section */}
         <div className="absolute top-4 right-4 z-10">
