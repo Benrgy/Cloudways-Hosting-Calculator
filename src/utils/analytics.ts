@@ -1,3 +1,4 @@
+
 // Extend Window interface to include gtag
 declare global {
   interface Window {
@@ -22,10 +23,10 @@ export const initializeAnalytics = () => {
   // Initialize gtag
   window.dataLayer = window.dataLayer || [];
   window.gtag = function(...args: any[]) {
-    window.dataLayer?.push(args);
+    window.dataLayer?.push(arguments);
   };
 
-  window.gtag('js', new Date());
+  window.gtag('js', new Date().toISOString());
   window.gtag('config', GA_MEASUREMENT_ID, {
     // Enhanced measurement
     enhanced_measurements: true,
