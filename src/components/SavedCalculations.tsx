@@ -18,8 +18,8 @@ export const SavedCalculations = ({ onLoadCalculation }: SavedCalculationsProps)
   const { toast } = useToast();
 
   const handleLoadCalculation = (calculation: any) => {
-    const inputs = calculation.inputs as CalculationInputs;
-    const results = calculation.results as CalculationResults;
+    const inputs = calculation.inputs as unknown as CalculationInputs;
+    const results = calculation.results as unknown as CalculationResults;
     onLoadCalculation(inputs, results);
     toast({
       title: "Calculation Loaded",
@@ -90,7 +90,7 @@ export const SavedCalculations = ({ onLoadCalculation }: SavedCalculationsProps)
 
       <div className="grid gap-4">
         {calculations.map((calculation) => {
-          const results = calculation.results as CalculationResults;
+          const results = calculation.results as unknown as CalculationResults;
           return (
             <Card key={calculation.id} className="hover:shadow-md transition-shadow">
               <CardContent className="p-6">

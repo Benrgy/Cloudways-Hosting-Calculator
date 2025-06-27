@@ -42,7 +42,7 @@ export const AnalyticsDashboard = () => {
 
   // Process data for charts with proper type casting
   const savingsData = calculations?.map(calc => {
-    const results = calc.results as CalculationResults;
+    const results = calc.results as unknown as CalculationResults;
     return {
       name: calc.name,
       monthly: results?.monthlySavings || 0,
@@ -167,7 +167,7 @@ export const AnalyticsDashboard = () => {
         <CardContent>
           <div className="space-y-4">
             {calculations?.slice(0, 5).map((calc) => {
-              const results = calc.results as CalculationResults;
+              const results = calc.results as unknown as CalculationResults;
               return (
                 <div key={calc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
