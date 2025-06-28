@@ -14,6 +14,7 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { EnhancedCalculator } from "@/components/EnhancedCalculator";
 import { useAuth } from "@/contexts/AuthContext";
 import { useABTest } from "@/components/ABTestProvider";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { User, Zap } from "lucide-react";
