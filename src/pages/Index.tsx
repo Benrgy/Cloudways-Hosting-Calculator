@@ -1,125 +1,51 @@
 
-import { Calculator } from "@/components/Calculator";
-import { Hero } from "@/components/Hero";
-import { Features } from "@/components/Features";
-import { HowItWorks } from "@/components/HowItWorks";
-import { Testimonials } from "@/components/Testimonials";
-import { FAQ } from "@/components/FAQ";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { ConversionBoosters } from "@/components/ConversionBoosters";
-import { OptimizationGuides } from "@/components/OptimizationGuides";
-import { SEOContent } from "@/components/SEOContent";
-import { NewsletterSignup } from "@/components/NewsletterSignup";
-import { EnhancedCalculator } from "@/components/EnhancedCalculator";
-import { useAuth } from "@/contexts/AuthContext";
-import { useABTest } from "@/components/ABTestProvider";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { User, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Hero } from '@/components/Hero';
+import { Calculator } from '@/components/Calculator';
+import { Features } from '@/components/Features';
+import { HowItWorks } from '@/components/HowItWorks';
+import { PricingComparison } from '@/components/PricingComparison';
+import { Testimonials } from '@/components/Testimonials';
+import { FAQ } from '@/components/FAQ';
+import { EnhancedNewsletter } from '@/components/EnhancedNewsletter';
+import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
+import { SEOContent } from '@/components/SEOContent';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
-  const { user } = useAuth();
-  const { getVariant, trackConversion } = useABTest();
-  const { t } = useLanguage();
-  
-  // A/B test for calculator version
-  const calculatorVariant = getVariant('calculator_version');
-  
-  const handleCalculatorInteraction = () => {
-    trackConversion('calculator_version', 'calculator_used');
-  };
-
-  const handleCalculateClick = () => {
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { t, currentLanguage } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
+    <>
+      <Helmet>
+        <title>{t('seo.title') || 'Cloudways Calculator - Find Your Perfect Hosting Plan'}</title>
+        <meta name="description" content={t('seo.description') || 'Calculate and compare Cloudways hosting costs with our advanced calculator. Find the perfect hosting plan for your website with real-time pricing and recommendations.'} />
+        <meta name="keywords" content={t('seo.keywords') || 'cloudways, hosting calculator, web hosting, cloud hosting, pricing calculator'} />
+        <link rel="canonical" href={`https://cloudways-calculator.com${currentLanguage !== 'en' ? `/${currentLanguage}` : ''}`} />
+        <meta property="og:title" content={t('seo.title') || 'Cloudways Calculator - Find Your Perfect Hosting Plan'} />
+        <meta property="og:description" content={t('seo.description') || 'Calculate and compare Cloudways hosting costs with our advanced calculator.'} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://cloudways-calculator.com${currentLanguage !== 'en' ? `/${currentLanguage}` : ''}`} />
+        <html lang={currentLanguage} />
+      </Helmet>
       
-      {/* Enhanced Hero with Auth CTA */}
-      <div className="relative">
-        <Hero onCalculateClick={handleCalculateClick} />
-        
-        {/* Enhanced CTA Section */}
-        <div className="absolute top-4 right-4 z-10">
-          {user ? (
-            <Link to="/dashboard">
-              <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
-                <User className="w-4 h-4 mr-2" />
-                {t('header.dashboard')}
-                <Badge variant="secondary" className="ml-2 bg-white text-emerald-700">
-                  Pro
-                </Badge>
-              </Button>
-            </Link>
-          ) : (
-            <div className="flex gap-2">
-              <Link to="/auth">
-                <Button variant="outline" className="bg-white/90 backdrop-blur-sm">
-                  {t('header.signIn')}
-                </Button>
-              </Link>
-              <Link to="/auth">
-                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg">
-                  <Zap className="w-4 h-4 mr-2" />
-                  {t('header.getStartedFree')}
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50">
+        <Header />
+        <main>
+          <Hero />
+          <Calculator />
+          <Features />
+          <HowItWorks />
+          <PricingComparison />
+          <Testimonials />
+          <FAQ />
+          <EnhancedNewsletter />
+          <SEOContent />
+        </main>
+        <Footer />
       </div>
-
-      {/* Calculator Section with A/B Test */}
-      <section id="calculator" className="py-20 bg-gray-50" onClick={handleCalculatorInteraction}>
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              {calculatorVariant === 'B' ? t('calculator.advancedTitle') : t('calculator.title')}
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {calculatorVariant === 'B' 
-                ? t('calculator.advancedSubtitle')
-                : t('calculator.subtitle')
-              }
-            </p>
-          </div>
-          
-          {calculatorVariant === 'B' ? <EnhancedCalculator /> : <Calculator />}
-        </div>
-      </section>
-
-      <Features />
-      <HowItWorks />
-      
-      {/* Newsletter Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {t('newsletter.title')}
-              </h2>
-              <p className="text-gray-600">
-                {t('newsletter.subtitle')}
-              </p>
-            </div>
-            <NewsletterSignup />
-          </div>
-        </div>
-      </section>
-
-      <ConversionBoosters />
-      <OptimizationGuides />
-      <Testimonials />
-      <FAQ />
-      <SEOContent />
-      <Footer />
-    </div>
+    </>
   );
 };
 
