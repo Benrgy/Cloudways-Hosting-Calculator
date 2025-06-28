@@ -22,28 +22,38 @@ const languages = {
 export const LanguageSelector = () => {
   const { currentLanguage, changeLanguage } = useLanguage();
 
+  const handleLanguageChange = (language: SupportedLanguage) => {
+    console.log('Changing language to:', language);
+    changeLanguage(language);
+    // Force a page refresh to ensure all components re-render with new language
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-2">
+        <Button variant="ghost" size="sm" className="gap-2 hover:bg-emerald-50">
+          <span className="text-lg">{languages[currentLanguage].flag}</span>
+          <span className="hidden sm:inline font-medium">
+            {languages[currentLanguage].name}
+          </span>
           <ChevronDown className="w-4 h-4" />
-          <span className="hidden sm:inline">
-            {languages[currentLanguage].flag} {languages[currentLanguage].name}
-          </span>
-          <span className="sm:hidden">
-            {languages[currentLanguage].flag}
-          </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="min-w-[150px]">
         {Object.entries(languages).map(([code, lang]) => (
           <DropdownMenuItem
             key={code}
-            onClick={() => changeLanguage(code as SupportedLanguage)}
-            className={currentLanguage === code ? "bg-emerald-50" : ""}
+            onClick={() => handleLanguageChange(code as SupportedLanguage)}
+            className={`cursor-pointer ${currentLanguage === code ? "bg-emerald-50 text-emerald-700 font-medium" : "hover:bg-gray-50"}`}
           >
-            <span className="mr-2">{lang.flag}</span>
-            {lang.name}
+            <span className="mr-3 text-lg">{lang.flag}</span>
+            <span>{lang.name}</span>
+            {currentLanguage === code && (
+              <span className="ml-auto text-emerald-600">✓</span>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

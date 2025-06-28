@@ -31,7 +31,19 @@ export const translations = {
     },
     features: {
       title: "Why Choose Our Calculator?",
-      subtitle: "Make informed hosting decisions with comprehensive comparisons, accurate calculations, and personalized recommendations."
+      subtitle: "Make informed hosting decisions with comprehensive comparisons, accurate calculations, and personalized recommendations.",
+      f1Title: "Accurate Cost Analysis",
+      f1Desc: "Get precise hosting cost comparisons based on your actual usage patterns and requirements.",
+      f2Title: "Real-time Calculations",
+      f2Desc: "Instant results with live pricing data from multiple hosting providers.",
+      f3Title: "Security Assessment",
+      f3Desc: "Compare security features and compliance capabilities across different hosting solutions.",
+      f4Title: "Migration Support",
+      f4Desc: "Get personalized migration assistance and zero-downtime transfer guarantees.",
+      f5Title: "Performance Metrics",
+      f5Desc: "Detailed performance comparisons including speed, uptime, and scalability analysis.",
+      f6Title: "Expert Support",
+      f6Desc: "24/7 technical support from hosting experts to guide your decision-making process."
     },
     howItWorks: {
       title: "How It Works",
@@ -46,7 +58,45 @@ export const translations = {
     },
     faq: {
       title: "Frequently Asked Questions",
-      subtitle: "Everything you need to know about our hosting calculator and migration process"
+      subtitle: "Everything you need to know about our hosting calculator and migration process",
+      q1: "How accurate are the cost calculations?",
+      a1: "Our calculator uses real-time pricing data from hosting providers and includes all fees, setup costs, and potential savings to give you the most accurate comparison possible.",
+      q2: "Is the migration really free?",
+      a2: "Yes, Cloudways offers completely free website migration handled by their expert team with zero downtime guarantee for most hosting environments.",
+      q3: "How long does the migration process take?",
+      a3: "Most migrations are completed within 24-48 hours, depending on the size and complexity of your website. Our team will provide you with a detailed timeline.",
+      q4: "Can I try Cloudways before migrating?",
+      a4: "Absolutely! Cloudways offers a free trial period where you can test their platform and services before making the full migration commitment.",
+      q5: "What if I'm not satisfied after migration?",
+      a5: "Cloudways offers a satisfaction guarantee. If you're not happy with their service, they'll help you migrate back or to another provider at no additional cost."
+    },
+    testimonials: {
+      title: "What Our Users Say",
+      subtitle: "Join thousands of satisfied customers who've made the switch to better hosting",
+      t1Name: "Sarah Johnson",
+      t1Role: "E-commerce Store Owner",
+      t1Content: "The calculator helped me realize I was overpaying by 60% for worse performance. The migration was seamless and my site is now 3x faster!",
+      t2Name: "Michael Chen",
+      t2Role: "Digital Marketing Agency",
+      t2Content: "We've migrated 15 client websites using this calculator's recommendations. Every single one saw improved performance and reduced costs.",
+      t3Name: "Emma Rodriguez",
+      t3Role: "Blogger & Content Creator",
+      t3Content: "I was skeptical about cloud hosting, but the calculator showed clear benefits. Now my blog loads instantly and I'm saving $200/month!"
+    },
+    footer: {
+      description: "The most accurate hosting cost calculator and migration assistant for website owners looking to optimize their hosting performance and costs.",
+      product: "Product",
+      calculator: "Calculator",
+      features: "Features",
+      pricing: "Pricing",
+      company: "Company",
+      about: "About Us",
+      blog: "Blog",
+      contact: "Contact",
+      legal: "Legal",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      copyright: "Cloudways Calculator. All rights reserved."
     },
     seo: {
       title: "Why Migrate from Shared Hosting to Cloudways Cloud Hosting?",
@@ -108,7 +158,19 @@ export const translations = {
     },
     features: {
       title: "Waarom Onze Calculator Kiezen?",
-      subtitle: "Neem weloverwogen hosting beslissingen met uitgebreide vergelijkingen, nauwkeurige berekeningen en gepersonaliseerde aanbevelingen."
+      subtitle: "Neem weloverwogen hosting beslissingen met uitgebreide vergelijkingen, nauwkeurige berekeningen en gepersonaliseerde aanbevelingen.",
+      f1Title: "Nauwkeurige Kostenanalyse",
+      f1Desc: "Krijg precieze hosting kostenvergelijkingen gebaseerd op uw werkelijke gebruikspatronen en vereisten.",
+      f2Title: "Real-time Berekeningen",
+      f2Desc: "Directe resultaten met live prijsinformatie van meerdere hosting providers.",
+      f3Title: "Beveiligingsbeoordeling",
+      f3Desc: "Vergelijk beveiligingsfuncties en compliance mogelijkheden tussen verschillende hosting oplossingen.",
+      f4Title: "Migratie Ondersteuning",
+      f4Desc: "Krijg gepersonaliseerde migratie-assistentie en nul-downtime overdracht garanties.",
+      f5Title: "Prestatie Metrics",
+      f5Desc: "Gedetailleerde prestatie vergelijkingen inclusief snelheid, uptime en schaalbaarheidsanalyse.",
+      f6Title: "Expert Ondersteuning",
+      f6Desc: "24/7 technische ondersteuning van hosting experts om uw besluitvormingsproces te begeleiden."
     },
     howItWorks: {
       title: "Hoe Het Werkt",
@@ -123,7 +185,45 @@ export const translations = {
     },
     faq: {
       title: "Veelgestelde Vragen",
-      subtitle: "Alles wat u moet weten over onze hosting calculator en migratieproces"
+      subtitle: "Alles wat u moet weten over onze hosting calculator en migratieproces",
+      q1: "Hoe nauwkeurig zijn de kostenberekeningen?",
+      a1: "Onze calculator gebruikt real-time prijsgegevens van hosting providers en omvat alle kosten, setup kosten en potentiële besparingen om u de meest nauwkeurige vergelijking te geven.",
+      q2: "Is de migratie echt gratis?",
+      a2: "Ja, Cloudways biedt volledig gratis website migratie uitgevoerd door hun expert team met nul downtime garantie voor de meeste hosting omgevingen.",
+      q3: "Hoe lang duurt het migratieproces?",
+      a3: "De meeste migraties zijn voltooid binnen 24-48 uur, afhankelijk van de grootte en complexiteit van uw website. Ons team zal u een gedetailleerd tijdschema geven.",
+      q4: "Kan ik Cloudways proberen voordat ik migreer?",
+      a4: "Absoluut! Cloudways biedt een gratis proefperiode waarin u hun platform en diensten kunt testen voordat u de volledige migratie commitment aangaat.",
+      q5: "Wat als ik niet tevreden ben na migratie?",
+      a5: "Cloudways biedt een tevredenheidsgarantie. Als u niet tevreden bent met hun service, helpen ze u terug te migreren of naar een andere provider zonder extra kosten."
+    },
+    testimonials: {
+      title: "Wat Onze Gebruikers Zeggen",
+      subtitle: "Sluit je aan bij duizenden tevreden klanten die de overstap hebben gemaakt naar betere hosting",
+      t1Name: "Sarah Johnson",
+      t1Role: "E-commerce Winkel Eigenaar",
+      t1Content: "De calculator hielp me realiseren dat ik 60% te veel betaalde voor slechtere prestaties. De migratie was naadloos en mijn site is nu 3x sneller!",
+      t2Name: "Michael Chen",
+      t2Role: "Digitaal Marketing Bureau",
+      t2Content: "We hebben 15 klant websites gemigreerd met deze calculator's aanbevelingen. Elk enkele zag verbeterde prestaties en verminderde kosten.",
+      t3Name: "Emma Rodriguez",
+      t3Role: "Bloggerin & Content Creator",
+      t3Content: "Ik was sceptisch over cloud hosting, maar de calculator toonde duidelijke voordelen. Nu laadt mijn blog direct en bespaar ik €200/maand!"
+    },
+    footer: {
+      description: "De meest accurate hosting kostencalculator en migratie-assistent voor website-eigenaren die hun hosting prestaties en kosten willen optimaliseren.",
+      product: "Product",
+      calculator: "Calculator",
+      features: "Functies",
+      pricing: "Prijzen",
+      company: "Bedrijf",
+      about: "Over Ons",
+      blog: "Blog",
+      contact: "Contact",
+      legal: "Juridisch",
+      privacy: "Privacybeleid",
+      terms: "Servicevoorwaarden",
+      copyright: "Cloudways Calculator. Alle rechten voorbehouden."
     },
     seo: {
       title: "Waarom Migreren van Shared Hosting naar Cloudways Cloud Hosting?",
@@ -185,7 +285,19 @@ export const translations = {
     },
     features: {
       title: "Warum Unseren Rechner Wählen?",
-      subtitle: "Treffen Sie informierte Hosting-Entscheidungen mit umfassenden Vergleichen, genauen Berechnungen und personalisierten Empfehlungen."
+      subtitle: "Treffen Sie informierte Hosting-Entscheidungen mit umfassenden Vergleichen, genauen Berechnungen und personalisierten Empfehlungen.",
+      f1Title: "Genaue Kostenanalyse",
+      f1Desc: "Erhalten Sie präzise Hosting-Kostenvergleiche basierend auf Ihren tatsächlichen Nutzungsmustern und Anforderungen.",
+      f2Title: "Echtzeit-Berechnungen",
+      f2Desc: "Sofortige Ergebnisse mit Live-Preisdaten von mehreren Hosting-Anbietern.",
+      f3Title: "Sicherheitsbewertung",
+      f3Desc: "Vergleichen Sie Sicherheitsfeatures und Compliance-Fähigkeiten verschiedener Hosting-Lösungen.",
+      f4Title: "Migrations-Support",
+      f4Desc: "Erhalten Sie personalisierte Migrationshilfe und Null-Ausfallzeit-Übertragungsgarantien.",
+      f5Title: "Leistungsmetriken",
+      f5Desc: "Detaillierte Leistungsvergleiche einschließlich Geschwindigkeit, Uptime und Skalierbarkeitsanalyse.",
+      f6Title: "Experten-Support",
+      f6Desc: "24/7 technischer Support von Hosting-Experten zur Unterstützung Ihres Entscheidungsprozesses."
     },
     howItWorks: {
       title: "Wie Es Funktioniert",
@@ -200,7 +312,45 @@ export const translations = {
     },
     faq: {
       title: "Häufig Gestellte Fragen",
-      subtitle: "Alles was Sie über unseren Hosting-Rechner und Migrationsprozess wissen müssen"
+      subtitle: "Alles was Sie über unseren Hosting-Rechner und Migrationsprozess wissen müssen",
+      q1: "Wie genau sind die Kostenberechnungen?",
+      a1: "Unser Rechner verwendet Echtzeit-Preisdaten von Hosting-Anbietern und beinhaltet alle Gebühren, Setup-Kosten und potenzielle Einsparungen, um Ihnen den genauesten Vergleich zu bieten.",
+      q2: "Ist die Migration wirklich kostenlos?",
+      a2: "Ja, Cloudways bietet völlig kostenlose Website-Migration, durchgeführt von ihrem Expertenteam mit Null-Ausfallzeit-Garantie für die meisten Hosting-Umgebungen.",
+      q3: "Wie lange dauert der Migrationsprozess?",
+      a3: "Die meisten Migrationen sind innerhalb von 24-48 Stunden abgeschlossen, abhängig von der Größe und Komplexität Ihrer Website. Unser Team wird Ihnen einen detaillierten Zeitplan geben.",
+      q4: "Kann ich Cloudways vor der Migration testen?",
+      a4: "Absoluut! Cloudways bietet eine kostenlose Testperiode, in der Sie ihre Plattform und Services testen können, bevor Sie sich zur vollständigen Migration verpflichten.",
+      q5: "Was ist, wenn ich nach der Migration nicht zufrieden bin?",
+      a5: "Cloudways bietet eine Zufriedenheitsgarantie. Wenn Sie mit ihrem Service nicht zufrieden sind, helfen sie Ihnen, zurück oder zu einem anderen Anbieter zu migrieren, ohne zusätzliche Kosten."
+    },
+    testimonials: {
+      title: "Was Unsere Nutzer Sagen",
+      subtitle: "Schließen Sie sich Tausenden zufriedener Kunden an, die zu besserem Hosting gewechselt sind",
+      t1Name: "Sarah Johnson",
+      t1Role: "E-Commerce-Shop-Inhaberin",
+      t1Content: "Der Rechner half mir zu erkennen, dass ich 60% zu viel für schlechtere Leistung bezahlte. Die Migration war nahtlos und meine Site ist jetzt 3x schneller!",
+      t2Name: "Michael Chen",
+      t2Role: "Digital Marketing Agentur",
+      t2Content: "Wir haben 15 Kunden-Websites mit den Empfehlungen dieses Rechners migriert. Jede einzelne sah verbesserte Leistung und reduzierte Kosten.",
+      t3Name: "Emma Rodriguez",
+      t3Role: "Bloggerin & Content Creator",
+      t3Content: "Ich war skeptisch bezüglich Cloud-Hosting, aber der Rechner zeigte klare Vorteile. Jetzt lädt mein Blog sofort und ich spare 200€/Monat!"
+    },
+    footer: {
+      description: "Der genaueste Hosting-Kostenrechner und Migrationsassistent für Website-Besitzer, die ihre Hosting-Leistung und -Kosten optimieren möchten.",
+      product: "Produkt",
+      calculator: "Rechner",
+      features: "Funktionen",
+      pricing: "Preise",
+      company: "Unternehmen",
+      about: "Über Uns",
+      blog: "Blog",
+      contact: "Kontakt",
+      legal: "Rechtliches",
+      privacy: "Datenschutz",
+      terms: "Nutzungsbedingungen",
+      copyright: "Cloudways Calculator. Alle Rechte vorbehalten."
     },
     seo: {
       title: "Warum Von Shared Hosting Zu Cloudways Cloud Hosting Migrieren?",
@@ -262,7 +412,19 @@ export const translations = {
     },
     features: {
       title: "Pourquoi Choisir Notre Calculatrice?",
-      subtitle: "Prenez des décisions d'hébergement éclairées avec des comparaisons complètes, des calculs précis et des recommandations personnalisées."
+      subtitle: "Prenez des décisions d'hébergement éclairées avec des comparaisons complètes, des calculs précis et des recommandations personnalisées.",
+      f1Title: "Analyse de Coûts Précise",
+      f1Desc: "Obtenez des comparaisons précises des coûts d'hébergement basées sur vos modèles d'utilisation et exigences réels.",
+      f2Title: "Calculs en Temps Réel",
+      f2Desc: "Résultats instantanés avec des données de prix en direct de plusieurs fournisseurs d'hébergement.",
+      f3Title: "Évaluation de Sécurité",
+      f3Desc: "Comparez les fonctionnalités de sécurité et les capacités de conformité entre différentes solutions d'hébergement.",
+      f4Title: "Support de Migration",
+      f4Desc: "Obtenez une assistance de migration personnalisée et des garanties de transfert sans temps d'arrêt.",
+      f5Title: "Métriques de Performance",
+      f5Desc: "Comparaisons détaillées de performance incluant vitesse, temps de fonctionnement et analyse de scalabilité.",
+      f6Title: "Support Expert",
+      f6Desc: "Support technique 24/7 d'experts en hébergement pour guider votre processus de prise de décision."
     },
     howItWorks: {
       title: "Comment Ça Marche",
@@ -277,7 +439,45 @@ export const translations = {
     },
     faq: {
       title: "Questions Fréquemment Posées",
-      subtitle: "Tout ce que vous devez savoir sur notre calculatrice d'hébergement et le processus de migration"
+      subtitle: "Tout ce que vous devez savoir sur notre calculatrice d'hébergement et le processus de migration",
+      q1: "Quelle est la précision des calculs de coûts?",
+      a1: "Notre calculatrice utilise des données de prix en temps réel des fournisseurs d'hébergement et inclut tous les frais, coûts de configuration et économies potentielles pour vous donner la comparaison la plus précise possible.",
+      q2: "La migration est-elle vraiment gratuite?",
+      a2: "Oui, Cloudways offre une migration de site web complètement gratuite gérée par leur équipe d'experts avec une garantie zéro temps d'arrêt pour la plupart des environnements d'hébergement.",
+      q3: "Combien de temps dure le processus de migration?",
+      a3: "La plupart des migrations sont terminées dans les 24-48 heures, selon la taille et la complexité de votre site web. Notre équipe vous fournira un calendrier détaillé.",
+      q4: "Puis-je essayer Cloudways avant de migrer?",
+      a4: "Absolument! Cloudways offre une période d'essai gratuite où vous pouvez tester leur plateforme et services avant de prendre l'engagement de migration complète.",
+      q5: "Que se passe-t-il si je ne suis pas satisfait après la migration?",
+      a5: "Cloudways offre une garantie de satisfaction. Si vous n'êtes pas content de leur service, ils vous aideront à migrer en arrière ou vers un autre fournisseur sans coût supplémentaire."
+    },
+    testimonials: {
+      title: "Ce Que Disent Nos Utilisateurs",
+      subtitle: "Rejoignez des milliers de clients satisfaits qui ont fait le changement vers un meilleur hébergement",
+      t1Name: "Sarah Johnson",
+      t1Role: "Propriétaire de Boutique E-commerce",
+      t1Content: "La calculatrice m'a aidée à réaliser que je payais 60% de trop pour de moins bonnes performances. La migration a été sans couture et mon site est maintenant 3x plus rapide!",
+      t2Name: "Michael Chen",
+      t2Role: "Agence de Marketing Digital",
+      t2Content: "Nous avons migré 15 sites web clients en utilisant les recommandations de cette calculatrice. Chacun a vu des performances améliorées et des coûts réduits.",
+      t3Name: "Emma Rodriguez",
+      t3Role: "Blogueuse & Créatrice de Contenu",
+      t3Content: "J'étais sceptique à propos de l'hébergement cloud, mais la calculatrice a montré des avantages clairs. Maintenant mon blog se charge instantanément et j'économise 200€/mois!"
+    },
+    footer: {
+      description: "La calculatrice de coûts d'hébergement la plus précise et l'assistant de migration pour les propriétaires de sites web cherchant à optimiser leurs performances et coûts d'hébergement.",
+      product: "Produit",
+      calculator: "Calculatrice",
+      features: "Fonctionnalités",
+      pricing: "Tarifs",
+      company: "Entreprise",
+      about: "À Propos",
+      blog: "Blog",
+      contact: "Contact",
+      legal: "Juridique",
+      privacy: "Politique de Confidentialité",
+      terms: "Conditions de Service",
+      copyright: "Cloudways Calculator. Tous droits réservés."
     },
     seo: {
       title: "Pourquoi Migrer de l'Hébergement Partagé vers l'Hébergement Cloud Cloudways?",
@@ -339,7 +539,19 @@ export const translations = {
     },
     features: {
       title: "¿Por Qué Elegir Nuestra Calculadora?",
-      subtitle: "Tome decisiones de hosting informadas con comparaciones completas, cálculos precisos y recomendaciones personalizadas."
+      subtitle: "Tome decisiones de hosting informadas con comparaciones completas, cálculos precisos y recomendaciones personalizadas.",
+      f1Title: "Análisis de Costos Preciso",
+      f1Desc: "Obtenga comparaciones precisas de costos de hosting basadas en sus patrones de uso y requerimientos reales.",
+      f2Title: "Cálculos en Tiempo Real",
+      f2Desc: "Resultados instantáneos con datos de precios en vivo de múltiples proveedores de hosting.",
+      f3Title: "Evaluación de Seguridad",
+      f3Desc: "Compare características de seguridad y capacidades de cumplimiento entre diferentes soluciones de hosting.",
+      f4Title: "Soporte de Migración",
+      f4Desc: "Obtenga asistencia de migración personalizada y garantías de transferencia sin tiempo de inactividad.",
+      f5Title: "Métricas de Rendimiento",
+      f5Desc: "Comparaciones detalladas de rendimiento incluyendo velocidad, tiempo de actividad y análisis de escalabilidad.",
+      f6Title: "Soporte Experto",
+      f6Desc: "Soporte técnico 24/7 de expertos en hosting para guiar su proceso de toma de decisiones."
     },
     howItWorks: {
       title: "Cómo Funciona",
@@ -354,7 +566,45 @@ export const translations = {
     },
     faq: {
       title: "Preguntas Frecuentes",
-      subtitle: "Todo lo que necesita saber sobre nuestra calculadora de hosting y proceso de migración"
+      subtitle: "Todo lo que necesita saber sobre nuestra calculadora de hosting y proceso de migración",
+      q1: "¿Qué tan precisos son los cálculos de costos?",
+      a1: "Nuestra calculadora usa datos de precios en tiempo real de proveedores de hosting e incluye todas las tarifas, costos de configuración y ahorros potenciales para darle la comparación más precisa posible.",
+      q2: "¿Es realmente gratuita la migración?",
+      a2: "Sí, Cloudways ofrece migración de sitio web completamente gratuita manejada por su equipo experto con garantía de cero tiempo de inactividad para la mayoría de entornos de hosting.",
+      q3: "¿Cuánto tiempo toma el proceso de migración?",
+      a3: "La mayoría de migraciones se completan dentro de 24-48 horas, dependiendo del tamaño y complejidad de su sitio web. Nuestro equipo le proporcionará un cronograma detallado.",
+      q4: "¿Puedo probar Cloudways antes de migrar?",
+      a4: "¡Absolutamente! Cloudways ofrece un período de prueba gratuito donde puede probar su plataforma y servicios antes de comprometerse con la migración completa.",
+      q5: "¿Qué pasa si no estoy satisfecho después de la migración?",
+      a5: "Cloudways ofrece una garantía de satisfacción. Si no está contento con su servicio, le ayudarán a migrar de vuelta o a otro proveedor sin costo adicional."
+    },
+    testimonials: {
+      title: "Lo Que Dicen Nuestros Usuarios",
+      subtitle: "Únase a miles de clientes satisfechos que han hecho el cambio a mejor hosting",
+      t1Name: "Sarah Johnson",
+      t1Role: "Propietaria de Tienda E-commerce",
+      t1Content: "La calculadora me ayudó a darme cuenta de que estaba pagando 60% de más por peor rendimiento. ¡La migración fue perfecta y mi sitio ahora es 3x más rápido!",
+      t2Name: "Michael Chen",
+      t2Role: "Agencia de Marketing Digital",
+      t2Content: "Hemos migrado 15 sitios web de clientes usando las recomendaciones de esta calculadora. Cada uno vio rendimiento mejorado y costos reducidos.",
+      t3Name: "Emma Rodriguez",
+      t3Role: "Bloguera & Creadora de Contenido",
+      t3Content: "Era escéptica sobre cloud hosting, pero la calculadora a mostrado beneficios claros. ¡Ahora mi blog carga al instante y estoy ahorrando $200/mes!"
+    },
+    footer: {
+      description: "La calculadora de costos de hosting más precisa y asistente de migración para propietarios de sitios web que buscan optimizar su rendimiento y costos de hosting.",
+      product: "Producto",
+      calculator: "Calculadora",
+      features: "Características",
+      pricing: "Precios",
+      company: "Empresa",
+      about: "Acerca de",
+      blog: "Blog",
+      contact: "Contacto",
+      legal: "Legal",
+      privacy: "Política de Privacidad",
+      terms: "Términos de Servicio",
+      copyright: "Cloudways Calculator. Todos los derechos reservados."
     },
     seo: {
       title: "¿Por Qué Migrar del Hosting Compartido al Hosting en la Nube Cloudways?",

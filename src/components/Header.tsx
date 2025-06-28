@@ -1,132 +1,90 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ChevronDown, X } from "lucide-react";
-import { LanguageSelector } from "@/components/LanguageSelector";
-import { useLanguage } from "@/contexts/LanguageContext";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { LanguageSelector } from '@/components/LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useLanguage();
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMenuOpen(false);
-  };
-
-  const handleCloudwaysClick = () => {
-    window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=header&utm_campaign=savings_calculator', '_blank');
-  };
-
   return (
-    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
+    <header className="bg-white shadow-sm border-b">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link id="header-home" aria-label="Cloudways Savings Calculator Homepage" to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CW</span>
-            </div>
-            <span className="font-bold text-xl text-gray-900">Cloudways Savings Calculator</span>
+        <div className="flex justify-between items-center py-4">
+          <Link to="/" className="text-2xl font-bold text-emerald-600">
+            Cloudways Calculator
           </Link>
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Main Navigation">
-            <button 
-              onClick={() => scrollToSection('features-section')}
-              id="desktop-nav-features"
-              className="text-gray-600 hover:text-primary transition-colors"
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#features" className="text-gray-600 hover:text-emerald-600 transition-colors">
+              {t('header.features')}
+            </a>
+            <a href="#how-it-works" className="text-gray-600 hover:text-emerald-600 transition-colors">
+              {t('header.howItWorks')}
+            </a>
+            <a href="#faq" className="text-gray-600 hover:text-emerald-600 transition-colors">
+              {t('header.faq')}
+            </a>
+            <a href="#calculator" className="text-gray-600 hover:text-emerald-600 transition-colors">
+              {t('header.calculator')}
+            </a>
+            <LanguageSelector />
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+              {t('header.startFreeTrial')}
+            </Button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center space-x-4">
+            <LanguageSelector />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-gray-600 hover:text-emerald-600"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <nav className="md:hidden pb-4 space-y-4">
+            <a 
+              href="#features" 
+              className="block text-gray-600 hover:text-emerald-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
               {t('header.features')}
-            </button>
-            <button 
-              onClick={() => scrollToSection('how-it-works-section')}
-              id="desktop-nav-howitworks"
-              className="text-gray-600 hover:text-primary transition-colors"
+            </a>
+            <a 
+              href="#how-it-works" 
+              className="block text-gray-600 hover:text-emerald-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
               {t('header.howItWorks')}
-            </button>
-            <button 
-              onClick={() => scrollToSection('faq-section')}
-              id="desktop-nav-faq"
-              className="text-gray-600 hover:text-primary transition-colors"
+            </a>
+            <a 
+              href="#faq" 
+              className="block text-gray-600 hover:text-emerald-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
               {t('header.faq')}
-            </button>
-            <button 
-              onClick={() => scrollToSection('calculator-section')}
-              id="desktop-nav-calculator"
-              className="text-gray-600 hover:text-primary transition-colors"
+            </a>
+            <a 
+              href="#calculator" 
+              className="block text-gray-600 hover:text-emerald-600 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
             >
               {t('header.calculator')}
-            </button>
-            <button 
-              onClick={handleCloudwaysClick}
-              id="desktop-nav-cloudways"
-              rel="sponsored noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-              aria-label="Start Free Trial"
-            >
+            </a>
+            <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
               {t('header.startFreeTrial')}
-            </button>
-            <span aria-label="Language Selector" tabIndex={0}><LanguageSelector /></span>
+            </Button>
           </nav>
-          <button
-            className="md:hidden"
-            id="mobile-menu-toggle"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            title={isMenuOpen ? "Close Main Menu" : "Open Main Menu"}
-            aria-label={isMenuOpen ? "Close main menu" : "Open main menu"}
-          >
-            <span className="sr-only">{isMenuOpen ? "Close main menu" : "Open main menu"}</span>
-            {isMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <ChevronDown className="w-6 h-6" aria-hidden="true" />}
-          </button>
-        </div>
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t" aria-label="Mobile Navigation">
-            <div className="flex flex-col space-y-4">
-              <button
-                onClick={() => scrollToSection('features-section')}
-                id="mobile-nav-features"
-                className="text-gray-600 hover:text-primary transition-colors text-left"
-              >
-                {t('header.features')}
-              </button>
-              <button
-                onClick={() => scrollToSection('how-it-works-section')}
-                id="mobile-nav-howitworks"
-                className="text-gray-600 hover:text-primary transition-colors text-left"
-              >
-                {t('header.howItWorks')}
-              </button>
-              <button
-                onClick={() => scrollToSection('faq-section')}
-                id="mobile-nav-faq"
-                className="text-gray-600 hover:text-primary transition-colors text-left"
-              >
-                {t('header.faq')}
-              </button>
-              <button
-                onClick={() => scrollToSection('calculator-section')}
-                id="mobile-nav-calculator"
-                className="text-gray-600 hover:text-primary transition-colors text-left"
-              >
-                {t('header.calculator')}
-              </button>
-              <button
-                onClick={handleCloudwaysClick}
-                id="mobile-nav-cloudways"
-                rel="sponsored noopener noreferrer"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-left"
-                aria-label="Start Free Trial"
-              >
-                {t('header.startFreeTrial')}
-              </button>
-              <div className="pt-2 border-t">
-                <span aria-label="Language Selector" tabIndex={0}><LanguageSelector /></span>
-              </div>
-            </div>
-          </div>
         )}
       </div>
     </header>
