@@ -1,7 +1,8 @@
 
-import { Button } from "@/components/ui/button";
-import { Calculator, ArrowUp, Shield, ChevronDown } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Calculator, Zap, Shield, Users } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HeroProps {
   onCalculateClick: () => void;
@@ -10,88 +11,109 @@ interface HeroProps {
 export const Hero = ({ onCalculateClick }: HeroProps) => {
   const { t } = useLanguage();
 
-  const handleCloudwaysClick = () => {
-    window.open('https://www.cloudways.com/en/?id=1384181&utm_source=calculator&utm_medium=hero_cta&utm_campaign=savings_calculator', '_blank');
-  };
-
   return (
-    <section className="bg-gradient-to-br from-emerald-50 via-white to-blue-50 py-20">
-      <div className="container mx-auto px-4">
+    <section className="relative pt-20 pb-32 bg-gradient-to-br from-blue-50 to-emerald-50 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10"></div>
+      
+      <div className="container mx-auto px-4 relative">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+          {/* Main heading */}
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             {t('hero.title')}
           </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-800 mb-8">
+          
+          {/* Subtitle */}
+          <h2 className="text-xl md:text-2xl text-gray-600 mb-8 font-medium">
             {t('hero.subtitle')}
           </h2>
-          <p className="text-xl text-gray-800 mb-12 max-w-3xl mx-auto">
+          
+          {/* Description */}
+          <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
             {t('hero.description')}
           </p>
-
-          {/* Key Benefits */}
-          <div className="grid md:grid-cols-4 gap-6 mb-12">
-            <div className="flex flex-col items-center p-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
-                <Calculator className="w-6 h-6 text-emerald-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{t('hero.instantCalculations')}</h3>
-              <p className="text-sm text-gray-800">{t('hero.instantCalculationsDesc')}</p>
-            </div>
-            <div className="flex flex-col items-center p-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                <ArrowUp className="w-6 h-6 text-blue-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{t('hero.performanceBoost')}</h3>
-              <p className="text-sm text-gray-800">{t('hero.performanceBoostDesc')}</p>
-            </div>
-            <div className="flex flex-col items-center p-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                <Shield className="w-6 h-6 text-purple-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{t('hero.betterSecurity')}</h3>
-              <p className="text-sm text-gray-800">{t('hero.betterSecurityDesc')}</p>
-            </div>
-            <div className="flex flex-col items-center p-4">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
-                <ChevronDown className="w-6 h-6 text-orange-600" />
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{t('hero.freeMigration')}</h3>
-              <p className="text-sm text-gray-800">{t('hero.freeMigrationDesc')}</p>
-            </div>
-          </div>
-
+          
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button 
               onClick={onCalculateClick}
-              size="lg" 
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-medium"
+              size="lg"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold"
             >
+              <Calculator className="w-5 h-5 mr-2" />
               {t('hero.calculateSavings')}
             </Button>
             <Button 
-              onClick={handleCloudwaysClick}
-              size="lg" 
-              variant="outline"
-              className="border-emerald-600 text-emerald-700 hover:bg-emerald-600 hover:text-white px-8 py-4 text-lg font-medium"
+              variant="outline" 
+              size="lg"
+              className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold"
             >
               {t('hero.startTrial')}
             </Button>
           </div>
-
-          {/* Trust Indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-900 font-medium">
-            <div className="flex items-center gap-2">
-              <span className="text-green-600">✓</span>
-              <span>{t('hero.trustIndicator1')}</span>
+          
+          {/* Trust indicators */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-16">
+            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-lg shadow-sm">
+              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Calculator className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">{t('hero.trustIndicator1')}</div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-green-600">✓</span>
-              <span>{t('hero.trustIndicator2')}</span>
+            
+            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-lg shadow-sm">
+              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Users className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">{t('hero.trustIndicator2')}</div>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-green-600">✓</span>
-              <span>{t('hero.trustIndicator3')}</span>
+            
+            <div className="flex items-center justify-center space-x-3 p-4 bg-white rounded-lg shadow-sm">
+              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Shield className="w-5 h-5 text-emerald-600" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold text-gray-900">{t('hero.trustIndicator3')}</div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Feature highlights */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calculator className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('hero.instantCalculations')}</h3>
+              <p className="text-gray-600 text-sm">{t('hero.instantCalculationsDesc')}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('hero.performanceBoost')}</h3>
+              <p className="text-gray-600 text-sm">{t('hero.performanceBoostDesc')}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('hero.betterSecurity')}</h3>
+              <p className="text-gray-600 text-sm">{t('hero.betterSecurityDesc')}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-emerald-600" />
+              </div>
+              <h3 className="font-semibold text-gray-900 mb-2">{t('hero.freeMigration')}</h3>
+              <p className="text-gray-600 text-sm">{t('hero.freeMigrationDesc')}</p>
             </div>
           </div>
         </div>

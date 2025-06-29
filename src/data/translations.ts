@@ -118,6 +118,8 @@ export const translations = {
     seo: {
       title: "Why Switch to Cloudways Hosting?",
       subtitle: "Discover the benefits of managed cloud hosting and how it can transform your website's performance and reduce costs.",
+      description: "Calculate and compare Cloudways hosting costs with our advanced calculator. Find the perfect hosting plan for your website with real-time pricing and recommendations.",
+      keywords: "cloudways, hosting calculator, web hosting, cloud hosting, pricing calculator",
       performanceTitle: "Superior Performance",
       performanceDesc: "Experience lightning-fast loading times with our optimized cloud infrastructure, advanced caching, and global CDN network.",
       costTitle: "Cost Optimization",
@@ -253,6 +255,8 @@ export const translations = {
     seo: {
       title: "Waarom Overstappen naar Cloudways Hosting?",
       subtitle: "Ontdek de voordelen van beheerde cloud hosting en hoe het de prestaties van je website kan transformeren en kosten kan verlagen.",
+      description: "Bereken en vergelijk Cloudways hosting kosten met onze geavanceerde calculator. Vind het perfecte hosting plan voor je website.",
+      keywords: "cloudways, hosting calculator, web hosting, cloud hosting, prijs calculator",
       performanceTitle: "Superieure Prestaties",
       performanceDesc: "Ervaar bliksemsnelle laadtijden met onze geoptimaliseerde cloud infrastructuur, geavanceerde caching, en wereldwijd CDN netwerk.",
       costTitle: "Kosten Optimalisatie",
@@ -388,6 +392,8 @@ export const translations = {
     seo: {
       title: "Warum zu Cloudways Hosting Wechseln?",
       subtitle: "Entdecken Sie die Vorteile von verwaltetem Cloud-Hosting und wie es die Leistung Ihrer Website transformieren und Kosten senken kann.",
+      description: "Berechnen und vergleichen Sie Cloudways Hosting-Kosten mit unserem erweiterten Rechner.",
+      keywords: "cloudways, hosting rechner, web hosting, cloud hosting, preis rechner",
       performanceTitle: "Überlegene Leistung",
       performanceDesc: "Erleben Sie blitzschnelle Ladezeiten mit unserer optimierten Cloud-Infrastruktur, erweiterten Caching und globalem CDN-Netzwerk.",
       costTitle: "Kostenoptimierung",
@@ -523,6 +529,8 @@ export const translations = {
     seo: {
       title: "Pourquoi Passer à l'Hébergement Cloudways?",
       subtitle: "Découvrez les avantages de l'hébergement cloud géré et comment il peut transformer les performances de votre site web et réduire les coûts.",
+      description: "Calculez et comparez les coûts d'hébergement Cloudways avec notre calculatrice avancée.",
+      keywords: "cloudways, calculatrice hébergement, hébergement web, cloud hosting, calculateur prix",
       performanceTitle: "Performance Supérieure",
       performanceDesc: "Expérimentez des temps de chargement ultra-rapides avec notre infrastructure cloud optimisée, mise en cache avancée, et réseau CDN mondial.",
       costTitle: "Optimisation des Coûts",
@@ -658,6 +666,8 @@ export const translations = {
     seo: {
       title: "¿Por Qué Cambiar al Hosting de Cloudways?",
       subtitle: "Descubre los beneficios del hosting cloud administrado y cómo puede transformar el rendimiento de tu sitio web y reducir costos.",
+      description: "Calcula y compara los costos de hosting de Cloudways con nuestra calculadora avanzada.",
+      keywords: "cloudways, calculadora hosting, alojamiento web, cloud hosting, calculador precios",
       performanceTitle: "Rendimiento Superior",
       performanceDesc: "Experimenta tiempos de carga súper rápidos con nuestra infraestructura cloud optimizada, caché avanzado, y red CDN global.",
       costTitle: "Optimización de Costos",
