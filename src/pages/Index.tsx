@@ -16,6 +16,13 @@ import { Helmet } from 'react-helmet-async';
 const Index = () => {
   const { t, currentLanguage } = useLanguage();
 
+  const handleCalculateClick = () => {
+    const calculatorElement = document.getElementById('calculator');
+    if (calculatorElement) {
+      calculatorElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -33,8 +40,10 @@ const Index = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50">
         <Header />
         <main>
-          <Hero />
-          <Calculator />
+          <Hero onCalculateClick={handleCalculateClick} />
+          <div id="calculator">
+            <Calculator />
+          </div>
           <Features />
           <HowItWorks />
           <PricingComparison />

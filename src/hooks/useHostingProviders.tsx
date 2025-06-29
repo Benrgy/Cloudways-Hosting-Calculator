@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -24,8 +25,12 @@ export const useHostingProviders = () => {
       
       if (error) throw error;
       return data;
-    },
-    onError: (error: any) => {
+    }
+  });
+
+  // Handle errors using useEffect instead of onError
+  React.useEffect(() => {
+    if (error) {
       console.error('Error fetching hosting providers:', error);
       toast({
         title: "Error",
@@ -33,7 +38,7 @@ export const useHostingProviders = () => {
         variant: "destructive",
       });
     }
-  });
+  }, [error, toast]);
 
   return {
     providers,

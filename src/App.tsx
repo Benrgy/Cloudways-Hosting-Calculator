@@ -1,22 +1,24 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
-import { Auth } from '@/pages/Auth';
-import { Dashboard } from '@/pages/Dashboard';
-import { Index } from '@/pages/Index';
-import { NotFound } from '@/pages/NotFound';
+import Auth from '@/pages/Auth';
+import Dashboard from '@/pages/Dashboard';
+import Index from '@/pages/Index';
+import NotFound from '@/pages/NotFound';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { HelmetProvider } from 'react-helmet-async';
-
 import { SupabaseErrorBoundary } from '@/components/SupabaseErrorBoundary';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <SupabaseErrorBoundary>
-      <QueryClient>
+      <QueryClientProvider client={queryClient}>
         <LanguageProvider>
           <AuthProvider>
             <HelmetProvider>
@@ -38,7 +40,7 @@ function App() {
             </HelmetProvider>
           </AuthProvider>
         </LanguageProvider>
-      </QueryClient>
+      </QueryClientProvider>
     </SupabaseErrorBoundary>
   );
 }
