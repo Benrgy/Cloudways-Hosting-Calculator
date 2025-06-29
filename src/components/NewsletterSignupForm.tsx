@@ -14,7 +14,7 @@ export const NewsletterSignupForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      subscribe({ email, name: name || undefined });
+      subscribe({ email, name: name || undefined, source: 'newsletter' });
       setEmail('');
       setName('');
     }
@@ -22,31 +22,29 @@ export const NewsletterSignupForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
+      <div className="flex flex-col sm:flex-row gap-4">
         <Input
           type="email"
-          placeholder={t('newsletter.emailPlaceholder') || 'Enter your email'}
+          placeholder={t('newsletter.emailPlaceholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full"
+          className="flex-1"
         />
-      </div>
-      <div>
         <Input
           type="text"
-          placeholder={t('newsletter.namePlaceholder') || 'Your name (optional)'}
+          placeholder={t('newsletter.namePlaceholder')}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full"
+          className="flex-1"
         />
       </div>
-      <Button
-        type="submit"
+      <Button 
+        type="submit" 
         disabled={isSubscribing || !email}
-        className="w-full"
+        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
       >
-        {isSubscribing ? t('newsletter.subscribing') || 'Subscribing...' : t('newsletter.subscribe') || 'Subscribe'}
+        {isSubscribing ? t('newsletter.subscribing') : t('newsletter.subscribe')}
       </Button>
     </form>
   );
