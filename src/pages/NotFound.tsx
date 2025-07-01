@@ -10,9 +10,16 @@ const NotFound = () => {
   useEffect(() => {
     console.error(
       "404 Error: User attempted to access non-existent route:",
-      location.pathname
+      location.pathname,
+      "Full URL:", window.location.href
     );
   }, [location.pathname]);
+
+  const handleReturnHome = () => {
+    // For GitHub Pages, ensure we navigate to the correct base path
+    const basePath = import.meta.env.PROD ? '/cloudways-savings-calculator' : '';
+    window.location.href = basePath + '/';
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-emerald-50">
@@ -29,12 +36,13 @@ const NotFound = () => {
         </div>
         
         <div className="space-y-4">
-          <Link to="/">
-            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 w-full">
-              <Home className="w-5 h-5 mr-2" />
-              Return to Home
-            </Button>
-          </Link>
+          <Button 
+            onClick={handleReturnHome}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 w-full"
+          >
+            <Home className="w-5 h-5 mr-2" />
+            Return to Home
+          </Button>
           
           <Link to="/#calculator">
             <Button variant="outline" className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 w-full">
@@ -47,6 +55,7 @@ const NotFound = () => {
         <div className="mt-8 text-sm text-gray-500">
           <p>Error code: 404</p>
           <p>Path: {location.pathname}</p>
+          <p>Environment: {import.meta.env.MODE}</p>
         </div>
       </div>
     </div>

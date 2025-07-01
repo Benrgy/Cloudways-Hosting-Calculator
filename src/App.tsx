@@ -13,7 +13,14 @@ import { LanguageProvider } from '@/contexts/LanguageContext';
 import { HelmetProvider } from 'react-helmet-async';
 import { SupabaseErrorBoundary } from '@/components/SupabaseErrorBoundary';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
 
 function App() {
   // Handle GitHub Pages SPA routing
@@ -21,11 +28,13 @@ function App() {
     const search = window.location.search;
     if (search && search.indexOf('?/') !== -1) {
       const path = search.slice(2).replace(/~/g, '&');
+      console.log('GitHub Pages redirect detected, navigating to:', path || '/');
       window.history.replaceState(null, '', path || '/');
     }
   }, []);
 
   const basename = import.meta.env.PROD ? '/cloudways-savings-calculator' : '';
+  console.log('App basename:', basename, 'Mode:', import.meta.env.MODE);
   
   return (
     <SupabaseErrorBoundary>

@@ -3,16 +3,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Cloudways Calculator</title>
+    <title>Cloudways Calculator - Redirecting...</title>
     <script type="text/javascript">
       console.log("=== 404.html REDIRECT STARTING ===");
       console.log("Current location:", window.location.href);
       
       // GitHub Pages SPA redirect for cloudways-savings-calculator
       var l = window.location;
+      var pathSegments = l.pathname.split('/').filter(function(segment) {
+        return segment.length > 0;
+      });
+      
+      // Remove 'cloudways-savings-calculator' from path if it exists
+      if (pathSegments[0] === 'cloudways-savings-calculator') {
+        pathSegments.shift();
+      }
+      
+      var redirectPath = pathSegments.length > 0 ? '/' + pathSegments.join('/') : '/';
       var redirect = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        '/cloudways-savings-calculator/' + '?/' +
-        l.pathname.slice(1).split('/').slice(1).join('/').replace(/&/g, '~and~') +
+        '/cloudways-savings-calculator/' + '?/' + redirectPath.slice(1) +
         (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
         l.hash;
       
