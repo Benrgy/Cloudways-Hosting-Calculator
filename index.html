@@ -12,8 +12,17 @@
     <!-- Preconnect to Google Analytics for faster loading -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
     
-    <!-- Google Analytics will be loaded dynamically by the app -->
-    <!-- This ensures proper configuration with environment variables -->
+    <!-- Ensure proper base path for GitHub Pages -->
+    <script type="text/javascript">
+      // GitHub Pages SPA support
+      (function() {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

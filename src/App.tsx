@@ -16,6 +16,17 @@ import { SupabaseErrorBoundary } from '@/components/SupabaseErrorBoundary';
 const queryClient = new QueryClient();
 
 function App() {
+  // Handle GitHub Pages SPA routing
+  React.useEffect(() => {
+    const search = window.location.search;
+    if (search && search.indexOf('?/') !== -1) {
+      const path = search.slice(2).replace(/~/g, '&');
+      window.history.replaceState(null, '', path || '/');
+    }
+  }, []);
+
+  const basename = import.meta.env.PROD ? '/cloudways-savings-calculator' : '';
+  
   return (
     <SupabaseErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -24,7 +35,7 @@ function App() {
             <HelmetProvider>
               <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50">
                 <Toaster />
-                <BrowserRouter>
+                <BrowserRouter basename={basename}>
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/auth" element={<Auth />} />
