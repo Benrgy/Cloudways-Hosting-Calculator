@@ -7,6 +7,9 @@
     <script type="text/javascript">
       console.log("=== 404.html REDIRECT STARTING ===");
       console.log("Current location:", window.location.href);
+      console.log("Pathname:", window.location.pathname);
+      console.log("Search:", window.location.search);
+      console.log("Hash:", window.location.hash);
       
       // GitHub Pages SPA redirect for cloudways-savings-calculator
       var l = window.location;
@@ -14,25 +17,45 @@
         return segment.length > 0;
       });
       
+      console.log("Path segments:", pathSegments);
+      
       // Remove 'cloudways-savings-calculator' from path if it exists
       if (pathSegments[0] === 'cloudways-savings-calculator') {
         pathSegments.shift();
+        console.log("Removed repo name, remaining segments:", pathSegments);
       }
       
+      // Build the redirect path
       var redirectPath = pathSegments.length > 0 ? '/' + pathSegments.join('/') : '/';
-      var redirect = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        '/cloudways-savings-calculator/' + '?/' + redirectPath.slice(1) +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash;
       
-      console.log("Redirecting to:", redirect);
+      // Handle search params and hash
+      var searchParams = l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '';
+      var hashParams = l.hash || '';
+      
+      // Construct the final redirect URL
+      var redirect = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/cloudways-savings-calculator/' + '?/' + redirectPath.slice(1) + searchParams + hashParams;
+      
+      console.log("Final redirect URL:", redirect);
+      
+      // Store the redirect info in sessionStorage for the main app
+      sessionStorage.setItem('github-pages-redirect', JSON.stringify({
+        originalPath: l.pathname,
+        redirectPath: redirectPath,
+        timestamp: Date.now()
+      }));
+      
+      // Perform the redirect
       l.replace(redirect);
     </script>
   </head>
   <body>
-    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-      <h2>Redirecting to Cloudways Calculator...</h2>
-      <p>If you are not redirected automatically, <a href="/cloudways-savings-calculator/">click here</a>.</p>
+    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <div>
+        <div style="font-size: 48px; margin-bottom: 20px;">🔄</div>
+        <h2 style="margin: 0 0 10px 0;">Redirecting to Cloudways Calculator...</h2>
+        <p style="margin: 0; opacity: 0.8;">If you are not redirected automatically, <a href="/cloudways-savings-calculator/" style="color: #fff; text-decoration: underline;">click here</a>.</p>
+      </div>
     </div>
   </body>
 </html>

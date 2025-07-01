@@ -9,23 +9,52 @@
     <title>Cloudways Savings Calculator - Compare Hosting Plans & Save Money</title>
     <meta name="description" content="Calculate potential savings by switching to Cloudways hosting. Compare costs, performance improvements, and get personalized recommendations." />
     
-    <!-- Preconnect to Google Analytics for faster loading -->
+    <!-- Preconnect to improve performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://www.googletagmanager.com">
     
-    <!-- Ensure proper base path for GitHub Pages -->
+    <!-- GitHub Pages SPA support script -->
     <script type="text/javascript">
-      // GitHub Pages SPA support
-      (function() {
-        var redirect = sessionStorage.redirect;
-        delete sessionStorage.redirect;
-        if (redirect && redirect != location.href) {
-          history.replaceState(null, null, redirect);
+      // GitHub Pages SPA redirect handler - MUST be in head for immediate execution
+      (function(l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
         }
-      })();
+      }(window.location));
+    </script>
+    
+    <!-- Performance optimization -->
+    <script>
+      // Preload critical resources
+      window.addEventListener('load', function() {
+        // Preload key assets that might be needed
+        const criticalAssets = ['/favicon.svg'];
+        criticalAssets.forEach(function(asset) {
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.href = asset;
+          link.as = asset.endsWith('.svg') ? 'image' : 'script';
+          document.head.appendChild(link);
+        });
+      });
     </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Fallback for users with JavaScript disabled -->
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to function properly.</p>
+        <p>Please enable JavaScript in your browser and refresh the page.</p>
+      </div>
+    </noscript>
   </body>
 </html>

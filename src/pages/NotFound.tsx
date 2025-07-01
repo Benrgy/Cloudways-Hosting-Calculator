@@ -2,7 +2,7 @@
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Home, Calculator } from "lucide-react";
+import { Home, Calculator, RefreshCw } from "lucide-react";
 
 const NotFound = () => {
   const location = useLocation();
@@ -16,9 +16,22 @@ const NotFound = () => {
   }, [location.pathname]);
 
   const handleReturnHome = () => {
-    // For GitHub Pages, ensure we navigate to the correct base path
-    const basePath = import.meta.env.PROD ? '/cloudways-savings-calculator' : '';
-    window.location.href = basePath + '/';
+    // Determine the correct home URL based on environment
+    if (import.meta.env.DEV) {
+      window.location.href = '/';
+    } else {
+      // For GitHub Pages production
+      const hostname = window.location.hostname;
+      if (hostname.includes('github.io')) {
+        window.location.href = '/cloudways-savings-calculator/';
+      } else {
+        window.location.href = '/';
+      }
+    }
+  };
+
+  const handleRefresh = () => {
+    window.location.reload();
   };
 
   return (
@@ -44,18 +57,29 @@ const NotFound = () => {
             Return to Home
           </Button>
           
-          <Link to="/#calculator">
-            <Button variant="outline" className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 w-full">
+          <Button 
+            onClick={handleRefresh}
+            variant="outline" 
+            className="border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 w-full"
+          >
+            <RefreshCw className="w-5 h-5 mr-2" />
+            Refresh Page
+          </Button>
+          
+          <Link to="/" className="block">
+            <Button variant="outline" className="border-gray-300 text-gray-600 hover:bg-gray-50 px-6 py-3 w-full">
               <Calculator className="w-5 h-5 mr-2" />
               Go to Calculator
             </Button>
           </Link>
         </div>
         
-        <div className="mt-8 text-sm text-gray-500">
-          <p>Error code: 404</p>
+        <div className="mt-8 text-sm text-gray-500 bg-gray-50 p-4 rounded-lg">
+          <p><strong>Debug Info:</strong></p>
           <p>Path: {location.pathname}</p>
           <p>Environment: {import.meta.env.MODE}</p>
+          <p>Base URL: {import.meta.env.BASE_URL}</p>
+          <p>Hostname: {window.location.hostname}</p>
         </div>
       </div>
     </div>

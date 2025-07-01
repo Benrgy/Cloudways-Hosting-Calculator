@@ -23,10 +23,16 @@ export default defineConfig(({ mode }) => {
     build: {
       assetsDir: 'assets',
       outDir: 'dist',
-      sourcemap: true,
+      sourcemap: false, // Disable sourcemaps for production
       rollupOptions: {
         output: {
-          manualChunks: undefined,
+          manualChunks: {
+            vendor: ['react', 'react-dom'],
+            router: ['react-router-dom'],
+            ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-toast'],
+            query: ['@tanstack/react-query'],
+            supabase: ['@supabase/supabase-js']
+          },
           assetFileNames: 'assets/[name].[hash][extname]',
           chunkFileNames: 'assets/[name].[hash].js',
           entryFileNames: 'assets/[name].[hash].js',

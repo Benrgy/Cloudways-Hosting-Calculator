@@ -18,6 +18,7 @@ const queryClient = new QueryClient({
     queries: {
       retry: 1,
       staleTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
     },
   },
 });
@@ -25,16 +26,59 @@ const queryClient = new QueryClient({
 function App() {
   // Handle GitHub Pages SPA routing
   React.useEffect(() => {
+    console.log("=== APP INITIALIZATION ===");
+    console.log("Current URL:", window.location.href);
+    console.log("Environment:", import.meta.env.MODE);
+    console.log("Base URL:", import.meta.env.BASE_URL);
+    
+    // Check for GitHub Pages redirect parameters
     const search = window.location.search;
     if (search && search.indexOf('?/') !== -1) {
-      const path = search.slice(2).replace(/~/g, '&');
-      console.log('GitHub Pages redirect detected, navigating to:', path || '/');
-      window.history.replaceState(null, '', path || '/');
+      const pathAndParams = search.slice(2);
+      const [path, ...paramParts] = pathAndParams.split('&');
+      const params = paramParts.join('&').replace(/~/g, '&');
+      const finalPath = path || '/';
+      const finalUrl = finalPath + (params ? '?' + params : '');
+      
+      console.log('GitHub Pages redirect detected:');
+      console.log('- Original search:', search);
+      console.log('- Extracted path:', finalPath);
+      console.log('- Final URL:', finalUrl);
+      
+      window.history.replaceState(null, '', finalUrl);
+    }
+
+    // Check for stored redirect info
+    const redirectInfo = sessionStorage.getItem('github-pages-redirect');
+    if (redirectInfo) {
+      try {
+        const info = JSON.parse(redirectInfo);
+        console.log('Found stored redirect info:', info);
+        sessionStorage.removeItem('github-pages-redirect');
+      } catch (e) {
+        console.warn('Failed to parse redirect info:', e);
+      }
     }
   }, []);
 
-  const basename = import.meta.env.PROD ? '/cloudways-savings-calculator' : '';
-  console.log('App basename:', basename, 'Mode:', import.meta.env.MODE);
+  // Determine basename for router
+  const getBasename = () => {
+    if (import.meta.env.DEV) {
+      return '';
+    }
+    
+    // For production GitHub Pages
+    const hostname = window.location.hostname;
+    if (hostname.includes('github.io')) {
+      return '/cloudways-savings-calculator';
+    }
+    
+    // For custom domains or other hosting
+    return '';
+  };
+
+  const basename = getBasename();
+  console.log('Router basename:', basename);
   
   return (
     <SupabaseErrorBoundary>
