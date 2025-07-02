@@ -34,25 +34,39 @@ export const LanguageSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-2 hover:bg-emerald-50">
-          <span className="text-lg">{languages[currentLanguage].flag}</span>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="gap-2 hover:bg-emerald-50 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+          aria-label={`Current language: ${languages[currentLanguage].name}. Click to change language`}
+        >
+          <span className="text-lg" aria-hidden="true">{languages[currentLanguage].flag}</span>
           <span className="hidden sm:inline font-medium">
             {languages[currentLanguage].name}
           </span>
-          <ChevronDown className="w-4 h-4" />
+          <ChevronDown className="w-4 h-4" aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[150px]">
+      <DropdownMenuContent 
+        align="end" 
+        className="min-w-[150px] bg-white shadow-lg border border-gray-200 rounded-md z-50"
+        sideOffset={4}
+      >
         {Object.entries(languages).map(([code, lang]) => (
           <DropdownMenuItem
             key={code}
             onClick={() => handleLanguageChange(code as SupportedLanguage)}
-            className={`cursor-pointer ${currentLanguage === code ? "bg-emerald-50 text-emerald-700 font-medium" : "hover:bg-gray-50"}`}
+            className={`cursor-pointer py-2 px-3 flex items-center transition-colors ${
+              currentLanguage === code 
+                ? "bg-emerald-50 text-emerald-700 font-medium" 
+                : "hover:bg-gray-50 text-gray-700"
+            }`}
+            aria-label={`Switch to ${lang.name}`}
           >
-            <span className="mr-3 text-lg">{lang.flag}</span>
-            <span>{lang.name}</span>
+            <span className="mr-3 text-lg" aria-hidden="true">{lang.flag}</span>
+            <span className="flex-1">{lang.name}</span>
             {currentLanguage === code && (
-              <span className="ml-auto text-emerald-600">✓</span>
+              <span className="ml-2 text-emerald-600 font-bold" aria-label="Currently selected">✓</span>
             )}
           </DropdownMenuItem>
         ))}
