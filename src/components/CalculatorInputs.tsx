@@ -31,39 +31,47 @@ interface CalculatorInputsProps {
 
 export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalculating }: CalculatorInputsProps) => {
   return (
-    <div className="grid lg:grid-cols-3 gap-8">
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">
+    <div className="grid lg:grid-cols-3 gap-8" role="form" aria-label="Hosting calculator inputs">
+      <fieldset className="space-y-4">
+        <legend className="text-lg font-semibold text-gray-800 border-b pb-2">
           Current Hosting Details
-        </h3>
+        </legend>
         
         <div>
           <Label htmlFor="monthlyHostingCost" className="text-base font-medium text-gray-700">
             Monthly Hosting Cost ($)
+            <span className="text-red-500 ml-1" aria-label="required">*</span>
           </Label>
           <Input
             id="monthlyHostingCost"
             type="number"
+            min="0"
+            step="0.01"
             value={inputs.monthlyHostingCost}
             onChange={(e) => onInputChange('monthlyHostingCost', parseFloat(e.target.value) || 0)}
             className="mt-2"
             aria-describedby="cost-help"
+            aria-required="true"
           />
           <p id="cost-help" className="text-sm text-gray-500 mt-1">
-            Include all hosting-related costs
+            Include all hosting-related costs including domains and add-ons
           </p>
         </div>
 
         <div>
           <Label htmlFor="numberOfWebsites" className="text-base font-medium text-gray-700">
             Number of Websites
+            <span className="text-red-500 ml-1" aria-label="required">*</span>
           </Label>
           <Input
             id="numberOfWebsites"
             type="number"
+            min="1"
+            max="100"
             value={inputs.numberOfWebsites}
             onChange={(e) => onInputChange('numberOfWebsites', parseInt(e.target.value) || 1)}
             className="mt-2"
+            aria-required="true"
           />
         </div>
 
@@ -74,10 +82,15 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
           <Input
             id="monthlyTraffic"
             type="number"
+            min="0"
             value={inputs.monthlyTraffic}
             onChange={(e) => onInputChange('monthlyTraffic', parseFloat(e.target.value) || 0)}
             className="mt-2"
+            aria-describedby="traffic-help"
           />
+          <p id="traffic-help" className="text-sm text-gray-500 mt-1">
+            Approximate number of unique visitors per month
+          </p>
         </div>
 
         <div>
@@ -87,22 +100,24 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
           <Input
             id="responseTimeMS"
             type="number"
+            min="0"
             value={inputs.responseTimeMS}
             onChange={(e) => onInputChange('responseTimeMS', parseFloat(e.target.value) || 0)}
             className="mt-2"
+            aria-describedby="response-help"
           />
-          <p className="text-sm text-gray-500 mt-1 flex items-center">
-            <Info className="w-4 h-4 mr-1" />
-            Test at gtmetrix.com or similar tools
-          </p>
+          <div id="response-help" className="text-sm text-gray-500 mt-1 flex items-center">
+            <Info className="w-4 h-4 mr-1" aria-hidden="true" />
+            Test your site at gtmetrix.com or similar speed testing tools
+          </div>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
-          <Database className="w-5 h-5" />
+      <fieldset className="space-y-4">
+        <legend className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
+          <Database className="w-5 h-5" aria-hidden="true" />
           Resource Requirements
-        </h3>
+        </legend>
 
         <div>
           <Label htmlFor="storageGB" className="text-base font-medium text-gray-700">
@@ -111,10 +126,16 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
           <Input
             id="storageGB"
             type="number"
+            min="0"
+            step="0.1"
             value={inputs.storageGB}
             onChange={(e) => onInputChange('storageGB', parseFloat(e.target.value) || 0)}
             className="mt-2"
+            aria-describedby="storage-help"
           />
+          <p id="storage-help" className="text-sm text-gray-500 mt-1">
+            Total disk space needed for your websites and files
+          </p>
         </div>
 
         <div>
@@ -124,19 +145,32 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
           <Input
             id="bandwidthGB"
             type="number"
+            min="0"
+            step="0.1"
             value={inputs.bandwidthGB}
             onChange={(e) => onInputChange('bandwidthGB', parseFloat(e.target.value) || 0)}
             className="mt-2"
+            aria-describedby="bandwidth-help"
           />
+          <p id="bandwidth-help" className="text-sm text-gray-500 mt-1">
+            Data transfer amount per month
+          </p>
         </div>
 
         <div>
-          <Label htmlFor="ramGB" className="text-base font-medium text-gray-700">
+          <Label htmlFor="ramSelect" className="text-base font-medium text-gray-700">
             RAM Required (GB)
           </Label>
-          <Select onValueChange={(value) => onInputChange('ramGB', parseFloat(value))}>
-            <SelectTrigger className="mt-2">
-              <SelectValue placeholder="Select RAM" />
+          <Select 
+            onValueChange={(value) => onInputChange('ramGB', parseFloat(value))}
+            value={inputs.ramGB.toString()}
+          >
+            <SelectTrigger 
+              id="ramSelect"
+              className="mt-2" 
+              aria-describedby="ram-help"
+            >
+              <SelectValue placeholder="Select RAM amount" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="1">1 GB</SelectItem>
@@ -146,14 +180,24 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
               <SelectItem value="16">16 GB</SelectItem>
             </SelectContent>
           </Select>
+          <p id="ram-help" className="text-sm text-gray-500 mt-1">
+            Memory requirements for your applications
+          </p>
         </div>
 
         <div>
-          <Label htmlFor="cpuCores" className="text-base font-medium text-gray-700">
+          <Label htmlFor="cpuSelect" className="text-base font-medium text-gray-700">
             CPU Cores
           </Label>
-          <Select onValueChange={(value) => onInputChange('cpuCores', parseInt(value))}>
-            <SelectTrigger className="mt-2">
+          <Select 
+            onValueChange={(value) => onInputChange('cpuCores', parseInt(value))}
+            value={inputs.cpuCores.toString()}
+          >
+            <SelectTrigger 
+              id="cpuSelect"
+              className="mt-2"
+              aria-describedby="cpu-help"
+            >
               <SelectValue placeholder="Select CPU cores" />
             </SelectTrigger>
             <SelectContent>
@@ -163,32 +207,46 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
               <SelectItem value="8">8 Cores</SelectItem>
             </SelectContent>
           </Select>
+          <p id="cpu-help" className="text-sm text-gray-500 mt-1">
+            Processing power needed for your workload
+          </p>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
-          <Shield className="w-5 h-5" />
+      <fieldset className="space-y-4">
+        <legend className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
+          <Shield className="w-5 h-5" aria-hidden="true" />
           Security & Features
-        </h3>
+        </legend>
 
-        <div className="flex items-center justify-between">
-          <Label htmlFor="sslRequired" className="text-base font-medium text-gray-700">
+        <div className="flex items-center justify-between py-2">
+          <Label htmlFor="sslSwitch" className="text-base font-medium text-gray-700 cursor-pointer">
             SSL Certificate Required
           </Label>
           <Switch
-            id="sslRequired"
+            id="sslSwitch"
             checked={inputs.sslRequired}
             onCheckedChange={(checked) => onInputChange('sslRequired', checked)}
+            aria-describedby="ssl-help"
           />
         </div>
+        <p id="ssl-help" className="text-sm text-gray-500 -mt-2">
+          HTTPS encryption for your website security
+        </p>
 
         <div>
-          <Label htmlFor="complianceNeeds" className="text-base font-medium text-gray-700">
+          <Label htmlFor="complianceSelect" className="text-base font-medium text-gray-700">
             Compliance Requirements
           </Label>
-          <Select onValueChange={(value) => onInputChange('complianceNeeds', value)}>
-            <SelectTrigger className="mt-2">
+          <Select 
+            onValueChange={(value) => onInputChange('complianceNeeds', value)}
+            value={inputs.complianceNeeds}
+          >
+            <SelectTrigger 
+              id="complianceSelect"
+              className="mt-2"
+              aria-describedby="compliance-help"
+            >
               <SelectValue placeholder="Select compliance needs" />
             </SelectTrigger>
             <SelectContent>
@@ -197,14 +255,24 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
               <SelectItem value="hipaa">HIPAA Compliance</SelectItem>
             </SelectContent>
           </Select>
+          <p id="compliance-help" className="text-sm text-gray-500 mt-1">
+            Industry-specific security requirements
+          </p>
         </div>
 
         <div>
-          <Label htmlFor="backupFrequency" className="text-base font-medium text-gray-700">
+          <Label htmlFor="backupSelect" className="text-base font-medium text-gray-700">
             Backup Frequency
           </Label>
-          <Select onValueChange={(value) => onInputChange('backupFrequency', value)}>
-            <SelectTrigger className="mt-2">
+          <Select 
+            onValueChange={(value) => onInputChange('backupFrequency', value)}
+            value={inputs.backupFrequency}
+          >
+            <SelectTrigger 
+              id="backupSelect"
+              className="mt-2"
+              aria-describedby="backup-help"
+            >
               <SelectValue placeholder="Select backup frequency" />
             </SelectTrigger>
             <SelectContent>
@@ -213,44 +281,52 @@ export const CalculatorInputs = ({ inputs, onInputChange, onCalculate, isCalcula
               <SelectItem value="monthly">Monthly</SelectItem>
             </SelectContent>
           </Select>
+          <p id="backup-help" className="text-sm text-gray-500 mt-1">
+            How often your data should be backed up
+          </p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <Label htmlFor="cdnRequired" className="text-base font-medium text-gray-700">
+        <div className="flex items-center justify-between py-2">
+          <Label htmlFor="cdnSwitch" className="text-base font-medium text-gray-700 cursor-pointer">
             CDN Required
           </Label>
           <Switch
-            id="cdnRequired"
+            id="cdnSwitch"
             checked={inputs.cdnRequired}
             onCheckedChange={(checked) => onInputChange('cdnRequired', checked)}
+            aria-describedby="cdn-help"
           />
         </div>
+        <p id="cdn-help" className="text-sm text-gray-500 -mt-2">
+          Content Delivery Network for faster global performance
+        </p>
 
         <div className="pt-4">
           <Button 
             onClick={onCalculate}
-            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-lg py-3"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white text-lg py-3 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             size="lg"
             disabled={isCalculating}
             aria-describedby="calculate-help"
+            type="button"
           >
             {isCalculating ? (
               <>
                 <LoadingSpinner size="sm" className="mr-2" />
-                Calculating...
+                <span>Calculating...</span>
               </>
             ) : (
               <>
-                Calculate Advanced Savings
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <span>Calculate Advanced Savings</span>
+                <ArrowRight className="w-5 h-5 ml-2" aria-hidden="true" />
               </>
             )}
           </Button>
           <p id="calculate-help" className="text-sm text-gray-500 mt-2 text-center">
-            Get your personalized hosting migration report
+            Get your personalized hosting migration report with detailed recommendations
           </p>
         </div>
-      </div>
+      </fieldset>
     </div>
   );
 };
