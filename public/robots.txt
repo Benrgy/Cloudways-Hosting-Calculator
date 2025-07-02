@@ -32,10 +32,10 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: Twitterbot
+User-agent: LinkedInBot
 Allow: /
 
-User-agent: LinkedInBot
+User-agent: Twitterbot
 Allow: /
 
 # Crawl-delay for general bots

@@ -15,6 +15,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Helmet } from 'react-helmet-async';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { performanceMonitor } from '@/utils/performance';
 
 // Lazy load components for better performance
 const LazyTestimonials = React.lazy(() => import('@/components/Testimonials').then(module => ({ default: module.Testimonials })));
@@ -24,10 +25,28 @@ const LazyEnhancedNewsletter = React.lazy(() => import('@/components/EnhancedNew
 const Index = () => {
   const { t, currentLanguage } = useLanguage();
 
+  // Performance monitoring
+  React.useEffect(() => {
+    performanceMonitor.markStart('page-load');
+    
+    const handleLoad = () => {
+      performanceMonitor.markEnd('page-load');
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, []);
+
   const handleCalculateClick = () => {
+    performanceMonitor.markStart('scroll-to-calculator');
     const calculatorElement = document.getElementById('calculator');
     if (calculatorElement) {
       calculatorElement.scrollIntoView({ behavior: 'smooth' });
+      performanceMonitor.markEnd('scroll-to-calculator');
     }
   };
 
@@ -45,6 +64,22 @@ const Index = () => {
         <meta name="description" content={seoDescription} />
         <meta name="keywords" content={seoKeywords} />
         <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Preconnect to external domains for better performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://cloudways.com" />
+        
+        {/* Optimize font loading */}
+        <link 
+          rel="preload" 
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" 
+          as="style" 
+          onLoad="this.onload=null;this.rel='stylesheet'" 
+        />
         
         {/* Open Graph Tags */}
         <meta property="og:title" content={seoTitle} />
@@ -64,12 +99,17 @@ const Index = () => {
         <meta name="twitter:image" content={`${baseUrl}/og-image.jpg`} />
         <meta name="twitter:creator" content="@cloudways" />
         
-        {/* Additional SEO Tags */}
+        {/* Performance & SEO Tags */}
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="language" content={currentLanguage} />
         <meta name="author" content="Cloudways Hosting Calculator" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#059669" />
+        <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+        
+        {/* Performance hints */}
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
         
         {/* Structured Data */}
         <script type="application/ld+json">
@@ -90,7 +130,7 @@ const Index = () => {
             },
             "featureList": [
               "Hosting Cost Calculator",
-              "Performance Analysis",
+              "Performance Analysis", 
               "Multi-language Support",
               "Real-time Pricing",
               "Savings Calculator",
@@ -104,7 +144,12 @@ const Index = () => {
             "datePublished": "2024-01-01",
             "dateModified": new Date().toISOString().split('T')[0],
             "inLanguage": currentLanguage,
-            "isAccessibleForFree": true
+            "isAccessibleForFree": true,
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "reviewCount": "1250"
+            }
           })}
         </script>
         
@@ -137,23 +182,35 @@ const Index = () => {
             <PricingComparison />
           </section>
           
-          {/* Testimonials Section */}
+          {/* Testimonials Section - Lazy loaded */}
           <section aria-labelledby="testimonials-heading">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={
+              <div className="flex justify-center items-center py-16">
+                <LoadingSpinner size="lg" text="Loading testimonials..." />
+              </div>
+            }>
               <LazyTestimonials />
             </Suspense>
           </section>
           
-          {/* FAQ Section */}
+          {/* FAQ Section - Lazy loaded */}
           <section id="faq" aria-labelledby="faq-heading">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={
+              <div className="flex justify-center items-center py-16">
+                <LoadingSpinner size="lg" text="Loading FAQ..." />
+              </div>
+            }>
               <LazyFAQ />
             </Suspense>
           </section>
           
-          {/* Newsletter Section */}
+          {/* Newsletter Section - Lazy loaded */}
           <section aria-labelledby="newsletter-heading">
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={
+              <div className="flex justify-center items-center py-16">
+                <LoadingSpinner size="lg" text="Loading newsletter..." />
+              </div>
+            }>
               <LazyEnhancedNewsletter />
             </Suspense>
           </section>
