@@ -23,7 +23,7 @@ export const Logo = ({ size = 'md', showText = true, className = '' }: LogoProps
 
   return (
     <div className={`flex items-center space-x-2 ${className}`}>
-      <div className="relative">
+      <div className="relative" aria-hidden="true">
         <Cloud className={`${sizeClasses[size]} text-emerald-600`} />
         <Calculator className={`${sizeClasses[size]} text-blue-600 absolute -bottom-1 -right-1 w-4 h-4`} />
       </div>

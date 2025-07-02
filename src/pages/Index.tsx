@@ -31,11 +31,12 @@ const Index = () => {
     }
   };
 
-  const seoTitle = t('seo.title') || 'Cloudways Calculator - Find Your Perfect Hosting Plan';
-  const seoDescription = t('seo.description') || 'Calculate and compare Cloudways hosting costs with our advanced calculator. Find the perfect hosting plan for your website with real-time pricing and recommendations.';
-  const seoKeywords = t('seo.keywords') || 'cloudways, hosting calculator, web hosting, cloud hosting, pricing calculator';
+  const seoTitle = t('seo.title') || 'Cloudways Hosting Calculator - Compare Plans & Save Money | 2024';
+  const seoDescription = t('seo.description') || 'Free Cloudways hosting calculator to compare plans, estimate costs, and find the perfect cloud hosting solution. Save money with our detailed pricing analysis and recommendations.';
+  const seoKeywords = t('seo.keywords') || 'cloudways calculator, hosting calculator, cloud hosting, web hosting pricing, cloudways plans, hosting comparison, managed hosting';
   
-  const canonicalUrl = `https://cloudways-calculator.com${currentLanguage !== 'en' ? `/${currentLanguage}` : ''}`;
+  const baseUrl = import.meta.env.DEV ? 'http://localhost:8080' : 'https://benrgy.github.io/cloudways-savings-calculator';
+  const canonicalUrl = `${baseUrl}${currentLanguage !== 'en' ? `?lang=${currentLanguage}` : ''}`;
 
   return (
     <ErrorBoundary>
@@ -50,42 +51,60 @@ const Index = () => {
         <meta property="og:description" content={seoDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:image" content="https://cloudways-calculator.com/og-image.jpg" />
-        <meta property="og:site_name" content="Cloudways Calculator" />
+        <meta property="og:image" content={`${baseUrl}/og-image.jpg`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:site_name" content="Cloudways Hosting Calculator" />
+        <meta property="og:locale" content={currentLanguage === 'en' ? 'en_US' : currentLanguage} />
         
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={seoTitle} />
         <meta name="twitter:description" content={seoDescription} />
-        <meta name="twitter:image" content="https://cloudways-calculator.com/og-image.jpg" />
+        <meta name="twitter:image" content={`${baseUrl}/og-image.jpg`} />
+        <meta name="twitter:creator" content="@cloudways" />
         
         {/* Additional SEO Tags */}
-        <meta name="robots" content="index, follow" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
         <meta name="language" content={currentLanguage} />
-        <meta name="author" content="Cloudways Calculator" />
+        <meta name="author" content="Cloudways Hosting Calculator" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#059669" />
         
         {/* Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebApplication",
-            "name": "Cloudways Calculator",
+            "name": "Cloudways Hosting Calculator",
             "description": seoDescription,
             "url": canonicalUrl,
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web Browser",
+            "browserRequirements": "Requires JavaScript",
             "offers": {
               "@type": "Offer",
               "price": "0",
-              "priceCurrency": "USD"
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock"
             },
             "featureList": [
               "Hosting Cost Calculator",
               "Performance Analysis",
               "Multi-language Support",
               "Real-time Pricing",
-              "Savings Calculator"
-            ]
+              "Savings Calculator",
+              "Plan Comparison Tool"
+            ],
+            "creator": {
+              "@type": "Organization",
+              "name": "Cloudways",
+              "url": "https://www.cloudways.com"
+            },
+            "datePublished": "2024-01-01",
+            "dateModified": new Date().toISOString().split('T')[0],
+            "inLanguage": currentLanguage,
+            "isAccessibleForFree": true
           })}
         </script>
         
@@ -94,33 +113,52 @@ const Index = () => {
       
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50">
         <Header />
-        <main>
+        <main role="main">
+          {/* Hero Section with proper h1 */}
           <Hero onCalculateClick={handleCalculateClick} />
-          <div id="calculator">
+          
+          {/* Calculator Section */}
+          <section id="calculator" aria-labelledby="calculator-heading">
             <Calculator />
-          </div>
-          <div id="features">
+          </section>
+          
+          {/* Features Section */}
+          <section id="features" aria-labelledby="features-heading">
             <Features />
-          </div>
-          <HowItWorks />
-          <div id="pricing">
+          </section>
+          
+          {/* How It Works Section */}
+          <section aria-labelledby="how-it-works-heading">
+            <HowItWorks />
+          </section>
+          
+          {/* Pricing Comparison Section */}
+          <section id="pricing" aria-labelledby="pricing-heading">
             <PricingComparison />
-          </div>
+          </section>
           
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyTestimonials />
-          </Suspense>
+          {/* Testimonials Section */}
+          <section aria-labelledby="testimonials-heading">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyTestimonials />
+            </Suspense>
+          </section>
           
-          <div id="faq">
+          {/* FAQ Section */}
+          <section id="faq" aria-labelledby="faq-heading">
             <Suspense fallback={<LoadingSpinner />}>
               <LazyFAQ />
             </Suspense>
-          </div>
+          </section>
           
-          <Suspense fallback={<LoadingSpinner />}>
-            <LazyEnhancedNewsletter />
-          </Suspense>
+          {/* Newsletter Section */}
+          <section aria-labelledby="newsletter-heading">
+            <Suspense fallback={<LoadingSpinner />}>
+              <LazyEnhancedNewsletter />
+            </Suspense>
+          </section>
           
+          {/* SEO Content Section */}
           <SEOContent />
         </main>
         <Footer />
