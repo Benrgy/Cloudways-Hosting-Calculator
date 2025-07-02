@@ -10,6 +10,16 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /_*
 
+# Allow indexing of key sections
+Allow: /#calculator
+Allow: /#features
+Allow: /#pricing
+Allow: /#faq
+
+# Disallow query parameters except language
+Disallow: /*?*
+Allow: /*?lang=*
+
 # Allow common crawlers
 User-agent: Googlebot
 Allow: /

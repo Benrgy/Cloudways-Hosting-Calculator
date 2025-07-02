@@ -60,11 +60,20 @@ export const SEOHead = () => {
       
       {/* Performance & SEO Tags */}
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+      <meta name="bingbot" content="index, follow" />
       <meta name="language" content={currentLanguage} />
       <meta name="author" content="Cloudways Hosting Calculator" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="theme-color" content="#059669" />
       <meta httpEquiv="x-ua-compatible" content="ie=edge" />
+      
+      {/* Additional SEO meta tags */}
+      <meta name="application-name" content="Cloudways Calculator" />
+      <meta name="apple-mobile-web-app-title" content="Cloudways Calculator" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="mobile-web-app-capable" content="yes" />
       
       {/* Performance hints */}
       <meta name="format-detection" content="telephone=no" />
