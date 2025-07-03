@@ -134,7 +134,12 @@ export const translations = {
       q7: "What if I need help choosing a plan?",
       a7: "Our calculator provides personalized recommendations based on your requirements. If you need additional help, you can contact Cloudways support directly through their platform.",
       q8: "Does the calculator work for all Cloudways servers?",
-      a8: "Yes, our calculator supports all Cloudways server types and configurations, ensuring accurate cost estimates regardless of your chosen infrastructure."
+      a8: "Yes, our calculator supports all Cloudways server types and configurations, ensuring accurate cost estimates regardless of your chosen infrastructure.",
+      help: {
+        title: "Still Have Questions?",
+        description: "Can't find the answer you're looking for? Contact Cloudways support for personalized assistance.",
+        button: "Contact Support"
+      }
     },
     testimonials: {
       title: "What Our Users Say",
