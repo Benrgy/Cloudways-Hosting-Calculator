@@ -802,11 +802,33 @@ export const translations = {
       q4: "Comment se compare la performance?",
       a4: "La plupart des clients voient une amélioration de 40-60% des temps de chargement grâce à notre infrastructure optimisée, CDN, et technologies de mise en cache.",
       q5: "Quel support est disponible?",
-      a5: "Vous obtenez un support expert 24/7 via chat en direct et tickets. Notre équipe est composée de professionnels certifiés en hébergement qui comprennent vos besoins."
+      a5: "Vous obtenez un support expert 24/7 via chat en direct et tickets. Notre équipe est composée de professionnels certifiés en hébergement qui comprennent vos besoins.",
+      q6: "Puis-je sauvegarder mes calculs pour plus tard?",
+      a6: "Oui, vous pouvez sauvegarder vos calculs et y revenir plus tard. Cette fonctionnalité vous aide à comparer différents scénarios et prendre des décisions éclairées sur vos besoins d'hébergement.",
+      q7: "Et si j'ai besoin d'aide pour choisir un plan?",
+      a7: "Notre calculatrice fournit des recommandations personnalisées basées sur vos exigences. Si vous avez besoin d'aide supplémentaire, vous pouvez contacter le support Cloudways directement via leur plateforme.",
+      q8: "La calculatrice fonctionne-t-elle pour tous les serveurs Cloudways?",
+      a8: "Oui, notre calculatrice prend en charge tous les types de serveurs et configurations Cloudways, garantissant des estimations de coûts précises quel que soit votre infrastructure choisie.",
+      help: {
+        title: "Vous Avez Encore des Questions?",
+        description: "Vous ne trouvez pas la réponse que vous cherchez? Contactez le support Cloudways pour une assistance personnalisée.",
+        button: "Contacter le Support"
+      }
     },
     testimonials: {
       title: "Ce Que Disent Nos Clients",
-      subtitle: "Rejoignez des milliers de clients satisfaits qui ont fait le changement",
+      subtitle: "Rejoignez des milliers de clients satisfaits qui ont optimisé leurs coûts d'hébergement et amélioré leurs performances web avec notre calculatrice.",
+      sarah: "La calculatrice m'a fait économiser plus de 1 800€ par an en m'aidant à trouver le plan Cloudways parfait. Mon site se charge maintenant 40% plus vite!",
+      marcus: "Outil incroyable! Il a analysé parfaitement mes besoins d'hébergement et recommandé la configuration serveur idéale. Les sites clients fonctionnent mieux que jamais.",
+      emily: "En tant que personne non-technique, cette calculatrice a rendu les décisions d'hébergement beaucoup plus faciles. La comparaison détaillée m'a aidée à économiser et améliorer les performances.",
+      david: "Les prédictions de performance étaient exactes! Notre temps de réponse d'application s'est amélioré de 60% après le passage au plan Cloudways recommandé.",
+      lisa: "Cette calculatrice change la donne pour les agences gérant plusieurs sites clients. Elle nous aide à prendre des décisions d'hébergement basées sur les données à chaque fois.",
+      ahmed: "L'analyse détaillée et les recommandations étaient incroyablement précises. Nous avons réduit nos coûts d'hébergement de 35% tout en améliorant la fiabilité et la vitesse.",
+      trustTitle: "Fait Confiance par des Professionnels Mondialement",
+      calculations: "Calculs",
+      avgSavings: "Économies Moy.",
+      satisfaction: "Satisfaction",
+      support: "Support",
       t1Name: "Sarah Johnson",
       t1Role: "Propriétaire E-commerce",
       t1Content: "Passer à Cloudways a réduit nos coûts d'hébergement de 40% tout en améliorant drastiquement la vitesse de notre site. La migration était sans couture!",
@@ -835,7 +857,13 @@ export const translations = {
       getStarted: "Commencer",
       monthly: "par mois",
       annually: "par an",
-      save: "Économiser"
+      save: "Économiser",
+      billedMonthly: "Facturé mensuellement",
+      allPlansInclude: "Tous les plans incluent la migration gratuite, les certificats SSL, et le support expert 24/7. Pas de frais d'installation, annulez à tout moment.",
+      noSetupFees: "Pas de Frais d'Installation",
+      cancelAnytime: "Annulez à Tout Moment",
+      uptimeSLA: "99,9% de Temps de Fonctionnement SLA",
+      freeMigration: "Migration Gratuite"
     },
     footer: {
       description: "Calculez et comparez les coûts d'hébergement Cloudways avec notre calculatrice avancée. Trouvez le plan d'hébergement parfait pour votre site web.",
@@ -854,6 +882,7 @@ export const translations = {
     },
     seo: {
       title: "Calculatrice d'Hébergement Cloudways - Comparez les Plans & Économisez | 2024",
+      subtitle: "Calculatrice d'hébergement Cloudways gratuite pour comparer les plans, estimer les coûts, et trouver la solution d'hébergement cloud parfaite. Économisez de l'argent avec notre analyse de prix détaillée et nos recommandations.",
       description: "Calculatrice d'hébergement Cloudways gratuite pour comparer les plans, estimer les coûts, et trouver la solution d'hébergement cloud parfaite. Économisez de l'argent avec notre analyse de prix détaillée et nos recommandations.",
       keywords: "calculatrice cloudways, calculatrice hébergement, cloud hosting, prix hébergement web, plans cloudways, comparaison hébergement, hébergement géré",
       performanceTitle: "Performance Supérieure",
@@ -953,11 +982,33 @@ export const translations = {
       q4: "¿Cómo se compara el rendimiento?",
       a4: "La mayoría de clientes ven una mejora del 40-60% en tiempos de carga gracias a nuestra infraestructura optimizada, CDN, y tecnologías de cache.",
       q5: "¿Qué soporte está disponible?",
-      a5: "Obtienes soporte experto 24/7 vía chat en vivo y tickets. Nuestro equipo consiste en profesionales certificados en hosting que entienden tus necesidades."
+      a5: "Obtienes soporte experto 24/7 vía chat en vivo y tickets. Nuestro equipo consiste en profesionales certificados en hosting que entienden tus necesidades.",
+      q6: "¿Puedo guardar mis cálculos para después?",
+      a6: "Sí, puedes guardar tus cálculos y volver a ellos más tarde. Esta función te ayuda a comparar diferentes escenarios y tomar decisiones informadas sobre tus necesidades de hosting.",
+      q7: "¿Qué pasa si necesito ayuda eligiendo un plan?",
+      a7: "Nuestra calculadora proporciona recomendaciones personalizadas basadas en tus requisitos. Si necesitas ayuda adicional, puedes contactar al soporte de Cloudways directamente a través de su plataforma.",
+      q8: "¿La calculadora funciona para todos los servidores de Cloudways?",
+      a8: "Sí, nuestra calculadora soporta todos los tipos de servidores y configuraciones de Cloudways, asegurando estimaciones de costos precisas sin importar tu infraestructura elegida.",
+      help: {
+        title: "¿Todavía Tienes Preguntas?",
+        description: "¿No puedes encontrar la respuesta que buscas? Contacta al soporte de Cloudways para asistencia personalizada.",
+        button: "Contactar Soporte"
+      }
     },
     testimonials: {
       title: "Lo Que Dicen Nuestros Clientes",
-      subtitle: "Únete a miles de clientes satisfechos que hicieron el cambio",
+      subtitle: "Únete a miles de clientes satisfechos que han optimizado sus costos de hosting y mejorado el rendimiento de sus sitios web con nuestra calculadora.",
+      sarah: "La calculadora me ahorró más de €1,800 anuales al ayudarme a encontrar el plan perfecto de Cloudways. ¡Mi sitio ahora carga 40% más rápido!",
+      marcus: "¡Herramienta increíble! Analizó perfectamente mis necesidades de hosting y recomendó la configuración de servidor ideal. Los sitios de clientes funcionan mejor que nunca.",
+      emily: "Como persona no técnica, esta calculadora hizo las decisiones de hosting mucho más fáciles. La comparación detallada me ayudó a ahorrar dinero y mejorar el rendimiento.",
+      david: "¡Las predicciones de rendimiento fueron exactas! El tiempo de respuesta de nuestra aplicación mejoró 60% después de cambiar al plan recomendado de Cloudways.",
+      lisa: "Esta calculadora es un cambio de juego para agencias que manejan múltiples sitios web de clientes. Nos ayuda a tomar decisiones de hosting basadas en datos cada vez.",
+      ahmed: "El análisis detallado y las recomendaciones fueron increíblemente precisos. Redujimos nuestros costos de hosting en 35% mientras mejoramos la confiabilidad y velocidad.",
+      trustTitle: "Confiado por Profesionales Mundialmente",
+      calculations: "Cálculos",
+      avgSavings: "Ahorros Prom.",
+      satisfaction: "Satisfacción",
+      support: "Soporte",
       t1Name: "Sarah Johnson",
       t1Role: "Propietaria de E-commerce",
       t1Content: "Cambiar a Cloudways redujo nuestros costos de hosting en 40% mientras mejoraba dramáticamente la velocidad de nuestro sitio. ¡La migración fue perfecta!",
@@ -986,7 +1037,13 @@ export const translations = {
       getStarted: "Comenzar",
       monthly: "por mes",
       annually: "por año",
-      save: "Ahorrar"
+      save: "Ahorrar",
+      billedMonthly: "Facturado mensualmente",
+      allPlansInclude: "Todos los planes incluyen migración gratuita, certificados SSL y soporte experto 24/7. Sin tarifas de configuración, cancela en cualquier momento.",
+      noSetupFees: "Sin Tarifas de Configuración",
+      cancelAnytime: "Cancela en Cualquier Momento",
+      uptimeSLA: "99.9% de Tiempo de Actividad SLA",
+      freeMigration: "Migración Gratuita"
     },
     footer: {
       description: "Calcula y compara los costos de hosting de Cloudways con nuestra calculadora avanzada. Encuentra el plan de hosting perfecto para tu sitio web.",
@@ -1005,6 +1062,7 @@ export const translations = {
     },
     seo: {
       title: "Calculadora de Hosting Cloudways - Compara Planes y Ahorra | 2024",
+      subtitle: "Calculadora gratuita de hosting Cloudways para comparar planes, estimar costos, y encontrar la solución perfecta de cloud hosting. Ahorra dinero con nuestro análisis detallado de precios y recomendaciones.",
       description: "Calculadora gratuita de hosting Cloudways para comparar planes, estimar costos, y encontrar la solución perfecta de cloud hosting. Ahorra dinero con nuestro análisis detallado de precios y recomendaciones.",
       keywords: "calculadora cloudways, calculadora hosting, cloud hosting, precios hosting web, planes cloudways, comparación hosting, hosting administrado",
       performanceTitle: "Rendimiento Superior",
