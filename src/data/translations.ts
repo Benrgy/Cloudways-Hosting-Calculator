@@ -1,5 +1,12 @@
 export const translations = {
   en: {
+    nav: {
+      calculator: "Calculator",
+      features: "Features", 
+      pricing: "Pricing",
+      faq: "FAQ",
+      getStarted: "Get Started"
+    },
     header: {
       features: "Features",
       howItWorks: "How It Works",
@@ -8,9 +15,17 @@ export const translations = {
       startFreeTrial: "Start Free Trial"
     },
     hero: {
-      title: "Calculate Your Cloudways Savings",
-      subtitle: "Find the Perfect Hosting Plan for Your Website",
-      description: "Compare hosting costs, performance improvements, and get personalized recommendations to make the best decision for your website.",
+      title: "Cloudways Hosting Calculator",
+      subtitle: "Find Your Perfect Plan & Save Money",
+      description: "Calculate hosting costs, compare plans, and discover potential savings with our advanced Cloudways hosting calculator. Get personalized recommendations in seconds.",
+      benefit1: "Free Calculator",
+      benefit2: "Performance Analysis", 
+      benefit3: "Cost Savings",
+      benefit4: "Instant Results",
+      calculateButton: "Calculate Your Savings",
+      trialButton: "Start Free Trial",
+      disclaimer: "No credit card required • 3-day free trial • Cancel anytime",
+      trustIndicator: "Trusted by thousands of developers and businesses worldwide",
       instantCalculations: "Instant Calculations",
       instantCalculationsDesc: "Get real-time pricing and comparisons",
       performanceBoost: "Performance Boost",
@@ -116,10 +131,9 @@ export const translations = {
       copyright: "Cloudways Calculator. All rights reserved."
     },
     seo: {
-      title: "Why Switch to Cloudways Hosting?",
-      subtitle: "Discover the benefits of managed cloud hosting and how it can transform your website's performance and reduce costs.",
-      description: "Calculate and compare Cloudways hosting costs with our advanced calculator. Find the perfect hosting plan for your website with real-time pricing and recommendations.",
-      keywords: "cloudways, hosting calculator, web hosting, cloud hosting, pricing calculator",
+      title: "Cloudways Hosting Calculator - Compare Plans & Save Money | 2024",
+      description: "Free Cloudways hosting calculator to compare plans, estimate costs, and find the perfect cloud hosting solution. Save money with our detailed pricing analysis and recommendations.",
+      keywords: "cloudways calculator, hosting calculator, cloud hosting, web hosting pricing, cloudways plans, hosting comparison, managed hosting",
       performanceTitle: "Superior Performance",
       performanceDesc: "Experience lightning-fast loading times with our optimized cloud infrastructure, advanced caching, and global CDN network.",
       costTitle: "Cost Optimization",
@@ -137,6 +151,13 @@ export const translations = {
   },
 
   nl: {
+    nav: {
+      calculator: "Calculator",
+      features: "Functies",
+      pricing: "Prijzen", 
+      faq: "Veelgestelde Vragen",
+      getStarted: "Aan de Slag"
+    },
     header: {
       features: "Functies",
       howItWorks: "Hoe Het Werkt",
@@ -145,9 +166,17 @@ export const translations = {
       startFreeTrial: "Start Gratis Proefperiode"
     },
     hero: {
-      title: "Bereken Je Cloudways Besparingen",
-      subtitle: "Vind Het Perfecte Hosting Plan Voor Je Website",
-      description: "Vergelijk hosting kosten, prestatie verbeteringen, en krijg gepersonaliseerde aanbevelingen om de beste beslissing te maken voor je website.",
+      title: "Cloudways Hosting Calculator",
+      subtitle: "Vind Je Perfecte Plan & Bespaar Geld",
+      description: "Bereken hosting kosten, vergelijk plannen, en ontdek potentiële besparingen met onze geavanceerde Cloudways hosting calculator. Krijg gepersonaliseerde aanbevelingen in seconden.",
+      benefit1: "Gratis Calculator",
+      benefit2: "Prestatie Analyse",
+      benefit3: "Kosten Besparingen", 
+      benefit4: "Directe Resultaten",
+      calculateButton: "Bereken Je Besparingen",
+      trialButton: "Start Gratis Proefperiode",
+      disclaimer: "Geen creditcard vereist • 3-dagen gratis proefperiode • Altijd opzegbaar",
+      trustIndicator: "Vertrouwd door duizenden ontwikkelaars en bedrijven wereldwijd",
       instantCalculations: "Directe Berekeningen",
       instantCalculationsDesc: "Krijg real-time prijzen en vergelijkingen",
       performanceBoost: "Prestatie Verbetering",
@@ -253,10 +282,9 @@ export const translations = {
       copyright: "Cloudways Calculator. Alle rechten voorbehouden."
     },
     seo: {
-      title: "Waarom Overstappen naar Cloudways Hosting?",
-      subtitle: "Ontdek de voordelen van beheerde cloud hosting en hoe het de prestaties van je website kan transformeren en kosten kan verlagen.",
-      description: "Bereken en vergelijk Cloudways hosting kosten met onze geavanceerde calculator. Vind het perfecte hosting plan voor je website.",
-      keywords: "cloudways, hosting calculator, web hosting, cloud hosting, prijs calculator",
+      title: "Cloudways Hosting Calculator - Vergelijk Plannen & Bespaar Geld | 2024",
+      description: "Gratis Cloudways hosting calculator om plannen te vergelijken, kosten te schatten, en de perfecte cloud hosting oplossing te vinden. Bespaar geld met onze gedetailleerde prijsanalyse en aanbevelingen.",
+      keywords: "cloudways calculator, hosting calculator, cloud hosting, web hosting prijzen, cloudways plannen, hosting vergelijking, beheerde hosting",
       performanceTitle: "Superieure Prestaties",
       performanceDesc: "Ervaar bliksemsnelle laadtijden met onze geoptimaliseerde cloud infrastructuur, geavanceerde caching, en wereldwijd CDN netwerk.",
       costTitle: "Kosten Optimalisatie",
@@ -274,6 +302,13 @@ export const translations = {
   },
 
   de: {
+    nav: {
+      calculator: "Rechner",
+      features: "Funktionen",
+      pricing: "Preise",
+      faq: "FAQ", 
+      getStarted: "Loslegen"
+    },
     header: {
       features: "Funktionen",
       howItWorks: "Wie Es Funktioniert",
@@ -282,9 +317,17 @@ export const translations = {
       startFreeTrial: "Kostenlose Testversion Starten"
     },
     hero: {
-      title: "Berechnen Sie Ihre Cloudways Ersparnisse",
-      subtitle: "Finden Sie Den Perfekten Hosting-Plan Für Ihre Website",
-      description: "Vergleichen Sie Hosting-Kosten, Leistungsverbesserungen und erhalten Sie personalisierte Empfehlungen, um die beste Entscheidung für Ihre Website zu treffen.",
+      title: "Cloudways Hosting Rechner",
+      subtitle: "Finden Sie Ihren Perfekten Plan & Sparen Sie Geld",
+      description: "Berechnen Sie Hosting-Kosten, vergleichen Sie Pläne und entdecken Sie potenzielle Einsparungen mit unserem erweiterten Cloudways Hosting-Rechner. Erhalten Sie personalisierte Empfehlungen in Sekunden.",
+      benefit1: "Kostenloser Rechner",
+      benefit2: "Leistungsanalyse",
+      benefit3: "Kosteneinsparungen",
+      benefit4: "Sofortige Ergebnisse",
+      calculateButton: "Berechnen Sie Ihre Ersparnisse",
+      trialButton: "Kostenlose Testversion Starten",
+      disclaimer: "Keine Kreditkarte erforderlich • 3-Tage kostenlose Testversion • Jederzeit kündbar",
+      trustIndicator: "Vertraut von Tausenden von Entwicklern und Unternehmen weltweit",
       instantCalculations: "Sofortige Berechnungen",
       instantCalculationsDesc: "Erhalten Sie Echtzeit-Preise und Vergleiche",
       performanceBoost: "Leistungssteigerung",
@@ -411,6 +454,13 @@ export const translations = {
   },
 
   fr: {
+    nav: {
+      calculator: "Calculatrice",
+      features: "Fonctionnalités",
+      pricing: "Tarifs",
+      faq: "FAQ",
+      getStarted: "Commencer"
+    },
     header: {
       features: "Fonctionnalités",
       howItWorks: "Comment Ça Marche",
@@ -419,9 +469,17 @@ export const translations = {
       startFreeTrial: "Commencer l'Essai Gratuit"
     },
     hero: {
-      title: "Calculez Vos Économies Cloudways",
-      subtitle: "Trouvez Le Plan d'Hébergement Parfait Pour Votre Site Web",
-      description: "Comparez les coûts d'hébergement, les améliorations de performance, et obtenez des recommandations personnalisées pour prendre la meilleure décision pour votre site web.",
+      title: "Calculatrice d'Hébergement Cloudways",
+      subtitle: "Trouvez Votre Plan Parfait & Économisez de l'Argent",
+      description: "Calculez les coûts d'hébergement, comparez les plans, et découvrez les économies potentielles avec notre calculatrice d'hébergement Cloudways avancée. Obtenez des recommandations personnalisées en quelques secondes.",
+      benefit1: "Calculatrice Gratuite",
+      benefit2: "Analyse de Performance",
+      benefit3: "Économies de Coûts",
+      benefit4: "Résultats Instantanés",
+      calculateButton: "Calculez Vos Économies",
+      trialButton: "Commencer l'Essai Gratuit",
+      disclaimer: "Aucune carte de crédit requise • Essai gratuit de 3 jours • Annulez à tout moment",
+      trustIndicator: "Fait confiance par des milliers de développeurs et d'entreprises dans le monde",
       instantCalculations: "Calculs Instantanés",
       instantCalculationsDesc: "Obtenez des prix et comparaisons en temps réel",
       performanceBoost: "Amélioration des Performances",
@@ -527,10 +585,9 @@ export const translations = {
       copyright: "Cloudways Calculator. Tous droits réservés."
     },
     seo: {
-      title: "Pourquoi Passer à l'Hébergement Cloudways?",
-      subtitle: "Découvrez les avantages de l'hébergement cloud géré et comment il peut transformer les performances de votre site web et réduire les coûts.",
-      description: "Calculez et comparez les coûts d'hébergement Cloudways avec notre calculatrice avancée.",
-      keywords: "cloudways, calculatrice hébergement, hébergement web, cloud hosting, calculateur prix",
+      title: "Calculatrice d'Hébergement Cloudways - Comparez les Plans & Économisez | 2024",
+      description: "Calculatrice d'hébergement Cloudways gratuite pour comparer les plans, estimer les coûts, et trouver la solution d'hébergement cloud parfaite. Économisez de l'argent avec notre analyse de prix détaillée et nos recommandations.",
+      keywords: "calculatrice cloudways, calculatrice hébergement, cloud hosting, prix hébergement web, plans cloudways, comparaison hébergement, hébergement géré",
       performanceTitle: "Performance Supérieure",
       performanceDesc: "Expérimentez des temps de chargement ultra-rapides avec notre infrastructure cloud optimisée, mise en cache avancée, et réseau CDN mondial.",
       costTitle: "Optimisation des Coûts",
@@ -548,6 +605,13 @@ export const translations = {
   },
 
   es: {
+    nav: {
+      calculator: "Calculadora",
+      features: "Características",
+      pricing: "Precios",
+      faq: "Preguntas Frecuentes",
+      getStarted: "Comenzar"
+    },
     header: {
       features: "Características",
       howItWorks: "Cómo Funciona",
@@ -556,9 +620,17 @@ export const translations = {
       startFreeTrial: "Iniciar Prueba Gratuita"
     },
     hero: {
-      title: "Calcula Tus Ahorros de Cloudways",
-      subtitle: "Encuentra El Plan de Hosting Perfecto Para Tu Sitio Web",
-      description: "Compara costos de hosting, mejoras de rendimiento, y obtén recomendaciones personalizadas para tomar la mejor decisión para tu sitio web.",
+      title: "Calculadora de Hosting Cloudways",
+      subtitle: "Encuentra Tu Plan Perfecto y Ahorra Dinero",
+      description: "Calcula costos de hosting, compara planes, y descubre ahorros potenciales con nuestra calculadora avanzada de hosting Cloudways. Obtén recomendaciones personalizadas en segundos.",
+      benefit1: "Calculadora Gratuita",
+      benefit2: "Análisis de Rendimiento",
+      benefit3: "Ahorros de Costos",
+      benefit4: "Resultados Instantáneos",
+      calculateButton: "Calcula Tus Ahorros",
+      trialButton: "Iniciar Prueba Gratuita",
+      disclaimer: "No se requiere tarjeta de crédito • Prueba gratuita de 3 días • Cancela en cualquier momento",
+      trustIndicator: "Confiado por miles de desarrolladores y empresas en todo el mundo",
       instantCalculations: "Cálculos Instantáneos",
       instantCalculationsDesc: "Obtén precios y comparaciones en tiempo real",
       performanceBoost: "Mejora de Rendimiento",
@@ -664,10 +736,9 @@ export const translations = {
       copyright: "Cloudways Calculator. Todos los derechos reservados."
     },
     seo: {
-      title: "¿Por Qué Cambiar al Hosting de Cloudways?",
-      subtitle: "Descubre los beneficios del hosting cloud administrado y cómo puede transformar el rendimiento de tu sitio web y reducir costos.",
-      description: "Calcula y compara los costos de hosting de Cloudways con nuestra calculadora avanzada.",
-      keywords: "cloudways, calculadora hosting, alojamiento web, cloud hosting, calculador precios",
+      title: "Calculadora de Hosting Cloudways - Compara Planes y Ahorra | 2024",
+      description: "Calculadora gratuita de hosting Cloudways para comparar planes, estimar costos, y encontrar la solución perfecta de cloud hosting. Ahorra dinero con nuestro análisis detallado de precios y recomendaciones.",
+      keywords: "calculadora cloudways, calculadora hosting, cloud hosting, precios hosting web, planes cloudways, comparación hosting, hosting administrado",
       performanceTitle: "Rendimiento Superior",
       performanceDesc: "Experimenta tiempos de carga súper rápidos con nuestra infraestructura cloud optimizada, caché avanzado, y red CDN global.",
       costTitle: "Optimización de Costos",
