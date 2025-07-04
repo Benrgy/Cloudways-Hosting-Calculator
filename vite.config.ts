@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
       assetsDir: 'assets',
       outDir: 'dist',
       sourcemap: false,
-      minify: 'terser',
+      minify: 'esbuild', // Use esbuild (default and faster)
       cssMinify: true,
       rollupOptions: {
         output: {
