@@ -26,10 +26,12 @@ const queryClient = new QueryClient({
 function App() {
   // Handle GitHub Pages SPA routing
   React.useEffect(() => {
-    console.log("=== APP INITIALIZATION ===");
-    console.log("Current URL:", window.location.href);
-    console.log("Environment:", import.meta.env.MODE);
-    console.log("Base URL:", import.meta.env.BASE_URL);
+    if (import.meta.env.DEV) {
+      console.log("=== APP INITIALIZATION ===");
+      console.log("Current URL:", window.location.href);
+      console.log("Environment:", import.meta.env.MODE);
+      console.log("Base URL:", import.meta.env.BASE_URL);
+    }
     
     // Check for GitHub Pages redirect parameters
     const search = window.location.search;
@@ -40,10 +42,12 @@ function App() {
       const finalPath = path || '/';
       const finalUrl = finalPath + (params ? '?' + params : '');
       
-      console.log('GitHub Pages redirect detected:');
-      console.log('- Original search:', search);
-      console.log('- Extracted path:', finalPath);
-      console.log('- Final URL:', finalUrl);
+      if (import.meta.env.DEV) {
+        console.log('GitHub Pages redirect detected:');
+        console.log('- Original search:', search);
+        console.log('- Extracted path:', finalPath);
+        console.log('- Final URL:', finalUrl);
+      }
       
       window.history.replaceState(null, '', finalUrl);
     }
@@ -53,10 +57,14 @@ function App() {
     if (redirectInfo) {
       try {
         const info = JSON.parse(redirectInfo);
-        console.log('Found stored redirect info:', info);
+        if (import.meta.env.DEV) {
+          console.log('Found stored redirect info:', info);
+        }
         sessionStorage.removeItem('github-pages-redirect');
       } catch (e) {
-        console.warn('Failed to parse redirect info:', e);
+        if (import.meta.env.DEV) {
+          console.warn('Failed to parse redirect info:', e);
+        }
       }
     }
   }, []);
@@ -70,7 +78,7 @@ function App() {
     // For production GitHub Pages
     const hostname = window.location.hostname;
     if (hostname.includes('github.io')) {
-      return '/cloudways-savings-calculator';
+      return '/Cloudways-Hosting-Calculator';
     }
     
     // For custom domains or other hosting
@@ -78,7 +86,9 @@ function App() {
   };
 
   const basename = getBasename();
-  console.log('Router basename:', basename);
+  if (import.meta.env.DEV) {
+    console.log('Router basename:', basename);
+  }
   
   return (
     <SupabaseErrorBoundary>

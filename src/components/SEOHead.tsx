@@ -10,7 +10,7 @@ export const SEOHead = () => {
   const seoDescription = t('seo.description') || 'Free Cloudways hosting calculator to compare plans, estimate costs, and find the perfect cloud hosting solution. Save money with our detailed pricing analysis and recommendations.';
   const seoKeywords = t('seo.keywords') || 'cloudways calculator, hosting calculator, cloud hosting, web hosting pricing, cloudways plans, hosting comparison, managed hosting';
   
-  const baseUrl = import.meta.env.DEV ? 'http://localhost:8080' : 'https://benrgy.github.io/cloudways-savings-calculator';
+  const baseUrl = import.meta.env.DEV ? 'http://localhost:8080' : 'https://benrgy.github.io/Cloudways-Hosting-Calculator';
   const canonicalUrl = `${baseUrl}${currentLanguage !== 'en' ? `?lang=${currentLanguage}` : ''}`;
 
   return (

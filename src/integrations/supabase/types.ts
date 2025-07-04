@@ -90,6 +90,48 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          current_host: string
+          email: string
+          id: string
+          lead_score: number | null
+          name: string
+          notes: string | null
+          status: string | null
+          submitted_at: string
+          updated_at: string
+          website: string
+        }
+        Insert: {
+          created_at?: string
+          current_host: string
+          email: string
+          id?: string
+          lead_score?: number | null
+          name: string
+          notes?: string | null
+          status?: string | null
+          submitted_at?: string
+          updated_at?: string
+          website: string
+        }
+        Update: {
+          created_at?: string
+          current_host?: string
+          email?: string
+          id?: string
+          lead_score?: number | null
+          name?: string
+          notes?: string | null
+          status?: string | null
+          submitted_at?: string
+          updated_at?: string
+          website?: string
+        }
+        Relationships: []
+      }
       email_subscribers: {
         Row: {
           email: string

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://benrgy.github.io/cloudways-savings-calculator/sitemap.xml
+Sitemap: https://benrgy.github.io/Cloudways-Hosting-Calculator/sitemap.xml
 
 # Disallow admin or private areas (if any exist in the future)
 Disallow: /admin/

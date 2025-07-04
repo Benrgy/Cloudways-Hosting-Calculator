@@ -7,12 +7,14 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
-  const basePath = isDev ? '/' : '/cloudways-savings-calculator/';
+  const basePath = isDev ? '/' : '/Cloudways-Hosting-Calculator/';
   
-  console.log('=== VITE CONFIG ===');
-  console.log('Mode:', mode);
-  console.log('Base path:', basePath);
-  console.log('isDev:', isDev);
+  if (isDev) {
+    console.log('=== VITE CONFIG ===');
+    console.log('Mode:', mode);
+    console.log('Base path:', basePath);
+    console.log('isDev:', isDev);
+  }
   
   return {
     base: basePath,
@@ -23,7 +25,9 @@ export default defineConfig(({ mode }) => {
     build: {
       assetsDir: 'assets',
       outDir: 'dist',
-      sourcemap: false, // Disable sourcemaps for production
+      sourcemap: false,
+      minify: 'terser',
+      cssMinify: true,
       rollupOptions: {
         output: {
           manualChunks: {
