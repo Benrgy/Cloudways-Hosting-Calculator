@@ -75,19 +75,22 @@ function App() {
       return '';
     }
     
-    // For production GitHub Pages
+    // Check if we're on GitHub Pages specifically
     const hostname = window.location.hostname;
-    if (hostname.includes('github.io')) {
+    const isGitHubPages = hostname.includes('github.io');
+    
+    if (isGitHubPages) {
       return '/Cloudways-Hosting-Calculator';
     }
     
-    // For custom domains or other hosting
+    // For Netlify, Vercel, and other hosting platforms
     return '';
   };
 
   const basename = getBasename();
   if (import.meta.env.DEV) {
     console.log('Router basename:', basename);
+    console.log('Hostname:', window.location.hostname);
   }
   
   return (

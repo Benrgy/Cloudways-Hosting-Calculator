@@ -7,13 +7,30 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
-  const basePath = isDev ? '/' : '/Cloudways-Hosting-Calculator/';
+  
+  // Determine base path based on environment
+  const getBasePath = () => {
+    if (isDev) {
+      return '/';
+    }
+    
+    // Check if we're building for GitHub Pages specifically
+    const isGitHubPages = process.env.GITHUB_PAGES === 'true' || 
+                         process.env.CI_PLATFORM === 'github' ||
+                         process.env.GITHUB_ACTIONS === 'true';
+    
+    return isGitHubPages ? '/Cloudways-Hosting-Calculator/' : '/';
+  };
+  
+  const basePath = getBasePath();
   
   if (isDev) {
     console.log('=== VITE CONFIG ===');
     console.log('Mode:', mode);
     console.log('Base path:', basePath);
     console.log('isDev:', isDev);
+    console.log('GitHub Pages:', process.env.GITHUB_PAGES || 'false');
+    console.log('CI Platform:', process.env.CI_PLATFORM || 'none');
   }
   
   return {
