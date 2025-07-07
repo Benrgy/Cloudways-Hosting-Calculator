@@ -25,5 +25,36 @@ export const NewsletterSignupForm = () => {
       setName('');
     }
   };
-  return;
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
+      <div className="space-y-2">
+        <Input
+          type="text"
+          placeholder="Your name (optional)"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full"
+        />
+        <Input
+          type="email"
+          placeholder="Enter your email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full"
+        />
+      </div>
+      
+      <Button 
+        type="submit" 
+        disabled={isSubscribing || !email}
+        className="w-full"
+      >
+        {isSubscribing 
+          ? 'Subscribing...' 
+          : 'Subscribe to Newsletter'
+        }
+      </Button>
+    </form>
+  );
 };
