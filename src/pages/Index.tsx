@@ -4,7 +4,6 @@ import { Hero } from '@/components/Hero';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { SEOHead } from '@/components/SEOHead';
 import { MainSections } from '@/components/MainSections';
 import { usePerformanceMonitoring } from '@/hooks/usePerformanceMonitoring';
 
@@ -13,8 +12,6 @@ const Index = () => {
 
   return (
     <ErrorBoundary>
-      <SEOHead />
-      
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50">
         <Header />
         

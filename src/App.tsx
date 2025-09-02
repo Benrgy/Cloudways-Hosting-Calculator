@@ -12,6 +12,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { HelmetProvider } from 'react-helmet-async';
 import { SupabaseErrorBoundary } from '@/components/SupabaseErrorBoundary';
+import { SEOWrapper } from '@/components/SEOWrapper';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -102,16 +103,18 @@ function App() {
               <div className="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50">
                 <Toaster />
                 <BrowserRouter basename={basename}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/dashboard" element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
+                  <SEOWrapper>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/auth" element={<Auth />} />
+                      <Route path="/dashboard" element={
+                        <ProtectedRoute>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </SEOWrapper>
                 </BrowserRouter>
               </div>
             </HelmetProvider>
