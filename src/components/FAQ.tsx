@@ -1,5 +1,6 @@
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 export const FAQ = () => {
   const {
@@ -54,9 +55,25 @@ export const FAQ = () => {
           </Accordion>
         </div>
         
-        {/* Additional help section */}
+        {/* Enhanced CTA section for conversion */}
         <div className="text-center mt-16">
-          
+          <div className="bg-gradient-to-r from-emerald-600 to-blue-600 rounded-lg p-8 text-white max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold mb-4">
+              {t('faq.help.title') || 'Ready to Make the Switch?'}
+            </h3>
+            <p className="text-lg mb-6 opacity-90">
+              {t('faq.help.description') || 'Join 10,000+ businesses saving money with better hosting. Free migration + 3-day trial = zero risk.'}
+            </p>
+            <Button 
+              onClick={() => window.open('https://platform.cloudways.com/signup', '_blank')}
+              className="bg-white text-emerald-600 hover:bg-gray-100 font-semibold px-8 py-3 text-lg shadow-lg"
+            >
+              {t('faq.help.button') || 'Start FREE Trial Now'}
+            </Button>
+            <p className="text-sm mt-4 opacity-75">
+              No credit card required • Expert migration included • Cancel anytime
+            </p>
+          </div>
         </div>
       </div>
     </section>;

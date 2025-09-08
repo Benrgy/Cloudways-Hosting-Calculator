@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { MainSections } from '@/components/MainSections';
+import { ConversionNotification } from '@/components/ConversionNotification';
 import { usePerformanceMonitoring } from '@/hooks/usePerformanceMonitoring';
 
 const Index = () => {
@@ -22,6 +23,9 @@ const Index = () => {
         <MainSections onCalculateClick={handleCalculateClick} />
         
         <Footer />
+        
+        {/* Conversion optimization notification */}
+        <ConversionNotification />
       </div>
     </ErrorBoundary>
   );

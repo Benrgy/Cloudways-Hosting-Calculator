@@ -405,12 +405,33 @@ export const Calculator = () => {
                       </div>
 
                       <div className="pt-4 border-t">
-                        <div className="text-xs text-gray-500 mb-4">
+                        <div className="text-xs text-gray-500 mb-2">
                           {t('calculator.calculationDisclaimer') || '* Calculations based on average customer savings and performance improvements'}
                         </div>
-                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
-                          {t('calculator.startFreeTrial') || 'Start Your Free Trial'}
+                        
+                        {/* Social proof element */}
+                        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 mb-4">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-emerald-700 font-medium">✓ 10,000+ sites migrated successfully</span>
+                            <div className="flex items-center gap-1 text-emerald-600">
+                              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                              <span>Free migration included</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <Button 
+                          className="w-full bg-emerald-600 hover:bg-emerald-700 text-lg py-3 font-semibold relative"
+                          onClick={() => window.open('https://platform.cloudways.com/signup', '_blank')}
+                        >
+                          {t('calculator.startFreeTrial') || 'Start Saving Today - FREE Trial'}
+                          <span className="absolute -top-1 -right-1 bg-yellow-400 text-black text-xs px-2 py-1 rounded-full font-bold">
+                            FREE
+                          </span>
                         </Button>
+                        <p className="text-xs text-center text-gray-500 mt-2">
+                          No credit card • 3-day trial • Expert migration included
+                        </p>
                       </div>
                     </div>
                   ) : (
