@@ -112,5 +112,95 @@ export const PricingComparison = () => {
   if (error) {
     console.error('Error loading pricing data:', error);
   }
-  return;
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <h2 id="pricing-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+          {t('pricingComparison.title') || 'Compare Hosting Plans'}
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <PricingCardSkeleton />
+          <PricingCardSkeleton />
+          <PricingCardSkeleton />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <h2 id="pricing-heading" className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">
+        {t('pricingComparison.title') || 'Popular Cloudways Hosting Plans'}
+      </h2>
+      <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+        {t('pricingComparison.subtitle') || 'Start with the perfect plan for your needs. Scale as you grow.'}
+      </p>
+
+      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {plansToShow.map((plan, index) => (
+          <Card 
+            key={`${plan.providerName}-${plan.name}-${index}`}
+            className={`relative ${plan.is_popular ? 'border-primary shadow-lg scale-105' : ''} hover:shadow-xl transition-all duration-300`}
+          >
+            {plan.is_popular && (
+              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
+                <Star className="w-3 h-3 mr-1" />
+                Most Popular
+              </Badge>
+            )}
+            
+            <CardHeader>
+              <CardTitle className="flex flex-col gap-2">
+                <span className="text-lg text-muted-foreground">{plan.providerName}</span>
+                <span className="text-2xl">{plan.name}</span>
+              </CardTitle>
+              <div className="flex items-baseline gap-2 mt-4">
+                <span className="text-4xl font-bold text-foreground">${plan.price_monthly}</span>
+                <span className="text-muted-foreground">/month</span>
+              </div>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              <ul className="space-y-3">
+                {getFeatureList(plan).map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm text-foreground">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button 
+                className={`w-full mt-6 ${plan.is_popular ? 'bg-primary hover:bg-primary/90' : ''}`}
+                size="lg"
+                asChild
+              >
+                <a 
+                  href="https://www.cloudways.com/en/?id=1293297" 
+                  target="_blank" 
+                  rel="noopener noreferrer sponsored"
+                  className="flex items-center justify-center gap-2"
+                >
+                  <Zap className="w-4 h-4" />
+                  {plan.is_popular ? 'Start Free Trial' : 'Get Started'}
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="text-center mt-12">
+        <p className="text-muted-foreground mb-4">
+          Not sure which plan is right for you?
+        </p>
+        <Button variant="outline" size="lg" onClick={() => {
+          document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+        }}>
+          Try Our Calculator
+        </Button>
+      </div>
+    </div>
+  );
 };
