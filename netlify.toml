@@ -13,3 +13,12 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+  [plugins.inputs]
+    buildDir = "dist"
+    exclude = ['/404', '/404.html']
+    prettyURLs = true
+    trailingSlash = true
